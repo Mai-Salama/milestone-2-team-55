@@ -43,7 +43,7 @@ class ViewStaffbyDep extends Component{
 
         axios.get('/instviewstaffbydep', {
             headers:{
-'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTIiLCJlbWFpbCI6InlhaGlhLmFobWVkQGd1Yy5lZHUuZWciLCJyb2xlIjoiQU0iLCJpYXQiOjE2MDg4OTc5OTl9.Mp_dzPaurv9NtOFO5k3Ph5bAvpBfhjelngiVPgpALgE'
+'x-auth-token':localStorage.getItem('savedToken')
             },
             params: {
               facultyname: this.state.facultyname,
