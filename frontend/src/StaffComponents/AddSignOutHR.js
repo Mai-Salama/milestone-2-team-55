@@ -43,20 +43,31 @@ export default class AddSignOutHR extends Component {
     render() {
         return (
             <div>
+            <h2>Add Missing Sign Out</h2>
+            <br></br>
             <form onSubmit = {this.handleSubmit}>
-            <label>
-                Staff ID:
-                <input name="id" type="text" id={this.state.id} onChange={this.handleChange}/>
-                Date:
-                <input name="datee" type="text" datee={this.state.datee} onChange={this.handleChange}/>
-                Month:
-                <input name="monthe" type="text" monthe={this.state.monthe} onChange={this.handleChange}/>
-                Hour:
-                <input name="hour" type="text" hour={this.state.hour} onChange={this.handleChange}/>
-                Minute:
-                <input name="minute" type="text" minute={this.state.minute} onChange={this.handleChange}/>
-            </label>
-            <input type="submit" value="Submit" />
+            <div class="row">
+                <label>
+                <input name="id" placeholder="ID..." type="text" id={this.state.id} onChange={this.handleChange}/>
+                </label>
+            </div>
+            <div class="row">
+                <label>
+                <input name="datee" placeholder="Date..." type="text" datee={this.state.datee} onChange={this.handleChange}/>
+                </label>
+                <label>
+                <input name="monthe" placeholder="Month..." type="text" monthe={this.state.monthe} onChange={this.handleChange}/>
+                </label>
+            </div>
+            <div class="row">
+                <label>
+                <input name="hour" placeholder="Hour..." type="text" hour={this.state.hour} onChange={this.handleChange}/>
+                </label>
+                <label>
+                <input name="minute" placeholder="Minute..." type="text" minute={this.state.minute} onChange={this.handleChange}/>
+                </label>
+            </div>
+            <input type="submit" id="submit" value="Submit" />
             </form>
         </div>
         )

@@ -63,7 +63,7 @@ export default class StaffCompensation extends Component {
         return (
             <div>
             <div>
-                <table>
+                <table id="requeststable">
                 <thead>
                     <tr>
                         <th>Request ID</th>
@@ -91,10 +91,14 @@ export default class StaffCompensation extends Component {
                 </table>  
             </div>
             <div>
-                Request ID:
-                <input name="reqid" type="text" reqid={this.state.reqid} onChange={this.handleChange}/>
-                Requester ID:
-                <input name="staffid" type="text" staffid={this.state.staffid} onChange={this.handleChange}/>
+            <div class="row">
+                <label>
+                <input name="reqid" placeholder="Request ID..." type="text" reqid={this.state.reqid} onChange={this.handleChange}/>
+                </label>
+                <label>
+                <input name="staffid" placeholder="Requester ID..." type="text" staffid={this.state.staffid} onChange={this.handleChange}/>
+                </label>
+            </div>
                 <Button onClick={this.acceptreq}>Accept</Button> 
                 <Button onClick={this.rejectreq}>Reject</Button>               
             </div>

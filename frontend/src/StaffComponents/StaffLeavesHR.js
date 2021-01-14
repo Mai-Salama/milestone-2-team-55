@@ -64,11 +64,13 @@ export default class StaffLeavesHR extends Component {
             }
             return (
                 <div>
-                    <Button onClick={this.toAnnual}>Annual Leave Requests</Button>
-                    <Button onClick={this.toAccidental}>Accidental Leave Requests</Button>
-                    <Button onClick={this.toCompensation}>Compensation Leave Requests</Button>
-                    <Button onClick={this.toSick}>Sick Leave Requests</Button>
-                    <Button onClick={this.toMaternity}>Maternity Leave Requests</Button>
+                <h2>HR Members Leave Requests</h2>
+                <br></br>
+                    <Button id="add" onClick={this.toAnnual}>Annual Leave Requests</Button>
+                    <Button id="add" onClick={this.toAccidental}>Accidental Leave Requests</Button>
+                    <Button id="add" onClick={this.toCompensation}>Compensation Leave Requests</Button>
+                    <Button id="add" onClick={this.toSick}>Sick Leave Requests</Button>
+                    <Button id="add" onClick={this.toMaternity}>Maternity Leave Requests</Button>
                 </div>
         )
     }

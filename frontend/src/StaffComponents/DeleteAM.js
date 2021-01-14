@@ -34,7 +34,7 @@ export default class DeleteAM extends Component {
     render() {
         return (
             <div>
-                <h1>Delete Academic Member</h1>
+                <h2>Delete Academic Member</h2>
                 <form onSubmit = {this.handleSubmit}>
                 <label>
                     <input name="ide" placeholder="ID..." type="text" ide={this.state.ide} onChange={this.handleChange}/>

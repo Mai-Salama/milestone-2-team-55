@@ -30,7 +30,7 @@ export default class ViewStaffWithMissingHR extends Component {
     render() {
         return (
             <div>
-            <table>
+            <table id="requeststable">
             <thead>
                 <tr>
                     <th>Staff ID</th>
@@ -45,7 +45,7 @@ export default class ViewStaffWithMissingHR extends Component {
             
             </tbody>
             </table> 
-            <table>
+            <table id="requeststable">
             <thead>
                 <tr>
                     <th>Hours</th>
@@ -60,7 +60,7 @@ export default class ViewStaffWithMissingHR extends Component {
             
             </tbody>
             </table>
-            <table>
+            <table id="requeststable">
             <thead>
                 <tr>
                     <th>Minutes</th>

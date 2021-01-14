@@ -49,7 +49,8 @@ export default class UpdateAM extends Component {
     render() {
         return (
             <div>
-            <h1>Update HR member</h1>
+            <h2>Update HR member</h2>
+            <br></br>
             <form onSubmit = {this.handleSubmit}>
             <div class="row">
                 <label>

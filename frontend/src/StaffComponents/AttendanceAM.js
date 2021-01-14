@@ -64,11 +64,13 @@ export default class AttendanceAM extends Component {
         }
         return (
             <div>
-            <Button onClick={this.toAttendance}>View Staff Attendance</Button> 
-            <Button onClick={this.toSignIn}>Add a Missing Sign In</Button>
-            <Button onClick={this.toSignOut}>Add a Missing Sign Out</Button>
-            <Button onClick={this.toMissing}>View Staff With Missing Hours</Button>
-            <Button onClick={this.toDays}>View Staff's Missing Days</Button>
+            <h2>Academic Members Attendance</h2>
+            <br></br>
+            <Button id="add" onClick={this.toAttendance}>View Staff Attendance</Button> 
+            <Button id="add" onClick={this.toSignIn}>Add a Missing Sign In</Button>
+            <Button id="add" onClick={this.toSignOut}>Add a Missing Sign Out</Button>
+            <Button id="add" onClick={this.toMissing}>View Staff With Missing Hours</Button>
+            <Button id="add" onClick={this.toDays}>View Staff's Missing Days</Button>
         </div>
         )
     }

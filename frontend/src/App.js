@@ -124,7 +124,7 @@ function App() {
       <Route path="/Home">
         <HomeHR />
       </Route>
-      <Route path="/Home/Faculties">
+      <Route path="/Faculties">
         <Faculties />
       </Route>
       <Route path="/Faculties/AddNewFaculty">

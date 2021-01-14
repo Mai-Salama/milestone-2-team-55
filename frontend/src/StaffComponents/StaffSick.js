@@ -61,7 +61,7 @@ export default class StaffSick extends Component {
         return (
             <div>
             <div>
-                <table>
+                <table id="requeststable">
                 <thead>
                     <tr>
                         <th>Request ID</th>
@@ -85,8 +85,9 @@ export default class StaffSick extends Component {
                 </table>  
             </div>
             <div>
-                Request ID:
-                <input name="reqid" type="text" reqid={this.state.reqid} onChange={this.handleChange}/>
+                <label>
+                <input name="reqid" placeholder="Request ID..." type="text" reqid={this.state.reqid} onChange={this.handleChange}/>
+                </label>
                 <Button onClick={this.acceptreq}>Accept</Button> 
                 <Button onClick={this.rejectreq}>Reject</Button>               
             </div>
