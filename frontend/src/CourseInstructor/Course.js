@@ -83,6 +83,7 @@ class Course extends Component{
         return(
             <div className="Course">
             <Navbar/>
+      
             <button style={{alignSelf:"center",marginLeft:550, marginTop:70 }} class="btn btn-primary btn-round"onClick={this.CourseCoverage}>
             <i class="fas fa-sort-amount-up"></i> View Course Coverage
             </button>

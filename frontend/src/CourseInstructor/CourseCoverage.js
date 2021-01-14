@@ -60,6 +60,7 @@ class CourseCoverage extends Component{
         return(
             <div className="ViewCourseCoverage" >
                 <Navbar/>
+               
                 <Modal isOpen={this.state.statemodal} >
               <h2> Courses coverage given by you </h2>
               <div>
