@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-
+import Navbar from "../NavbarHR.js";
 
 export default class SubmitAMaternityLeaveRequest extends Component{
 
@@ -66,7 +66,7 @@ onSubmit(e){
         document:this.state.document
 
     }
-    axios.post('/requestMaternityLeave',request,{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTMiLCJlbWFpbCI6IlllaGlhQGdtYWlsLmNvbSIsInJvbGUiOiJIUiIsImlhdCI6MTYxMDQ0MTA5Mn0.Qeuechb5TMFxsOG91P6BZBfOohDTsFPcwkPePoFu-CM'}})
+    axios.post('/requestMaternityLeave',request,{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
         .then((res)=>{
             if(res.data.gender=="male")
             {console.log("male")}
@@ -83,6 +83,8 @@ window.location="/Success"
     render(){
         return(
             <div>
+                <Navbar/>
+            <div className='container'>
                 <nav aria-label="breadcrumb">
             <ol className="breadcrumb alert alert-warning">
               <li className="breadcrumb-item text-warning"><a className="text-warning"href="HomeHR">Home</a></li>
@@ -92,6 +94,8 @@ window.location="/Success"
               <li className="breadcrumb-item active text-danger" aria-current="page">Submit a maternity leave request </li>
             </ol>
           </nav>
+          </div>
+          <div className='container'>
           <h3>Maternity leave request</h3>
                <form onSubmit={this.onSubmit}>
                    <div className='form-group'>
@@ -143,6 +147,7 @@ window.location="/Success"
                 <input type="submit" value="Submit request" className="btn btn-warning"/>
             </div>
                </form>
+            </div>
             </div>
         )
     }

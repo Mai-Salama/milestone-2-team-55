@@ -66,11 +66,9 @@ console.log(this.state.requests)
   <thead>
     <tr>
     <th> request id</th>
-      <th>     Reciever id</th>
-      <th>     Requested day</th>
-      <th>     Requested timing</th>
-      <th>    requested course</th>
-      <th>    requested location</th>
+      <th>     Requested date</th>
+      <th>    requested slot number</th>
+      <th>    TA to replace</th>
       <th>    request acceptance status</th>
     </tr>
   </thead>
@@ -80,12 +78,11 @@ console.log(this.state.requests)
                
     <tr>
       <td>{request.id}</td>
-      <td>{request.receiver_id}</td>
-      <td>{request.day}</td>
-      <td>{request.timing}</td>
-      <td>{request.course}</td>
-      <td>{request.location}</td>
-      <td>{request.request_status}</td>
+     
+      <td>{request.requestedDate}</td>
+      <td>{request.slotNumber}</td>
+      <td>{request.TAtoreplace}</td>
+      <td>{request.status}</td>
     </tr>
     
    )}

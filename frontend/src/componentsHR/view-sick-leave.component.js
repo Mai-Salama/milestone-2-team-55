@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-
+import Navbar from "../NavbarHR.js";
 
 
 export default class ViewSickStatus extends Component{
@@ -23,7 +23,7 @@ export default class ViewSickStatus extends Component{
         })
      }
     componentDidMount(){
-        axios.get('/viewStatusOfSickPending',{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTEiLCJlbWFpbCI6IkBndWMiLCJyb2xlIjoiSFIiLCJpYXQiOjE2MTA1NDI0MTR9.cOHHcKOWqOvZcjQnOnYehK9-ik5V9rRPzSWzBoFtvmU'}})
+        axios.get('/viewStatusOfSickPending',{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
         .then(response=> {
              this.setState({SickRequests: response.data});
              console.log(response.data);
@@ -34,7 +34,7 @@ export default class ViewSickStatus extends Component{
     .catch((error)=> { 
     console.log(error);
 })
-    axios.get('/viewStatusOfSickAccepted',{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTEiLCJlbWFpbCI6IkBndWMiLCJyb2xlIjoiSFIiLCJpYXQiOjE2MTA1NDI0MTR9.cOHHcKOWqOvZcjQnOnYehK9-ik5V9rRPzSWzBoFtvmU'}})
+    axios.get('/viewStatusOfSickAccepted',{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
             .then((res)=>{
                 this.setState({SickRequestsA: res.data});
                 console.log(res.data)
@@ -47,7 +47,7 @@ export default class ViewSickStatus extends Component{
         console.log(error);
     })
 
-    axios.get('/viewStatusOfSickRejected',{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTEiLCJlbWFpbCI6IkBndWMiLCJyb2xlIjoiSFIiLCJpYXQiOjE2MTA1NDI0MTR9.cOHHcKOWqOvZcjQnOnYehK9-ik5V9rRPzSWzBoFtvmU'}})
+    axios.get('/viewStatusOfSickRejected',{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
         .then((res)=>{
             this.setState({SickRequestsR: res.data});
             console.log(res.data)}
@@ -70,7 +70,7 @@ onSubmit(e){
             reqID:this.state.id
 
     }
-    axios.post('/cancelPendingSick',request,{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTEiLCJlbWFpbCI6IkBndWMiLCJyb2xlIjoiSFIiLCJpYXQiOjE2MTA1NDI0MTR9.cOHHcKOWqOvZcjQnOnYehK9-ik5V9rRPzSWzBoFtvmU'}})
+    axios.post('/cancelPendingSick',request,{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
         .then((res)=>console.log(res.data))
     .catch((error)=> { 
     console.log(error);
@@ -85,6 +85,8 @@ window.location="/Success"
     render(){
         return(
             <div>
+                <Navbar/>
+            <div className='container'>
                 <nav aria-label="breadcrumb">
             <ol className="breadcrumb alert alert-warning">
               <li className="breadcrumb-item text-warning"><a className="text-warning"href="HomeHR">Home</a></li>
@@ -180,6 +182,7 @@ window.location="/Success"
                    <input type="submit" value="Cancel request" className="btn btn-danger"/>
                    </div>
                    </form>
+            </div>
             </div>
         )
     }

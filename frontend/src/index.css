@@ -44,6 +44,36 @@ td, th{
   color: white;
 }
 
+#attendancetable{
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width:100%;
+  table-layout: fixed;
+  display: inline;
+}
+
+#attendancetable table body{
+  width:100%;
+  overflow: auto;
+}
+
+#attendancetable td{
+  border-left: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  padding: 8px;
+  overflow: hidden;
+  width:50px;
+}
+
+#attendancetable th{
+ border-left: 1px solid #ddd;
+ padding: 8px;
+  text-align: left;
+  background-color:rgb(219,114,53);
+  color: white;
+  width:100%;
+  display:inline;
+}
 
 label{
   text-align: center;

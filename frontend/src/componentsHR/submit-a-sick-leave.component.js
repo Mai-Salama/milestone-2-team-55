@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-
+import Navbar from "../NavbarHR.js";
 
 
 export default class SubmitASickLeaveRequest extends Component{
@@ -38,7 +38,7 @@ onSubmit(e){
         month:this.state.month
 
     }
-    axios.post('/requestSickLeave',request,{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTEiLCJlbWFpbCI6IkBndWMiLCJyb2xlIjoiSFIiLCJpYXQiOjE2MTA1NDI0MTR9.cOHHcKOWqOvZcjQnOnYehK9-ik5V9rRPzSWzBoFtvmU'}})
+    axios.post('/requestSickLeave',request,{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
         .then((res)=>{
             console.log(res.data);
         }).catch((error)=> { 
@@ -53,6 +53,8 @@ window.location="/Success"
     render(){
         return(
             <div>
+                <Navbar/>
+            <div className='container'>
                 <nav aria-label="breadcrumb">
             <ol className="breadcrumb alert alert-warning">
               <li className="breadcrumb-item text-warning"><a className="text-warning"href="HomeHR">Home</a></li>
@@ -93,7 +95,7 @@ window.location="/Success"
                </form>
             </div>
 
-           
+            </div>
              
           
         )

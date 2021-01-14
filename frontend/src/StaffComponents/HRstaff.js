@@ -6,6 +6,7 @@ import AddNewHR from './AddNewHR';
 import UpdateHR from './UpdateHR';
 import DeleteHR from './DeleteHR';
 import AttendanceHR from './AttendanceHR';
+import Navbar from '../NavbarHR.js';
 
 export default class HRstaff extends Component {
     constructor(props){
@@ -56,6 +57,7 @@ export default class HRstaff extends Component {
         }
         return (
             <div>
+            <Navbar />
             <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item"><a href="/Home">Home</a></li>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from "axios";
 import {Redirect} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
-import Navbar from '../NavbarInstructor';
+import Navbar from '../NavbarHR.js';
 
 export default class UpdateFaculty extends Component {
     constructor(props){

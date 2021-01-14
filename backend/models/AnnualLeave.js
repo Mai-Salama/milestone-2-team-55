@@ -6,6 +6,8 @@ const AnnulaLeaves = mongoose.Schema({
     req_id:{type:Number},
     date:{type:Date,
     required:true},
+    month:{type:Number},
+    day:{type:String},
     TAtoCover:{type:String},
     status:{type:Number}
 });

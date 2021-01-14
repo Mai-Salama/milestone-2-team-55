@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import Navbar from "../NavbarHR.js";
 
 export default class ViewProfileHR extends Component{
 constructor(){
@@ -15,7 +16,7 @@ constructor(){
 }
 
 componentDidMount(){
-    axios.get('/viewprofile',{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTEiLCJlbWFpbCI6IkBndWMiLCJyb2xlIjoiSFIiLCJpYXQiOjE2MTAzMzU0MTJ9.XBfnhqT0VYcJiZzY4KiscpHGG-__d5ItiZ3gpbOIxx8'}})
+    axios.get('/viewprofile',{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
     .then(response=> {
         this.setState({name: response.data.name,
                      office:response.data.office,
@@ -31,14 +32,16 @@ componentDidMount(){
     render(){
         return(
             <div>
-               <h3>Here's your profile:</h3>
-               <h4>username: {this.state.name}</h4>
-               <h4>office: {this.state.office}</h4>
-               <h4>email: {this.state.email}</h4>
-               <h4>day off: {this.state.dayOff}</h4>
-               <h4>salary: {this.state.salary}</h4>
+                <Navbar/>
+            <div className='container'>
+               <h3 className="text-danger"> Your profile:</h3>
+               <h4 className="text-warning">username: </h4> <h4>{this.state.name}</h4>
+               <h4 className="text-warning"> office: </h4> <h4>{this.state.office}</h4>
+               <h4 className="text-warning">email:</h4><h4> {this.state.email}</h4>
+               <h4 className="text-warning">day off:</h4><h4> {this.state.dayOff}</h4>
+               <h4 className="text-warning">salary:</h4><h4> {this.state.salary}</h4>
 
-
+               </div>
             </div>
         )
     }

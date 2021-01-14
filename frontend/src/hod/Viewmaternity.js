@@ -85,7 +85,7 @@ this.setState({
         <td>{request.re_id}</td>
         <td>{request.dayFrom}</td>
         <td>{request.dayTo}</td>
-        <td>{request.month}</td>
+        <td>{request.monthTo}</td>
         <td>{request.reason}</td>
         <td>{request.document}</td>
         <td>{request.status}</td>

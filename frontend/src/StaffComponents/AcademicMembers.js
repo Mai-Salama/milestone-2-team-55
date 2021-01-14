@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Dropdown} from 'react-bootstrap';
 import {Redirect} from 'react-router-dom';
+import Navbar from '../NavbarHR.js';
 import AddNewAM from './AddNewAM';
 import UpdateAM from './UpdateAM';
 import DeleteAM from './DeleteAM';
@@ -56,6 +57,7 @@ export default class AcademicMembers extends Component {
         }
         return (
             <div>
+            <Navbar />
             <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item"><a href="/Home">Home</a></li>

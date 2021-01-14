@@ -7,6 +7,7 @@ import AddSignInAM from './AddSignInAM';
 import AddSignOutAM from './AddSignOutAM';
 import ViewStaffWithMissingAM from './ViewStaffWithMissingAM';
 import ViewAmmissingDays from './ViewAmmissingDays';
+import Navbar from '../NavbarHR.js';
 
 export default class AttendanceAM extends Component {
     constructor(props){
@@ -64,6 +65,7 @@ export default class AttendanceAM extends Component {
         }
         return (
             <div>
+            <Navbar />
              <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item"><a href="/Home">Home</a></li>

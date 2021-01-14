@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-
+import Navbar from "../NavbarHR.js";
 
 export default class ViewAllAttendanceRecords extends Component{
 constructor(){
@@ -13,7 +13,7 @@ constructor(){
 }
 
 componentDidMount(){
-    axios.get('/viewAllAttendanceRecords',{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTMiLCJlbWFpbCI6IlllaGlhQGdtYWlsLmNvbSIsInJvbGUiOiJIUiIsImlhdCI6MTYxMDQxMzgxOH0.yLuTAkZUrQScAzILJXFJRi80eCDZtXt4mpiZhK0BDiU'}})
+    axios.get('/viewAllAttendanceRecords',{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
     .then(response=> {
         this.setState({attendanceRecords: response.data});
         console.log(response.data);
@@ -43,6 +43,8 @@ componentDidMount(){
     render(){
         return(
             <div>
+                <Navbar/>
+            <div className='container'>
             <nav aria-label="breadcrumb">
             <ol className="breadcrumb alert alert-warning">
               <li className="breadcrumb-item text-warning"><a className="text-warning"href="HomeHR">Home</a></li>
@@ -60,6 +62,8 @@ componentDidMount(){
                             <th>Month</th>
                             <th>Hours</th>
                             <th>Minutes</th>
+                            <th>Sign In</th>
+                            <th>Sign Out</th>
                         </tr>
 
                     </thead>
@@ -71,36 +75,45 @@ componentDidMount(){
                           <td> {item.month}</td>
                           <td> {item.hours}</td>
                           <td> {item.minutes}</td>
+                          <td>
+                            <table className= "table table-bordered">
+                                <thread className="table-warning">
+                                    <tr>
+                                        <th>Timing</th>
+                                    </tr>
+                                </thread>
+                                <tbody>
+                                    {item.signs.map((smalleritem =>
+                                        <tr>
+                                            <td>{smalleritem.hourin}</td>
+                                            <td>{smalleritem.minutein}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                            </td>
+                                <td>
+                                <table className= "table table-bordered">
+                                        <thread className="table-warning">
+                                            <tr>
+                                                <th>Timing</th>
+                                            </tr>
+                                        </thread>
+                                        <tbody>
+                                            {item.signs.map((smalleritem =>
+                                            <tr>
+                                                <td>{smalleritem.hourout}</td>
+                                                <td>{smalleritem.minuteout}</td>
+                                            </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </td>
                           </tr>
                         )}
                     </tbody>
                 </table>
-
-                <table className= "table table-bordered">
-                <thead className="table-warning">
-                    <tr>
-                        <th colSpan="2">Sign In</th>
-                        <th colSpan="2">Sign Out</th>
-                    </tr>
-                    <tr>
-                        <th>Hour In</th>
-                        <th>Minute In</th>
-                        <th>Hour Out</th>
-                        <th>Minute Out</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {this.state.signs.map((item =>
-                    <tr>
-                    <td>{item.hourin}</td>
-                    <td>{item.minutein}</td>
-                    <td>{item.hourout}</td>
-                    <td>{item.minuteout}</td> 
-                    </tr>
-                ))}
-                </tbody>
-                </table>                  
-
+            </div>
             </div>
         )
     }

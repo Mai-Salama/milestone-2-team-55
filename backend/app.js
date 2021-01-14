@@ -30,6 +30,7 @@ const AccidentalLeaves = require('./models/AccidentalLeaves');
 const SlotLinkingRequest = require('./models/SlotLinkingRequest');
 const Availability = require('./models/Availability');
 const { findOne } = require('./models/AcademicMember');
+const DayOffRequest = require('./models/DayOffRequest');
 
 portal.use(express.json());
 portal.use(express.urlencoded({extended:false}));
@@ -6651,8 +6652,10 @@ console.log("dsf");
                     let toSend = [];
                     const JWT_Password="RandomString";
                     const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
-                    if(verified.role == "HR"){
+                    if(verified.role == "AM"){
                         const HRfound = await AcademicMember.findOne({id: verified.id});
+                        console.log("in notifications")
+                        console.log(HRfound.id);
                         const accAccidental = await AccidentalLeaves.find({id: HRfound.id, status:1});
                         for(let i = 0; i < accAccidental.length; i++){
                             let item = {

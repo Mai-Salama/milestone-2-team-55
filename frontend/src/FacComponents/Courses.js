@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Dropdown} from 'react-bootstrap';
 import {Redirect} from 'react-router-dom';
-import Navbar from '../NavbarInstructor';
+import Navbar from '../NavbarHR.js';
 import AddNewCourse from '../FacComponents/AddNewCourse';
 import UpdateCourse from '../FacComponents/UpdateCourse';
 import DeleteCourse from '../FacComponents/DeleteCourse';

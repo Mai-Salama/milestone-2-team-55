@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from "axios";
+import Navbar from '../NavbarHR.js';
 
 export default class ViewStaffWithMissingHR extends Component {
     constructor(props){
@@ -30,6 +31,7 @@ export default class ViewStaffWithMissingHR extends Component {
     render() {
         return (
             <div>
+            <Navbar />
                      <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item"><a href="/Home">Home</a></li>
@@ -39,8 +41,8 @@ export default class ViewStaffWithMissingHR extends Component {
             <li className="breadcrumb-item active" aria-current="page">StaffWithMissingHours</li>
           </ol>
         </nav>
-            <table id="requeststable">
-            <thead>
+            <table id="attendancetable">
+            <thead className="table-warning">
                 <tr>
                     <th>Staff ID</th>
                 </tr>
@@ -54,8 +56,8 @@ export default class ViewStaffWithMissingHR extends Component {
             
             </tbody>
             </table> 
-            <table id="requeststable">
-            <thead>
+            <table id="attendancetable">
+            <thead className="table-warning">
                 <tr>
                     <th>Hours</th>
                 </tr>
@@ -69,8 +71,8 @@ export default class ViewStaffWithMissingHR extends Component {
             
             </tbody>
             </table>
-            <table id="requeststable">
-            <thead>
+            <table id="attendancetable">
+            <thead className="table-warning">
                 <tr>
                     <th>Minutes</th>
                 </tr>

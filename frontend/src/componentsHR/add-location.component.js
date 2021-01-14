@@ -51,7 +51,7 @@ onSubmit(e){
             capacity:this.state.capacity
 
     }
-    axios.post('/addlocation',location,{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTYiLCJlbWFpbCI6Im1pcmFsQGd1Yy5lZHUuZWciLCJyb2xlIjoiSFIiLCJpYXQiOjE2MTAzMzUyNTB9.FnGEnaAntthMVn84lT5-uG1f_MfyJoJGDOSRI7vPJAY'}})
+    axios.post('/addlocation',location,{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
         .then((res)=>{
             console.log(res.data)}
            
