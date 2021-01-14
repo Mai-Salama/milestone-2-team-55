@@ -33,6 +33,10 @@ import Viewsickleave from "./Viewsickleave"
 import Viewaccidental from "./Viewaccidental"
  import Viewmaternity from "./Viewmaternity"
  import Viewcompensation from "./Viewcompensation"
+ import HomeCI from '../CourseInstructor/HomeInstuctor';
+import axios from 'axios';
+import HomeCC from '../CourseCoordinator/CoordinatorHomeCont';
+
 
 export default class HODhomepage extends Component{
     constructor(props){
@@ -65,7 +69,21 @@ export default class HODhomepage extends Component{
             rcompensation:null,
             rannual:null,
             raccidental:null,
-            rannual:null
+            rannual:null,
+
+            RedirectToHomeAM:null,
+            RedirectToHomeCC:null,
+            RedirectToHomeCI:null,
+            RedirectToHomeHOD:null,
+            stateCC:"",
+            stateCI:"",
+            stateHOD:"",
+            DisabledCC:false,
+            DisabledCI:false,
+            DisabledHOD:false
+
+
+
         }
         this.toviewstaff=this.toviewstaff.bind(this)
         this.toviewstaffbycourse=this.toviewstaffbycourse.bind(this)
@@ -270,7 +288,75 @@ export default class HODhomepage extends Component{
         })
         event.preventDefault()
     }
+
+    HomeAM(event){
+        this.setState({RedirectToHomeAM:"/StaffAM/AddStaffMember"})
+        event.preventDefault()
+    }
+    HomeCC(event){
+        this.setState({RedirectToHomeCC:"/HomeC"})
+        event.preventDefault()
+    }
+    HomeCI(event){
+        this.setState({RedirectToHomeCI:"/HomeInstructor"})
+        event.preventDefault()
+    }
+    HomeHOD(event){
+        this.setState({RedirectToHomeHOD:"/HODhomepage"})
+        event.preventDefault()
+    }
+
+    componentDidMount=()=>{
+        axios.get('/getRole', {
+            headers:{
+'x-auth-token':localStorage.getItem('savedToken')
+            }
+           
+          })
+          .then(response => {
+            this.setState({
+                
+                stateCC:response.data.CC,
+                stateCI:response.data.CI,
+                stateHOD:response.data.HOD
+
+            })
+
+            if(this.state.stateCC=="0"){
+                this.setState({
+                    DisabledCC:true
+                })
+            }
+
+            if(this.state.stateCI=="0"){
+                this.setState({
+                    DisabledCI:true
+                })
+            }
+
+            if(this.state.stateHOD=="0"){
+                this.setState({
+                    DisabledHOD:true
+                })
+            }
+          //console.log(this.state.Roles);
+
+        })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+        
+    }
+
     render(){
+      
+        if(this.state.RedirectToHomeCC){
+            return<Redirect to ={this.state.RedirectToHomeCC} Component={HomeCC}/>
+        }
+        if(this.state.RedirectToHomeCI){
+            return<Redirect to ={this.state.RedirectToHomeCI} Component={HomeCI}/>
+        }
         if(this.state.rviewstaff){
             return(<Redirect to ={this.state.rviewstaff} Component {...Viewstaff}/>)
         }
@@ -359,6 +445,20 @@ export default class HODhomepage extends Component{
             <div >
                  <Navbar/>
                 <h1>Welcome to your home page</h1>
+
+
+
+                <Dropdown>
+                <Dropdown.Toggle  id="dropdown1"style={{alignSelf:"center",marginLeft:550, marginTop:70 }}>
+                <i class="fas fa-eye"></i>  Navigate 
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    <Dropdown.Item as="button" onClick={this.HomeAM.bind(this)} >Academic Member</Dropdown.Item>
+                    <Dropdown.Item as="button" onClick={this.HomeCC.bind(this)} disabled={this.state.DisabledCC}>Course Coordinator</Dropdown.Item> 
+                    <Dropdown.Item as="button" onClick={this.HomeCI.bind(this)} disabled={this.state.DisabledCC}>Course Instructor</Dropdown.Item> 
+                    <Dropdown.Item as="button" onClick={this.HomeHOD.bind(this)} disabled="true">Head Of Department</Dropdown.Item> 
+                </Dropdown.Menu>
+            </Dropdown>
         <Dropdown class ="middle">
                 <Dropdown.Toggle variant="primary" id="drop">
                     Your Staff 
