@@ -184,6 +184,7 @@ function App() {
       <Route path="/Staff/HRstaff/DeleteHR">
         <DeleteHR />
       </Route>
+      
       <Route path="/Staff/AcademicMembers/DeleteAM">
         <DeleteAM />
       </Route>
