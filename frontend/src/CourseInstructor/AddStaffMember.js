@@ -58,6 +58,14 @@ const inputdata={
             <div className="AddStaffMember" >
             
             <Navbar/>
+            <nav aria-label="breadcrumb">
+            <ol className="breadcrumb alert alert-warning">
+              <li className="breadcrumb-item text-warning"><a className="text-warning"href="/HomeInstructor">Home</a></li>
+              <li className="breadcrumb-item "><a className="text-warning"href="/StaffAM">Staff</a></li>
+
+              <li className="breadcrumb-item active text-danger" aria-current="page">Add Staff Member</li>
+            </ol>
+          </nav>
 <Input style={{alignSelf:"center",marginLeft:550, marginTop:70 }} placeholder=' Course Id...' onChange={this.handleChange1.bind(this)}/ >
 <Input style={{alignSelf:"center",marginLeft:550, marginTop:70 }} placeholder=' Academic Member Id...' onChange={this.handleChange2.bind(this)}/ >
 

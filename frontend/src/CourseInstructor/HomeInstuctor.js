@@ -129,6 +129,12 @@ import HomeHOD from '../hod/HODhomepage';
             <div className="HomeInstructor">
                 <Navbar/>
             <h1 style={{fontFamily:'Montserrat', textAlign:'center'}}> Welcome to your home page </h1>
+            <nav aria-label="breadcrumb">
+            <ol className="breadcrumb alert alert-warning">
+              
+              <li className="breadcrumb-item active text-danger" aria-current="/HomeInstructor">Home</li>
+            </ol>
+          </nav>
             <Dropdown>
                 <Dropdown.Toggle  id="dropdown1"style={{alignSelf:"center",marginLeft:550, marginTop:70 }}>
                 <i class="fas fa-eye"></i>  Navigate 
