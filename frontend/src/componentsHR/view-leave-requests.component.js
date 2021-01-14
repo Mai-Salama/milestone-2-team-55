@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import Navbar from "../NavbarHR.js";
 
 export default class ViewLeaveRequests extends Component{
     constructor(){
@@ -14,6 +15,9 @@ export default class ViewLeaveRequests extends Component{
     render(){
         return(
             <div>
+
+<Navbar/>
+            <div className='container'>
                 <nav aria-label="breadcrumb">
             <ol className="breadcrumb alert alert-warning">
               <li className="breadcrumb-item text-warning"><a className="text-warning"href="HomeHR">Home</a></li>
@@ -35,6 +39,7 @@ export default class ViewLeaveRequests extends Component{
           <br/>
           <br/>
           <a href="/ViewAnnualStatus"> <button className="btn btn-warning">  View annual leave requests </button> </a>
+            </div>
             </div>
         )
     }

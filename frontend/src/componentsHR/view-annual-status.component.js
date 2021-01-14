@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-
+import Navbar from "../NavbarHR.js";
 
 
 export default class ViewAnnualStatus extends Component{
@@ -85,13 +85,15 @@ window.location="/Success"
     render(){
         return(
             <div>
+                <Navbar/>
+            <div className='container'>
                 <nav aria-label="breadcrumb">
             <ol className="breadcrumb alert alert-warning">
               <li className="breadcrumb-item text-warning"><a className="text-warning"href="HomeHR">Home</a></li>
               <li className="breadcrumb-item "><a className="text-warning"href="Attendance">Attendance</a></li>
               <li className="breadcrumb-item "><a className="text-warning"href="Leaves">Leaves</a></li>
               <li className="breadcrumb-item "><a className="text-warning"href="ViewLeaveRequests">View leave requests</a></li>
-              <li className="breadcrumb-item active text-danger" aria-current="page">View Accidental Status</li>
+              <li className="breadcrumb-item active text-danger" aria-current="page">View Annual Status</li>
             </ol>
           </nav>
           <h5 class="text-warning">Pending Requests: </h5>
@@ -187,6 +189,7 @@ window.location="/Success"
                    <input type="submit" value="Cancel request" className="btn btn-danger"/>
                    </div>
                    </form>
+            </div>
             </div>
         )
     }

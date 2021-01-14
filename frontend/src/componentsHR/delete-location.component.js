@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import Navbar from '../NavbarHR';
+import Navbar from "../NavbarHR.js";
+
 
 
 export default class DeleteLocation extends Component{
