@@ -5388,7 +5388,8 @@ console.log("dsf");
 
 
             portal.get("/getRole",authA,async(req,res)=>{
-                let listOfRoles=[];
+               
+                let mem;
                 const JWT_Password="RandomString";
                 
                 const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
@@ -5396,12 +5397,16 @@ console.log("dsf");
                 if(verified.role=="AM"){
         
                     const am= await AcademicMember.findOne({"id":verified.id});
-                    listOfRoles.push(am.coursecoordindator);
-                    listOfRoles.push(am.courseinstructor);
-                    listOfRoles.push(am.HOD);
-
+                    // listOfRoles.push(am.coursecoordindator);
+                    // listOfRoles.push(am.courseinstructor);
+                    // listOfRoles.push(am.HOD);
+                    mem={
+                        "CC":am.coursecoordindator,
+                        "CI":am.courseinstructor,
+                        "HOD":am.HOD
+                    }
                        
                     }
-                    res.send(listOfRoles);
+                    res.send(mem);
                 
             })

@@ -12,27 +12,6 @@ import {Dropdown} from "react-bootstrap";
 import HomeCC from '../CourseCoordinator/CoordinatorHomeCont';
 import HomeHOD from '../hod/HODhomepage';
 
-const data=[
-    { value:1,
-    label:"Academic Member"
-
-    },
-    {
-        value:2,
-        label:"Course Coordinator"
-    
-    },
-    {
-        value:3,
-        label:"Course Instructor"
-        
-    },
-    {
-        value:4,
-        label:"Head Of Department"
-    
-    }
-];
 
    
 
@@ -45,10 +24,9 @@ const data=[
             RedirectToHomeCC:null,
             RedirectToHomeCI:null,
             RedirectToHomeHOD:null,
-            Roles:[],
-            RoleCC:"",
-            RoleCI:"",
-            RoleHOD:"",
+            stateCC:"",
+            stateCI:"",
+            stateHOD:"",
             DisabledCC:false,
             DisabledCI:false,
             DisabledHOD:false
@@ -100,31 +78,31 @@ const data=[
           })
           .then(response => {
             this.setState({
-                Roles:response.data,
-                stateCC:this.state.Roles[0],
-                stateCI:this.state.Roles[1],
-                stateHOD:this.state.Roles[2]
+                
+                stateCC:response.data.CC,
+                stateCI:response.data.CI,
+                stateHOD:response.data.HOD
 
             })
 
-            if(this.stateCC=="0"){
+            if(this.state.stateCC=="0"){
                 this.setState({
                     DisabledCC:true
                 })
             }
 
-            if(this.stateCI=="0"){
+            if(this.state.stateCI=="0"){
                 this.setState({
                     DisabledCI:true
                 })
             }
 
-            if(this.stateHOD=="0"){
+            if(this.state.stateHOD=="0"){
                 this.setState({
                     DisabledHOD:true
                 })
             }
-          console.log(this.state.Roles);
+          //console.log(this.state.Roles);
 
         })
           .catch(function (error) {
@@ -157,8 +135,8 @@ const data=[
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     <Dropdown.Item as="button" onClick={this.HomeAM.bind(this)} >Academic Member</Dropdown.Item>
-                    <Dropdown.Item as="button" onClick={this.HomeCI.bind(this)} disabled={this.state.DisabledCC}>Course Coordinator</Dropdown.Item> 
-                    <Dropdown.Item as="button" onClick={this.HomeCC.bind(this)} disabled="true">Course Instructor</Dropdown.Item> 
+                    <Dropdown.Item as="button" onClick={this.HomeCC.bind(this)} disabled={this.state.DisabledCC}>Course Coordinator</Dropdown.Item> 
+                    <Dropdown.Item as="button" onClick={this.HomeCI.bind(this)} disabled="true">Course Instructor</Dropdown.Item> 
                     <Dropdown.Item as="button" onClick={this.HomeHOD.bind(this)} disabled={this.state.DisabledHOD}>Head Of Department</Dropdown.Item> 
                 </Dropdown.Menu>
             </Dropdown>

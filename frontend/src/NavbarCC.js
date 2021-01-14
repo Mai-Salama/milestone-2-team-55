@@ -5,6 +5,7 @@ import {MenuItems} from "./MenuItems"
 import {Button} from './CourseInstructor/Button';
 
 import './Navbar.css'
+import HomeC from './CourseCoordinator/CoordinatorHomeCont'
 import {Redirect} from 'react-router-dom'
 import StaffAM from './CourseInstructor/StaffAM';
 //import CourseSlotsC from './CourseCoordinator/CourseSlotsC';
@@ -14,15 +15,15 @@ class Navbar extends Component{
     constructor(){
         super();
         this.state={
-            RedirectToHomeCC:null,
+            RedirectToHomeC:null,
             RedirectToProfile:null
         }
-        this.HomeCC=this.HomeCC.bind(this);
+        this.HomeC=this.HomeC.bind(this);
         this.ProfileInstructor=this.ProfileInstructor.bind(this);
     }
 
-    HomeCC(event){
-        this.setState({RedirectToHomeCC:"/HomeC"})
+    HomeC(event){
+        this.setState({RedirectToHomeC:"/HomeC"})
         event.preventDefault()
     }
     ProfileInstructor(event){
@@ -35,8 +36,8 @@ class Navbar extends Component{
     }
 
     render(){
-        if(this.state.RedirectToHomeCC){
-            return<Redirect to ={this.state.RedirectToHomeCC} Component={HomeC}/>
+        if(this.state.RedirectToHomeC){
+            return<Redirect to ={this.state.RedirectToHomeC} Component={HomeC}/>
         }
         if(this.state.RedirectToProfile){
             return<Redirect to ={this.state.RedirectToProfile} Component={StaffAM}/>
@@ -64,7 +65,7 @@ class Navbar extends Component{
         </ul> */}
 
         {/* //<a href="www.mypage.com" onclick="window.history.go(-1); return false;"> Go to previous </a> */}
-        <Button onClick={this.HomeCC}> {MenuItems[0].title}<i class={MenuItems[0].icon}></i> </Button>
+        <Button onClick={this.HomeC}> {MenuItems[0].title}<i class={MenuItems[0].icon}></i> </Button>
         <Button onclick={this.ProfileInstructor}>{MenuItems[1].title}<i class={MenuItems[1].icon}></i> </Button>
         <Button >{MenuItems[2].title}<i class={MenuItems[2].icon}></i> </Button>
         <Button >{MenuItems[3].title}<i class={MenuItems[3].icon}></i> </Button>
