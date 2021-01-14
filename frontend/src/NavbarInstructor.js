@@ -25,6 +25,7 @@ class Navbar extends Component{
         event.preventDefault()
     }
     ProfileInstructor(event){
+        
         this.setState({RedirectToProfile:"/StaffAM"})
         event.preventDefault()
     }
