@@ -103,6 +103,30 @@ import Viewslotlinkingrequests from "./hod/Viewslotlinkingrequests"
 import HODhomepage from "./hod/HODhomepage"
 import Viewcourseassignment from "./hod/Viewcourseassignment"
 import Submitted from "./hod/Submitted"
+//Miral's HR
+// import HomeHR from "./componentsHR/home-hr.component";
+import ViewProfileHR from "./componentsHR/view-profile-hr.component";
+import Attendance from "./componentsHR/attendance.component";
+import Locations from "./componentsHR/locations.component";
+import ViewAllAttendanceRecords from "./componentsHR/view-all-attendance-records.component";
+import ViewAttendanceRecordsByMonth from "./componentsHR/view-attendance-records-by-month.component";
+import Leaves from "./componentsHR/leaves.component";
+import AddLocation from "./componentsHR/add-location.component"
+import Success from "./componentsHR/success.component";
+import DeleteLocation from "./componentsHR/delete-location.component";
+import UpdateLocation from "./componentsHR/update-locatoin.component";
+import SubmitALeaveRequest from "./componentsHR/submit-a-request.component";
+import SubmitAMaternityLeaveRequest from "./componentsHR/submit-a-maternity-leave-request.component";
+import SubmitACompensationLeaveRequest from "./componentsHR/submit-a-compensation-leave-request.component";
+import SubmitAnAccidentalLeaveRequest from "./componentsHR/submit-an-accidental-leave-request.component";
+import ViewLeaveRequests from "./componentsHR/view-leave-requests.component";
+import ViewMaternityStatus from"./componentsHR/view-maternity-status.component";
+import ViewCompensationStatus from "./componentsHR/view-compensation-status.component";
+import ViewAccidentalStatus from "./componentsHR/view-accidental-status.component";
+import SubmitASickLeaveRequest  from "./componentsHR/submit-a-sick-leave.component";
+import SubmitAnAnnualLeaveRequest from "./componentsHR/submit-annual-leave-request.component";
+import ViewSickStatus from "./componentsHR/view-sick-leave.component";
+import ViewAnnualStatus from "./componentsHR/view-annual-status.component";
 
 function App() {
   const DefaultContainer = ()=>(
@@ -308,6 +332,33 @@ function App() {
     <Route path="/Submitted" component={Submitted}/>
     <Route path="/Viewsickleave" component= {Viewsickleave}/>
 
+    {/* Miral's Routes */}
+
+    <div className="container">
+      {/* <Route path="/HomeHR" component= {HomeHR}/> */}
+      <Route path="/ViewProfileHR" component= {ViewProfileHR}/>
+      <Route path="/Attendance" component= {Attendance}/>
+      <Route path="/Locations" component= {Locations}/>
+      <Route path="/ViewAllAttendanceRecords" component= {ViewAllAttendanceRecords}/>
+      <Route path="/ViewAttendanceRecordsByMonth" component= {ViewAttendanceRecordsByMonth}/>
+      <Route path="/Leaves" component= {Leaves}/>  
+      <Route path="/AddLocation" component= {AddLocation}/>
+      <Route path="/DeleteLocation" component= {DeleteLocation}/>
+      <Route path="/UpdateLocation" component= {UpdateLocation}/>
+      <Route path="/Success" component= {Success}/>
+      <Route path="/SubmitALeaveRequest" component= {SubmitALeaveRequest}/>
+      <Route path="/SubmitAMaternityLeaveRequest" component= {SubmitAMaternityLeaveRequest}/>
+      <Route path="/SubmitACompensationLeaveRequest" component= {SubmitACompensationLeaveRequest}/>
+      <Route path="/SubmitAnAccidentalLeaveRequest" component= {SubmitAnAccidentalLeaveRequest}/>
+      <Route path="/ViewLeaveRequests" component= {ViewLeaveRequests}/>
+      <Route path="/ViewCompensationStatus" component= {ViewCompensationStatus}/>
+      <Route path="/ViewMaternityStatus" component= {ViewMaternityStatus}/>
+      <Route path="/ViewAccidentalStatus" component= {ViewAccidentalStatus}/> 
+      <Route path="/SubmitASickLeaveRequest" component= {SubmitASickLeaveRequest}/> 
+      <Route path="/SubmitAnAnnualLeaveRequest" component= {SubmitAnAnnualLeaveRequest}/> 
+      <Route path="/ViewSickStatus" component= {ViewSickStatus}/>
+      <Route path="/ViewAnnualStatus" component= {ViewAnnualStatus}/>
+      </div>
 
     </div>
   )
