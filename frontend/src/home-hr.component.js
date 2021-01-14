@@ -85,12 +85,19 @@ window.location='/Success'
                <br/>
                <br/>
                <button onClick={this.onSignOut} type= "button" className="btn btn-warning" >  Sign Out </button> 
+               <br/>
+               <br/>
                <div>
-                    <Button onClick={this.toFaculties}>Faculties</Button>
-                    <Button onClick={this.toStaff}>Staff</Button>
-                </div>
+                <Button className="btn btn-warning" onClick={this.toFaculties}>Faculties</Button>
+                <br/>
+               <br/>
+                <Button className="btn btn-warning" onClick={this.toStaff}>Staff</Button>
+                <br/>
+               <br/>
+            </div>
             </div>
         )
+            
 
            
         

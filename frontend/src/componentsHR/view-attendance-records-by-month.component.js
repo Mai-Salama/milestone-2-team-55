@@ -32,10 +32,8 @@ export default class ViewAttendanceRecordsByMonth extends Component{
             month:e.target.value
             
     
-        }).then(response=>{
-            console.log("onMonth");
-        })
-    }
+
+        })}
 
 
 
