@@ -48,7 +48,7 @@ export default class AddSignOutHR extends Component {
             <li className="breadcrumb-item"><a href="/Home">Home</a></li>
             <li className="breadcrumb-item"><a href="/Staff">Staff</a></li>
             <li className="breadcrumb-item"><a href="/Staff/HRstaff">HRstaff</a></li>
-            <li className="breadcrumb-item"><a href="/Staff/HRstaff/Attendance">AttendanceHR</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/HRstaff/AttendanceHR">AttendanceHR</a></li>
             <li className="breadcrumb-item active" aria-current="page">AddSignOut</li>
           </ol>
         </nav>

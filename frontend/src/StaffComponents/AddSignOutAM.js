@@ -43,6 +43,15 @@ export default class AddSignOutAM extends Component {
     render() {
         return (
             <div>
+                    <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li className="breadcrumb-item"><a href="/Staff">Staff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/AcademicMembers">AcademicMembers</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/AcademicMembers/AttendanceAM">Attendance</a></li>
+            <li className="breadcrumb-item active" aria-current="page">AddSignOut</li>
+          </ol>
+        </nav>
             <h2>Add Missing Sign Out</h2>
             <br></br>
             <form onSubmit = {this.handleSubmit}>

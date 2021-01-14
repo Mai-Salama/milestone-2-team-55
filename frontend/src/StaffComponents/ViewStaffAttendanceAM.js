@@ -55,6 +55,15 @@ export default class ViewStaffAttendanceHR extends Component {
         if(this.state.submitted){
             return (
                 <div>
+                 <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li className="breadcrumb-item"><a href="/Staff">Staff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/AcademicMembers">AcademicMembers</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/AcademicMembers/AttendanceAM">Attendance</a></li>
+            <li className="breadcrumb-item active" aria-current="page">ViewStaffAttendance</li>
+          </ol>
+        </nav>
             <div>
     <table>
     <thead>
