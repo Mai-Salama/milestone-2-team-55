@@ -241,15 +241,12 @@ function App() {
       <Route path="/Staff/AcademicMembers/Attendance/AMMissingDays">
         <ViewAmmissingDays />
       </Route>
-      <Route path="/HomeC">
-        <CoordinatorHomeCont />
-      </Route>
-      <Route path="/HomeC/SlotLinkingC">
-        <SlotLinkingC />
-      </Route>
-      <Route path="/HomeC/CourseSlotsC">
-        <CourseSlotsC />
-      </Route>
+      <Route path="/HomeC" component={CoordinatorHomeCont} />
+        
+      <Route path="/SlotLinkingC" component={SlotLinkingC} />
+
+      <Route path="/CourseSlotsC" component={CourseSlotsC} />
+    
       <Route path="/HomeC/CourseSlotsC/AddNewCourseSlot">
         <AddNewCourseSlot />
       </Route>

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import {Button} from 'react-bootstrap';
+import {Button} from '../CourseInstructor/Button';
 import {Redirect} from 'react-router-dom';
 import CourseSlotsC from './CourseSlotsC';
 import SlotLinkingC from './SlotLinkingC';
 import Navbar from '../NavbarCC';
+
 export default class CoordinatorHomeCont extends Component {
    
     constructor(props){
@@ -18,12 +19,12 @@ export default class CoordinatorHomeCont extends Component {
     }
  
     toSlotLinking(event){
-        this.setState({redirectToSlotLinking: "/HomeC/SlotLinkingC"});
+        this.setState({redirectToSlotLinking: "/SlotLinkingC"});
         event.preventDefault();
     }
 
     toCourseSlots(event){
-        this.setState({redirectToCourseSlots: "HomeC/CourseSlotsC"});
+        this.setState({redirectToCourseSlots: "/CourseSlotsC"});
         event.preventDefault();
     }
     render() {

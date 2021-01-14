@@ -5,11 +5,10 @@ import {MenuItems} from "./MenuItems"
 import {Button} from './CourseInstructor/Button';
 
 import './Navbar.css'
-import HomeCC from './CourseCoordinator/CoordinatorHomeCont';
 import {Redirect} from 'react-router-dom'
 import StaffAM from './CourseInstructor/StaffAM';
 //import CourseSlotsC from './CourseCoordinator/CourseSlotsC';
-//import HomeCC from './CourseCoordinator/CoordinatorHomeCont';
+import HomeC from './CourseCoordinator/CoordinatorHomeCont';
 class Navbar extends Component{
 
     constructor(){
@@ -37,7 +36,7 @@ class Navbar extends Component{
 
     render(){
         if(this.state.RedirectToHomeCC){
-            return<Redirect to ={this.state.RedirectToHomeCC} Component={HomeCC}/>
+            return<Redirect to ={this.state.RedirectToHomeCC} Component={HomeC}/>
         }
         if(this.state.RedirectToProfile){
             return<Redirect to ={this.state.RedirectToProfile} Component={StaffAM}/>
