@@ -14,15 +14,8 @@ class Navbar extends Component{
     constructor(){
         super();
         this.state={
-<<<<<<< HEAD
             RedirectToHomeAM:null,
             RedirectToProfile:null
-=======
-            RedirectToHomeInstructor:null,
-            RedirectToProfile:null,
-            RedirectToNotification:null,
-            RedirectOnLogout:null
->>>>>>> 4b5d2065beab88986918acb67b4cf29667123f06
         }
         this.HomeAM=this.HomeAM.bind(this);
         this.ProfileInstructor=this.ProfileInstructor.bind(this);
