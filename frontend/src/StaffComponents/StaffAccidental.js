@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from "axios";
 import {Button} from 'react-bootstrap';
 
+
 export default class StaffLeavesHR extends Component {
     constructor(props){
         super(props);

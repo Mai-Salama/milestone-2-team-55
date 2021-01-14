@@ -6113,6 +6113,275 @@ console.log("dsf");
                     console.log(err);
                 }
             });
+
+            portal.get('/notificationsHR', authH,async(req,res)=>{
+                try{
+                    let toSend = [];
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        const accAccidental = await AccidentalLeaves.find({id: HRfound.id, status:1});
+                        for(let i = 0; i < accAccidental.length; i++){
+                            let item = {
+                                type:"Accidental",
+                                req_id: accAccidental[i].req_id,
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejAccidental = await AccidentalLeaves.find({id: HRfound.id, status:2});
+                        for(let i = 0; i < rejAccidental.length; i++){
+                            let item = {
+                                type:"Accidental",
+                                req_id: rejAccidental[i].req_id,
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        const accAnnual = await AnnualLeave.find({id: HRfound.id, status:1});
+                        for(let i = 0; i < accAnnual.length; i++){
+                            let item = {
+                                type:"Annual",
+                                req_id: accAnnual[i].req_id,
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejAnnual = await AnnualLeave.find({id: HRfound.id, status:2});
+                        for(let i = 0; i < rejAnnual.length; i++){
+                            let item = {
+                                type:"Annual",
+                                req_id: rejAnnual[i].req_id,
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        const accMaternity = await MaternityRequest.find({id: HRfound.id, status:1});
+                        for(let i = 0; i < accMaternity.length; i++){
+                            let item = {
+                                type:"Maternity",
+                                req_id: accMaternity[i].req_id,
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejMaternity = await MaternityRequest.find({id: HRfound.id, status:2});
+                        for(let i = 0; i < rejMaternity.length; i++){
+                            let item = {
+                                type:"Maternity",
+                                req_id: rejMaternity[i].req_id,
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        const accComp = await CompensationRequest.find({id: HRfound.id, status:1});
+                        for(let i = 0; i < accComp.length; i++){
+                            let item = {
+                                type:"Compensation",
+                                req_id: accComp[i].req_id,
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejComp = await CompensationRequest.find({id: HRfound.id, status:2});
+                        for(let i = 0; i < rejComp.length; i++){
+                            let item = {
+                                type:"Compensation",
+                                req_id: rejComp[i].req_id,
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        const accSick = await SickLeave.find({id: HRfound.id, status:1});
+                        for(let i = 0; i < accSick.length; i++){
+                            let item = {
+                                type:"Sick",
+                                req_id: accSick[i].req_id,
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejSick = await SickLeave.find({id: HRfound.id, status:2});
+                        for(let i = 0; i < rejSick.length; i++){
+                            let item = {
+                                type:"Sick",
+                                req_id: rejSick[i].req_id,
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        res.send(toSend);
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+
+            portal.get('/notificationsAM', authH,async(req,res)=>{
+                try{
+                    let toSend = [];
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                        const HRfound = await AcademicMember.findOne({id: verified.id});
+                        const accAccidental = await AccidentalLeaves.find({id: HRfound.id, status:1});
+                        for(let i = 0; i < accAccidental.length; i++){
+                            let item = {
+                                type:"Accidental Leave",
+                                req_id: accAccidental[i].req_id,
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejAccidental = await AccidentalLeaves.find({id: HRfound.id, status:2});
+                        for(let i = 0; i < rejAccidental.length; i++){
+                            let item = {
+                                type:"Accidental Leave",
+                                req_id: rejAccidental[i].req_id,
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        const accAnnual = await AnnualLeave.find({id: HRfound.id, status:1});
+                        for(let i = 0; i < accAnnual.length; i++){
+                            let item = {
+                                type:"Annual Leave",
+                                req_id: accAnnual[i].req_id,
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejAnnual = await AnnualLeave.find({id: HRfound.id, status:2});
+                        for(let i = 0; i < rejAnnual.length; i++){
+                            let item = {
+                                type:"Annual Leave",
+                                req_id: rejAnnual[i].req_id,
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        const accMaternity = await MaternityRequest.find({id: HRfound.id, status:1});
+                        for(let i = 0; i < accMaternity.length; i++){
+                            let item = {
+                                type:"Maternity Leave",
+                                req_id: accMaternity[i].req_id,
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejMaternity = await MaternityRequest.find({id: HRfound.id, status:2});
+                        for(let i = 0; i < rejMaternity.length; i++){
+                            let item = {
+                                type:"Maternity Leave",
+                                req_id: rejMaternity[i].req_id,
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        const accComp = await CompensationRequest.find({id: HRfound.id, status:1});
+                        for(let i = 0; i < accComp.length; i++){
+                            let item = {
+                                type:"Compensation Leave",
+                                req_id: accComp[i].req_id,
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejComp = await CompensationRequest.find({id: HRfound.id, status:2});
+                        for(let i = 0; i < rejComp.length; i++){
+                            let item = {
+                                type:"Compensation Leave",
+                                req_id: rejComp[i].req_id,
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        const accSick = await SickLeave.find({id: HRfound.id, status:1});
+                        for(let i = 0; i < accSick.length; i++){
+                            let item = {
+                                type:"Sick Leave",
+                                req_id: accSick[i].req_id,
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejSick = await SickLeave.find({id: HRfound.id, status:2});
+                        for(let i = 0; i < rejSick.length; i++){
+                            let item = {
+                                type:"Sick Leave",
+                                req_id: rejSick[i].req_id,
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        //slotlinking
+                        const accSlot = await SlotLinkingRequest.find({id: HRfound.id, acceptanceStatus:1});
+                        for(let i = 0; i < accSlot.length; i++){
+                            let item = {
+                                type:"SlotLinking",
+                                req_id: "-",
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejSlot = await SlotLinkingRequest.find({id: HRfound.id, acceptanceStatus:2});
+                        for(let i = 0; i < rejSlot.length; i++){
+                            let item = {
+                                type:"SlotLinking",
+                                req_id: "-",
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        //day off
+                        const accDay = await DayOffRequest.find({id: HRfound.id, acceptanceStatus:1});
+                        for(let i = 0; i < accDay.length; i++){
+                            let item = {
+                                type:"Day Off",
+                                req_id: "-",
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejDay = await DayOffRequest.find({id: HRfound.id, acceptanceStatus:2});
+                        for(let i = 0; i < rejDay.length; i++){
+                            let item = {
+                                type:"Day Off",
+                                req_id: "-",
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        //replacement request
+                        const accRep = await ReplacementRequest.find({id: HRfound.id, request_status:"accepted"});
+                        for(let i = 0; i < accRep.length; i++){
+                            let item = {
+                                type:"Replacement",
+                                req_id: "-",
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejRep = await ReplacementRequest.find({id: HRfound.id, request_status:"rejected"});
+                        for(let i = 0; i < rejRep.length; i++){
+                            let item = {
+                                type:"Replacement",
+                                req_id: "-",
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        res.send(toSend);
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+
+            
         
             portal.get('/viewStatusOfAccidentalRejected', authH,async(req,res)=>{
                 try{

@@ -126,7 +126,12 @@ import SubmitASickLeaveRequest  from "./componentsHR/submit-a-sick-leave.compone
 import SubmitAnAnnualLeaveRequest from "./componentsHR/submit-annual-leave-request.component";
 import ViewSickStatus from "./componentsHR/view-sick-leave.component";
 import ViewAnnualStatus from "./componentsHR/view-annual-status.component";
+<<<<<<< HEAD
 import Logout from "./logout";
+=======
+import NotificationsHR from './NotificationsHR';
+import NotificationsAM from './NotificationsAM';
+>>>>>>> fc4f2a2e6c856ba9aaabe36c928854c4ef756d61
 
 function App() {
   const DefaultContainer = ()=>(
@@ -277,6 +282,8 @@ function App() {
       <Route path="/CourseSlotsC/UpdateCourseSlot" component={UpdateCourseSlot} />
         
       <Route path="/CourseSlotsC/DeleteCourseSlot" component={DeleteCourseSlot} />
+      <Route path="/NotificationsHR" component={NotificationsHR} />
+      <Route path="/NotificationsAM" component={NotificationsAM} />
         
       {/* /** Menna's Routes */ }
       <Route path="/HomeInstructor" component={HomeInstructor}/>

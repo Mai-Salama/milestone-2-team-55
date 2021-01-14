@@ -30,7 +30,7 @@ export default class ChangePasswordHR extends Component {
         }}).then(response =>{
             console.log(response.data);
             //maybe a pop up message with response.data
-            this.setState({redirect: "/Home"});
+            this.setState({redirect: "/HomeHR"});
         }).catch(err =>{
             console.log(err);
         });
