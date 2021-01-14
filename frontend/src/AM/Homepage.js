@@ -4,7 +4,7 @@ import {Redirect} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import Signin from './Signin'
 import Viewprofile from './Viewprofile';
-import Attendance from './Attendance';
+import AttendanceAMM from './AttendanceAMM';
 import Requests from './Requests';
 import Replacement from './Replacement';
 import ViewReplacement from './ViewReplacement';
@@ -70,7 +70,7 @@ axios.get('/viewprofile',{headers:{
         event.preventDefault();
     }
     attendance(event){
-        this.setState({redirectToAttendance:"/Homepage/Attendance"});
+        this.setState({redirectToAttendance:"/Homepage/AttendanceAMM"});
         event.preventDefault();
     }
 
@@ -99,7 +99,7 @@ render(){
         return<Redirect to={this.state.redirectToSignin} Component={Signin}/>
     }
     if(this.state.redirectToAttendance){
-        return<Redirect to={this.state.redirectToAttendance} Component={Attendance}/>
+        return<Redirect to={this.state.redirectToAttendance} Component={AttendanceAMM}/>
     }
     if(this.state.redirectToRequests){
         return<Redirect to={this.state.redirectToRequests} Component={Requests}/>

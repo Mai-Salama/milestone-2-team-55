@@ -1,10 +1,23 @@
 // import logo from './logo.svg';
 // import Whatever from "./Whatever"
 import './App.css';
+
+
+
+
+
+
+import {BrowserRouter as Router, Route} from "react-router-dom";
+import {Redirect} from 'react-router-dom';
+import ReactDOM from 'react-dom'
+
+
+
+
+
 import UpdatedLogin from './UpdatedLogin';
 import ChangePasswordAM from './ChangePasswordAM';
 import ChangePasswordHR from './ChangePasswordHR';
-import {BrowserRouter as Router, Redirect, Route} from "react-router-dom";
 import Faculties from './FacComponents/Faculties';
 import AddNewFaculty from './FacComponents/AddNewFaculty';
 import UpdateFaculty from './FacComponents/UpdateFaculty';
@@ -132,8 +145,27 @@ import Logout from "./logout";
 import NotificationsHR from './NotificationsHR';
 import NotificationsAM from './NotificationsAM';
  // Yassmin's Routes 
-
+ import Viewprofile from './AM/Viewprofile'
  import HomeAM from './AM/Homepage';
+ import Signin from './AM/Signin';
+import AttendanceAMM from './AM/AttendanceAMM';
+import Requests from './AM/Requests';
+import Replacement from './AM/Replacement';
+import SubmitAccidentalLeave from './AM/SubmitAccidentalLeave';
+import MaternityLeave from './AM/MaternityLeave';
+import SickLeave from './AM/SickLeave';
+import Dayoff from './AM/Dayoff';
+import SlotLinking from './AM/SlotLinking';
+import ViewReplacement from './AM/ViewReplacement'
+import ViewSchedule from './AM/ViewSchedule';
+import ViewMaternity from './AM/ViewMaternity';
+import Cancelpendingcomp from './AM/Cancelpendingcomp';
+import CancelMaternity from './AM/CancelMaternity';
+import CancelDayoff from './AM/CancelDayoff';
+import ViewCompensation from './AM/ViewCompensation';
+import ViewDayOff from './AM/ViewDayOff';
+import ViewSick from './AM/ViewSick';
+import ViewSlotLinking from './AM/ViewSlotLinking'
 
 function App() {
   const DefaultContainer = ()=>(
@@ -215,6 +247,9 @@ function App() {
       <Route path="/Staff/HRstaff/DeleteHR">
         <DeleteHR />
       </Route>
+      
+
+
       
       <Route path="/Staff/AcademicMembers/DeleteAM">
         <DeleteAM />
@@ -373,7 +408,83 @@ function App() {
 
  {/* Yassmin's routes */}
  <Route path="/HomepageAM" component= {HomeAM}/>
+ <Route path="/Homepage/Viewprofile">
+          <Viewprofile/>
+        </Route>
 
+        <Route path="/Homepage/Signin">
+          <Signin/>
+        </Route>
+
+        <Route path="/Homepage/AttendanceAMM">
+          <AttendanceAMM/>
+        </Route>
+        <Route path="/Homepage/Requests">
+          <Requests/>
+        </Route>
+        <Route path="/Homepage/Requests/Replacement">
+          <Replacement/>
+        </Route>
+        <Route path="/Homepage/Requests/SubmitAccidentalLeave">
+          <SubmitAccidentalLeave/>
+        </Route>
+
+        <Route path="/Homepage/Requests/MaternityLeave">
+          <MaternityLeave/>
+        </Route>
+        
+        <Route path="/Homepage/Requests/SickLeave">
+          <SickLeave/>
+        </Route>
+
+        <Route path="/Homepage/Requests/Dayoff">
+          <Dayoff/>
+        </Route>
+
+        <Route path="/Homepage/Requests/SlotLinking">
+          <SlotLinking/>
+        </Route>
+
+        <Route path="/Homepage/ViewReplacement">
+          <ViewReplacement/>
+        </Route>
+        
+        <Route path="/Homepage/ViewSchedule">
+          <ViewSchedule/>
+        </Route>
+
+        <Route path="/Homepage/Requests/ViewMaternity">
+          <ViewMaternity/>
+        </Route>
+
+        <Route path="/Homepage/Requests/ViewCompensation">
+          <ViewCompensation/>
+        </Route>
+        
+        <Route path="/Homepage/Requests/ViewSlotLinking">
+          <ViewSlotLinking/>
+        </Route>
+
+        <Route path="/Homepage/Requests/ViewSick">
+          <ViewSick/>
+        </Route>
+
+        <Route path="/Homepage/Requests/ViewDayOff">
+          <ViewDayOff/>
+        </Route>
+        
+      
+        <Route path="/Homepage/Requests/Cancelpendingcomp">
+          <Cancelpendingcomp/>
+        </Route>
+
+        <Route path="/Homepage/Requests/CancelMaternity">
+          <CancelMaternity/>
+        </Route>
+
+        <Route path="/Homepage/Requests/CancelDayoff">
+          <CancelDayoff/>
+        </Route>
 
 
     </div>

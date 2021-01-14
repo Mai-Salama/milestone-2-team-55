@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import Navbar from '../NavbarAM'
 
-export default class Attendance extends Component{
+export default class AttendanceAMM extends Component{
 constructor(){
     super();
 
