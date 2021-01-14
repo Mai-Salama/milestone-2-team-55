@@ -5385,3 +5385,23 @@ console.log("dsf");
                     console.log(err)
                 }
             })
+
+
+            portal.get("/getRole",authA,async(req,res)=>{
+                let listOfRoles=[];
+                const JWT_Password="RandomString";
+                
+                const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                
+                if(verified.role=="AM"){
+        
+                    const am= await AcademicMember.findOne({"id":verified.id});
+                    listOfRoles.push(am.coursecoordindator);
+                    listOfRoles.push(am.courseinstructor);
+                    listOfRoles.push(am.HOD);
+
+                       
+                    }
+                    res.send(listOfRoles);
+                
+            })
