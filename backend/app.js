@@ -6929,4 +6929,8 @@ console.log("dsf");
                 catch(err){
                     console.log(err);
                 }
-            });            
+            });    
+            
+            portal.get('/logout',(req,res)=>{
+                res.send("logged out");  
+             });
