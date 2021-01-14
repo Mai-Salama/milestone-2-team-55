@@ -8,6 +8,7 @@ import './Navbar.css'
 import HomeC from './CourseCoordinator/CoordinatorHomeCont'
 import {Redirect} from 'react-router-dom'
 import StaffAM from './CourseInstructor/StaffAM';
+import NotificationsAM from './NotificationsAM';
 //import CourseSlotsC from './CourseCoordinator/CourseSlotsC';
 
 class Navbar extends Component{
@@ -16,10 +17,12 @@ class Navbar extends Component{
         super();
         this.state={
             RedirectToHomeC:null,
-            RedirectToProfile:null
+            RedirectToProfile:null,
+            RedirectToNotification:null
         }
         this.HomeC=this.HomeC.bind(this);
         this.ProfileInstructor=this.ProfileInstructor.bind(this);
+        this.Notifications=this.Notifications.bind(this);
     }
 
     HomeC(event){
@@ -28,6 +31,10 @@ class Navbar extends Component{
     }
     ProfileInstructor(event){
         this.setState({RedirectToProfile:"/StaffAM"})
+        event.preventDefault()
+    }
+    Notifications(event){
+        this.setState({RedirectToNotification:"/NotificationsAM"})
         event.preventDefault()
     }
     state={ clicked:false}
@@ -41,6 +48,9 @@ class Navbar extends Component{
         }
         if(this.state.RedirectToProfile){
             return<Redirect to ={this.state.RedirectToProfile} Component={StaffAM}/>
+        }
+        if(this.state.RedirectToNotification){
+            return<Redirect to ={this.state.RedirectToNotification} Component={NotificationsAM}/>
         }
         return(
             <nav className="NavbarItems">
@@ -67,7 +77,7 @@ class Navbar extends Component{
         {/* //<a href="www.mypage.com" onclick="window.history.go(-1); return false;"> Go to previous </a> */}
         <Button onClick={this.HomeC}> {MenuItems[0].title}<i class={MenuItems[0].icon}></i> </Button>
         <Button onclick={this.ProfileInstructor}>{MenuItems[1].title}<i class={MenuItems[1].icon}></i> </Button>
-        <Button >{MenuItems[2].title}<i class={MenuItems[2].icon}></i> </Button>
+        <Button onClick={this.Notifications}>{MenuItems[2].title}<i class={MenuItems[2].icon}></i> </Button>        
         <Button >{MenuItems[3].title}<i class={MenuItems[3].icon}></i> </Button>
         <Button >{MenuItems[4].title}<i class={MenuItems[4].icon}></i> </Button>
 
