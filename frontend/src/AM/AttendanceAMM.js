@@ -13,7 +13,7 @@ constructor(){
 }
 
 componentDidMount(){
-    axios.get('/viewAllAttendanceRecords',{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTMiLCJlbWFpbCI6IlllaGlhQGdtYWlsLmNvbSIsInJvbGUiOiJIUiIsImlhdCI6MTYxMDQxMzgxOH0.yLuTAkZUrQScAzILJXFJRi80eCDZtXt4mpiZhK0BDiU'}})
+    axios.get('/viewAllAttendanceRecords',{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
     .then(response=> {
         this.setState({attendanceRecords: response.data});
         console.log(response.data);

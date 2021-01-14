@@ -11,13 +11,13 @@ export default class Viewprofile extends Component {
     constructor(){
         super();
         this.state={
-            weather:"Not yet gotten"
-        };
+            weather:"Not yet gotten",
+            statemodal:false          };
 
     
  
     axios.get('/viewprofile',{headers:{
-        'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTQiLCJlbWFpbCI6InJhbmEuYWhtZWRAZ3VjLmVkdS5lZyIsInJvbGUiOiJBTSIsImlhdCI6MTYwODkwMzIzOH0.JMVKdzKRV0DjbypXnWWSkaGN1ytn11B0CbdCOPU7JGA'
+        'x-auth-token':localStorage.getItem('savedToken')
     }})
       .then (response =>{
         this.setState({

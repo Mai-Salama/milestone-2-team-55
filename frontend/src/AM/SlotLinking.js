@@ -54,7 +54,7 @@ submitrequest=(event)=>{
     
     }
     axios.post('/slotlinkingrequest',inputData,{headers:{
-        'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTYiLCJlbWFpbCI6IkAiLCJyb2xlIjoiQU0iLCJpYXQiOjE2MTAwNDk4NjV9.tZOa5JWoRqCVx-y2asRKhYMS3lTdiBV-Df202aoM4jk'
+        'x-auth-token':localStorage.getItem('savedToken')
     }
     
        

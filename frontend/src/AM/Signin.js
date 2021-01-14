@@ -28,7 +28,7 @@ export default class Signin extends Component {
     handlebuttonClick2 = () =>{
    
         axios.get('/signoutAM',{headers:{
-            'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTYiLCJlbWFpbCI6IkAiLCJyb2xlIjoiQU0iLCJpYXQiOjE2MTAwNDk4NjV9.tZOa5JWoRqCVx-y2asRKhYMS3lTdiBV-Df202aoM4jk'
+            'x-auth-token':localStorage.getItem('savedToken')
         }})
           .then (response =>{
             this.setState({
