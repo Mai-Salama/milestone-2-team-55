@@ -93,6 +93,14 @@ class SlotAssignment extends Component{
             <div className="AssignCourseCoordinator" >
             
             <Navbar/>
+            <nav aria-label="breadcrumb">
+            <ol className="breadcrumb alert alert-warning">
+              <li className="breadcrumb-item text-warning"><a className="text-warning"href="/HomeInstructor">Home</a></li>
+              <li className="breadcrumb-item "><a className="text-warning"href="/Course">Course</a></li>
+
+              <li className="breadcrumb-item active text-danger" aria-current="page">View Slot Assignment</li>
+            </ol>
+          </nav>
                 <Modal isOpen={this.state.statemodal} >
               <h2> Your slot assignments  </h2>
               <div>

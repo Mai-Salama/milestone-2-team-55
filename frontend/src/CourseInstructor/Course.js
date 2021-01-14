@@ -83,7 +83,13 @@ class Course extends Component{
         return(
             <div className="Course">
             <Navbar/>
-      
+            <nav aria-label="breadcrumb">
+            <ol className="breadcrumb alert alert-warning">
+              <li className="breadcrumb-item text-warning"><a className="text-warning"href="/HomeInstructor">Home</a></li>
+              
+              <li className="breadcrumb-item active text-danger" aria-current="page">Course</li>
+            </ol>
+          </nav>
             <button style={{alignSelf:"center",marginLeft:550, marginTop:70 }} class="btn btn-primary btn-round"onClick={this.CourseCoverage}>
             <i class="fas fa-sort-amount-up"></i> View Course Coverage
             </button>

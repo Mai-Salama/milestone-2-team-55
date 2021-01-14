@@ -99,7 +99,14 @@ class UpdateAssignMembertoSlot extends Component{
         return(
             <div className="UpdateAssignMembertoSlot" >
                 <Navbar/>
-            
+                <nav aria-label="breadcrumb">
+            <ol className="breadcrumb alert alert-warning">
+              <li className="breadcrumb-item text-warning"><a className="text-warning"href="/HomeInstructor">Home</a></li>
+              <li className="breadcrumb-item "><a className="text-warning"href="/Course">Course</a></li>
+
+              <li className="breadcrumb-item active text-danger" aria-current="page">Update Slot Assignment</li>
+            </ol>
+          </nav>
            
                 <Input style={{alignSelf:"center",marginLeft:550, marginTop:50 }} placeholder=' Faculty Name...' onChange={this.handleChange.bind(this)}/ >
 <Input style={{alignSelf:"center",marginLeft:550, marginTop:50 }} placeholder=' Department Id...' onChange={this.handleChange1.bind(this)}/ >

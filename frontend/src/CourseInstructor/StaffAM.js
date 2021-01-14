@@ -69,6 +69,15 @@ class Staff extends Component{
         return(
             <div className="Staff">
            <Navbar/>
+
+           <nav aria-label="breadcrumb">
+            <ol className="breadcrumb alert alert-warning">
+              <li className="breadcrumb-item text-warning"><a className="text-warning"href="/HomeInstructor">Home</a></li>
+             
+
+              <li className="breadcrumb-item active text-danger" aria-current="page">Staff</li>
+            </ol>
+          </nav>
             <button style={{alignSelf:"center",marginLeft:550, marginTop:70 }} class="btn btn-primary btn-round" onClick={this.AddStaffMember}>
             <i class="fas fa-user"></i> Add staff member
             </button>
