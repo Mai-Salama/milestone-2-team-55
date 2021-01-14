@@ -61,6 +61,12 @@ window.location='/Success'
 }
 
     render(){
+        if(this.state.redirectToFaculties){
+            return <Redirect to={this.state.redirectToFaculties} Component={Faculties}/>
+        }
+        if(this.state.redirectToStaff){
+            return <Redirect to={this.state.redirectToStaff} Component={Staff}/>
+        }
         return(
 
             <div>
@@ -79,21 +85,19 @@ window.location='/Success'
                <br/>
                <br/>
                <button onClick={this.onSignOut} type= "button" className="btn btn-warning" >  Sign Out </button> 
-
+               <br/>
+               <br/>
+               <div>
+                <Button className="btn btn-warning" onClick={this.toFaculties}>Faculties</Button>
+                <br/>
+               <br/>
+                <Button className="btn btn-warning" onClick={this.toStaff}>Staff</Button>
+                <br/>
+               <br/>
+            </div>
             </div>
         )
-            if(this.state.redirectToFaculties){
-                return <Redirect to={this.state.redirectToFaculties} Component={Faculties}/>
-            }
-            if(this.state.redirectToStaff){
-                return <Redirect to={this.state.redirectToStaff} Component={Staff}/>
-            }
-            return (
-                <div>
-                    <Button onClick={this.toFaculties}>Faculties</Button>
-                    <Button onClick={this.toStaff}>Staff</Button>
-                </div>
-            )
+            
 
            
         
