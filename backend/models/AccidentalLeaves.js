@@ -4,6 +4,7 @@ const AccidentalLeaves = mongoose.Schema({
     required:true},
     req_id:{type: Number},
     date:{type:Number},
+    day:{type:String},
     month:{type: Number},
     reason:{type: Number},
     status:{type:Number}
