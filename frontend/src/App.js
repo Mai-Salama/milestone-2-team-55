@@ -4,7 +4,7 @@ import './App.css';
 import UpdatedLogin from './UpdatedLogin';
 import ChangePasswordAM from './ChangePasswordAM';
 import ChangePasswordHR from './ChangePasswordHR';
-import {BrowserRouter as Router, Route} from "react-router-dom";
+import {BrowserRouter as Router, Redirect, Route} from "react-router-dom";
 import Faculties from './FacComponents/Faculties';
 import AddNewFaculty from './FacComponents/AddNewFaculty';
 import UpdateFaculty from './FacComponents/UpdateFaculty';
@@ -366,7 +366,7 @@ function App() {
       <Route path="/SubmitAnAnnualLeaveRequest" component= {SubmitAnAnnualLeaveRequest}/> 
       <Route path="/ViewSickStatus" component= {ViewSickStatus}/>
       <Route path="/ViewAnnualStatus" component= {ViewAnnualStatus}/>
-      <Route path="/Logout" component= {Logout}/>
+      <Route path="/Logout" component= {UpdatedLogin}/>
   
 
     </div>
