@@ -48,7 +48,7 @@ export default class CourseSlotsC extends Component {
             <Navbar />
             <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
-            <li className="breadcrumb-item"><a href="HomeC">Home</a></li>
+            <li className="breadcrumb-item"><a href="/HomeC">Home</a></li>
             <li className="breadcrumb-item active" aria-current="page">CourseSlotsC</li>
           </ol>
         </nav>

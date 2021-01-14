@@ -37,8 +37,7 @@ export default class DeleteHR extends Component {
                 <h1>Delete HR member</h1>
                 <form onSubmit = {this.handleSubmit}>
                 <label>
-                    ID:
-                    <input name="ide" type="text" ide={this.state.ide} onChange={this.handleChange}/>
+                    <input name="ide" placeholder="ID..." type="text" ide={this.state.ide} onChange={this.handleChange}/>
                 </label>
                 <input type="submit" value="Submit" />
                 </form>

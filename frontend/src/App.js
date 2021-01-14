@@ -241,24 +241,18 @@ function App() {
       <Route path="/Staff/AcademicMembers/Attendance/AMMissingDays">
         <ViewAmmissingDays />
       </Route>
-      <Route path="/HomeC">
-        <CoordinatorHomeCont />
-      </Route>
-      <Route path="/HomeC/SlotLinkingC">
-        <SlotLinkingC />
-      </Route>
-      <Route path="/HomeC/CourseSlotsC">
-        <CourseSlotsC />
-      </Route>
-      <Route path="/HomeC/CourseSlotsC/AddNewCourseSlot">
-        <AddNewCourseSlot />
-      </Route>
-      <Route path="/HomeC/CourseSlotsC/UpdateCourseSlot">
-        <UpdateCourseSlot />
-      </Route>
-      <Route path="/HomeC/CourseSlotsC/DeleteCourseSlot">
-        <DeleteCourseSlot />
-      </Route>
+      <Route path="/HomeC" component={CoordinatorHomeCont} />
+        
+      <Route path="/SlotLinkingC" component={SlotLinkingC} />
+
+      <Route path="/CourseSlotsC" component={CourseSlotsC} />
+    
+      <Route path="/CourseSlotsC/AddNewCourseSlot" component={AddNewCourseSlot} />
+    
+      <Route path="/CourseSlotsC/UpdateCourseSlot" component={UpdateCourseSlot} />
+        
+      <Route path="/CourseSlotsC/DeleteCourseSlot" component={DeleteCourseSlot} />
+        
       {/* /** Menna's Routes */ }
       <Route path="/HomeInstructor" component={HomeInstructor}/>
        <Route path="/StaffAM" component={StaffAM}/>

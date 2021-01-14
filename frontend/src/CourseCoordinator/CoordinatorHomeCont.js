@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button} from 'react-bootstrap';
+import {Button} from '../CourseInstructor/Button';
 import {Redirect} from 'react-router-dom';
 import CourseSlotsC from './CourseSlotsC';
 import SlotLinkingC from './SlotLinkingC';
@@ -33,12 +33,12 @@ export default class CoordinatorHomeCont extends Component {
     }
  
     toSlotLinking(event){
-        this.setState({redirectToSlotLinking: "/HomeC/SlotLinkingC"});
+        this.setState({redirectToSlotLinking: "/SlotLinkingC"});
         event.preventDefault();
     }
 
     toCourseSlots(event){
-        this.setState({redirectToCourseSlots: "HomeC/CourseSlotsC"});
+        this.setState({redirectToCourseSlots: "/CourseSlotsC"});
         event.preventDefault();
     }
 
@@ -139,6 +139,8 @@ export default class CoordinatorHomeCont extends Component {
             <div>
            
             <Navbar/>
+                <Button id="add" onClick={this.toSlotLinking}>Slotlinking</Button>
+                <Button id="add" onClick={this.toCourseSlots}>Course Slots</Button>
 
             <Dropdown>
                 <Dropdown.Toggle  id="dropdown1"style={{alignSelf:"center",marginLeft:550, marginTop:70 }}>
