@@ -13,7 +13,7 @@ import Courses from './FacComponents/Courses';
 import AddNewCourse from './FacComponents/AddNewCourse';
 import UpdateCourse from './FacComponents/UpdateCourse';
 import DeleteCourse from './FacComponents/DeleteCourse';
-import HomeHR from './HomeHR';
+import HomeHR from './home-hr.component';
 import Staff from './StaffComponents/Staff';
 import HRstaff from './StaffComponents/HRstaff';
 import AcademicMembers from './StaffComponents/AcademicMembers';
@@ -68,7 +68,7 @@ export default class RoutesWithNav extends Component {
             <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
             <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"></link>
             
-              <Route path="/Home">
+              <Route path="/HomeHR">
                 <HomeHR />
               </Route>
               <Route path="/Faculties">

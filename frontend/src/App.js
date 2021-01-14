@@ -17,7 +17,6 @@ import Courses from './FacComponents/Courses';
 import AddNewCourse from './FacComponents/AddNewCourse';
 import UpdateCourse from './FacComponents/UpdateCourse';
 import DeleteCourse from './FacComponents/DeleteCourse';
-import HomeHR from './HomeHR';
 import Staff from './StaffComponents/Staff';
 import HRstaff from './StaffComponents/HRstaff';
 import AcademicMembers from './StaffComponents/AcademicMembers';
@@ -104,7 +103,7 @@ import HODhomepage from "./hod/HODhomepage"
 import Viewcourseassignment from "./hod/Viewcourseassignment"
 import Submitted from "./hod/Submitted"
 //Miral's HR
-// import HomeHR from "./componentsHR/home-hr.component";
+import HomeHR from "./home-hr.component";
 import ViewProfileHR from "./componentsHR/view-profile-hr.component";
 import Attendance from "./componentsHR/attendance.component";
 import Locations from "./componentsHR/locations.component";
@@ -145,9 +144,9 @@ function App() {
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"></link>
     
-      <Route path="/Home">
+      {/* <Route path="/Home">
         <HomeHR />
-      </Route>
+      </Route> */}
       <Route path="/Faculties">
         <Faculties />
       </Route>
@@ -336,7 +335,7 @@ function App() {
     {/* Miral's Routes */}
 
     <div className="container">
-      {/* <Route path="/HomeHR" component= {HomeHR}/> */}
+      <Route path="/HomeHR" component= {HomeHR}/>
       <Route path="/ViewProfileHR" component= {ViewProfileHR}/>
       <Route path="/Attendance" component= {Attendance}/>
       <Route path="/Locations" component= {Locations}/>
