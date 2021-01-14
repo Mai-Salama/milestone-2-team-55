@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios";
-import HomeHR from './HomeHR';
+import HomeHR from './home-hr.component';
 import { Redirect } from 'react-router-dom';
 
 export default class ChangePasswordHR extends Component {
