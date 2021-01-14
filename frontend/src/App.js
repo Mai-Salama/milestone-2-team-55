@@ -126,6 +126,7 @@ import SubmitASickLeaveRequest  from "./componentsHR/submit-a-sick-leave.compone
 import SubmitAnAnnualLeaveRequest from "./componentsHR/submit-annual-leave-request.component";
 import ViewSickStatus from "./componentsHR/view-sick-leave.component";
 import ViewAnnualStatus from "./componentsHR/view-annual-status.component";
+import Logout from "./logout";
 
 function App() {
   const DefaultContainer = ()=>(
@@ -334,7 +335,7 @@ function App() {
 
     {/* Miral's Routes */}
 
-    <div className="container">
+ 
       <Route path="/HomeHR" component= {HomeHR}/>
       <Route path="/ViewProfileHR" component= {ViewProfileHR}/>
       <Route path="/Attendance" component= {Attendance}/>
@@ -358,7 +359,8 @@ function App() {
       <Route path="/SubmitAnAnnualLeaveRequest" component= {SubmitAnAnnualLeaveRequest}/> 
       <Route path="/ViewSickStatus" component= {ViewSickStatus}/>
       <Route path="/ViewAnnualStatus" component= {ViewAnnualStatus}/>
-      </div>
+      <Route path="/Logout" component= {Logout}/>
+  
 
     </div>
   )
