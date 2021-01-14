@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import Navbar from "../NavbarHR.js";
 
 export default class ViewProfileHR extends Component{
 constructor(){
@@ -31,6 +32,8 @@ componentDidMount(){
     render(){
         return(
             <div>
+                <Navbar/>
+            <div className='container'>
                <h3>Here's your profile:</h3>
                <h4>username: {this.state.name}</h4>
                <h4>office: {this.state.office}</h4>
@@ -38,7 +41,7 @@ componentDidMount(){
                <h4>day off: {this.state.dayOff}</h4>
                <h4>salary: {this.state.salary}</h4>
 
-
+               </div>
             </div>
         )
     }

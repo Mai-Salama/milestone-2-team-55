@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-
+import Navbar from "../NavbarHR.js";
 
 export default class ViewAllAttendanceRecords extends Component{
 constructor(){
@@ -43,6 +43,8 @@ componentDidMount(){
     render(){
         return(
             <div>
+                <Navbar/>
+            <div className='container'>
             <nav aria-label="breadcrumb">
             <ol className="breadcrumb alert alert-warning">
               <li className="breadcrumb-item text-warning"><a className="text-warning"href="HomeHR">Home</a></li>
@@ -101,6 +103,7 @@ componentDidMount(){
                 </tbody>
                 </table>                  
 
+            </div>
             </div>
         )
     }

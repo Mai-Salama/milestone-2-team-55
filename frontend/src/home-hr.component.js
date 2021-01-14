@@ -4,6 +4,7 @@ import {Button} from 'react-bootstrap';
 import {Redirect} from 'react-router-dom';
 import Faculties from './FacComponents/Faculties';
 import Staff from "./StaffComponents/Staff"
+import Navbar from "./NavbarHR.js";
 
 
 export default class HomeHR extends Component{
@@ -70,6 +71,8 @@ window.location='/Success'
         return(
 
             <div>
+                <Navbar/>
+            <div className='container'>
                 <nav aria-label="breadcrumb">
             <ol className="breadcrumb alert alert-warning">
               
@@ -94,6 +97,7 @@ window.location='/Success'
                 <Button className="btn btn-warning" onClick={this.toStaff}>Staff</Button>
                 <br/>
                <br/>
+            </div>
             </div>
             </div>
         )
