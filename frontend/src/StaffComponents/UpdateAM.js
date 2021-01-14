@@ -51,25 +51,37 @@ export default class UpdateAM extends Component {
             <div>
             <h1>Update HR member</h1>
             <form onSubmit = {this.handleSubmit}>
-            <label>
-                ID:
-                <input name="ide" type="text" ide={this.state.ide} onChange={this.handleChange}/>
-                Name(update or resubmit original):
-                <input name="namee" type="text" namee={this.state.namee} onChange={this.handleChange}/>
-                Gender:
-                <input name="gendere" type="text" gendere={this.state.gendere} onChange={this.handleChange}/>
-                Office:
-                <input name="officee" type="text" officee={this.state.officee} onChange={this.handleChange}/>
-                Salary:
-                <input name="salarye" type="text" salarye={this.state.salarye} onChange={this.handleChange}/>
-                Extra Info:
-                <input name="extrainfoe" type="text" extrainfoe={this.state.extrainfoe} onChange={this.handleChange}/>
-                Faculty:
-                <input name="facultye" type="text" facultye={this.state.facultye} onChange={this.handleChange}/>
-                Department:
-                <input name="departmente" type="text" departmente={this.state.departmente} onChange={this.handleChange}/>
-            </label>
-            <input type="submit" value="Submit" />
+            <div class="row">
+                <label>
+                <input name="ide" placeholder="ID..." type="text" ide={this.state.ide} onChange={this.handleChange}/>
+                </label>
+                <label>
+                <input name="namee" placeholder="Name..." type="text" namee={this.state.namee} onChange={this.handleChange}/>
+                </label>
+                <label>
+                <input name="gendere" placeholder="Gender..." type="text" gendere={this.state.gendere} onChange={this.handleChange}/>
+                </label>
+            </div>
+            <div class="row">
+                <label>
+                <input name="officee" placeholder="Office..." type="text" officee={this.state.officee} onChange={this.handleChange}/>
+                </label>
+                <label>
+                <input name="salarye" placeholder="Salary..." type="text" salarye={this.state.salarye} onChange={this.handleChange}/>
+                </label>
+                <label>
+                <input name="extrainfoe" placeholder="Extra Info..." type="text" extrainfoe={this.state.extrainfoe} onChange={this.handleChange}/>
+                </label>
+            </div>
+            <div class="row">
+                <label>
+                <input name="facultye" placeholder="Faculty..." type="text" facultye={this.state.facultye} onChange={this.handleChange}/>
+                </label>
+                <label>
+                <input name="departmente" placeholder="Department..." type="text" departmente={this.state.departmente} onChange={this.handleChange}/>
+                </label>
+            </div>
+            <input type="submit" id="submit" value="Submit" />
             </form>
         </div>
         )

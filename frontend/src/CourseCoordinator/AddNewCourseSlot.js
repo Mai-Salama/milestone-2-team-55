@@ -50,8 +50,8 @@ export default class AddNewCourseSlot extends Component {
             <NavbarAM />
             <nav aria-label="breadcrumb">
             <ol className="breadcrumb">
-              <li className="breadcrumb-item"><a href="HomeC">Home</a></li>
-              <li className="breadcrumb-item"><a href="HomeC/CourseSlotsC">CourseSlots</a></li>
+              <li className="breadcrumb-item"><a href="/HomeC">Home</a></li>
+              <li className="breadcrumb-item"><a href="/CourseSlotsC">CourseSlots</a></li>
               <li className="breadcrumb-item active" aria-current="page">AddNewCourseSlot</li>
             </ol>
           </nav>

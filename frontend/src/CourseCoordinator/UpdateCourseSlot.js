@@ -51,8 +51,8 @@ export default class UpdateCourseSlot extends Component {
             <Navbar />
              <nav aria-label="breadcrumb">
             <ol className="breadcrumb">
-              <li className="breadcrumb-item"><a href="HomeC">Home</a></li>
-              <li className="breadcrumb-item"><a href="HomeC/CourseSlotsC">CourseSlots</a></li>
+              <li className="breadcrumb-item"><a href="/HomeC">Home</a></li>
+              <li className="breadcrumb-item"><a href="/CourseSlotsC">CourseSlots</a></li>
               <li className="breadcrumb-item active" aria-current="page">UpdateCourseSlots</li>
             </ol>
           </nav>

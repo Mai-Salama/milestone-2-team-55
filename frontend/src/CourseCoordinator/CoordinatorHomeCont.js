@@ -39,8 +39,8 @@ export default class CoordinatorHomeCont extends Component {
             <div>
            
             <Navbar/>
-                <Button onClick={this.toSlotLinking}>Slotlinking</Button>
-                <Button onClick={this.toCourseSlots}>Course Slots</Button>
+                <Button id="add" onClick={this.toSlotLinking}>Slotlinking</Button>
+                <Button id="add" onClick={this.toCourseSlots}>Course Slots</Button>
             </div>
         )
     }

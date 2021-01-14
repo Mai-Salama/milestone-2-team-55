@@ -247,15 +247,12 @@ function App() {
 
       <Route path="/CourseSlotsC" component={CourseSlotsC} />
     
-      <Route path="/HomeC/CourseSlotsC/AddNewCourseSlot">
-        <AddNewCourseSlot />
-      </Route>
-      <Route path="/HomeC/CourseSlotsC/UpdateCourseSlot">
-        <UpdateCourseSlot />
-      </Route>
-      <Route path="/HomeC/CourseSlotsC/DeleteCourseSlot">
-        <DeleteCourseSlot />
-      </Route>
+      <Route path="/CourseSlotsC/AddNewCourseSlot" component={AddNewCourseSlot} />
+    
+      <Route path="/CourseSlotsC/UpdateCourseSlot" component={UpdateCourseSlot} />
+        
+      <Route path="/CourseSlotsC/DeleteCourseSlot" component={DeleteCourseSlot} />
+        
       {/* /** Menna's Routes */ }
       <Route path="/HomeInstructor" component={HomeInstructor}/>
        <Route path="/StaffAM" component={StaffAM}/>
