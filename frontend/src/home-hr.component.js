@@ -1,13 +1,31 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
+import {Button} from 'react-bootstrap';
+import {Redirect} from 'react-router-dom';
+import Faculties from './FacComponents/Faculties';
+import Staff from "./StaffComponents/Staff"
 
 
 export default class HomeHR extends Component{
     constructor(){
         super();
+        this.state = {
+            redirectToFaculties: null,
+            redirectToStaff: null
+        };
+        this.toFaculties = this.toFaculties.bind(this);
+        this.toStaff = this.toStaff.bind(this);
+    }
+    toFaculties(event){
+        this.setState({redirectToFaculties: "/Faculties"});
+        console.log("set faculties");
+        console.log(this.state.redirectToFaculties);
+        event.preventDefault();
+    }
 
+    toStaff(event){
+        this.setState({redirectToStaff: "/Staff"});
+        event.preventDefault();
     }
 
     onSignIn(){
@@ -63,46 +81,21 @@ window.location='/Success'
                <button onClick={this.onSignOut} type= "button" className="btn btn-warning" >  Sign Out </button> 
 
             </div>
-
-            // <div>
-            //    <h3>Welcome to your Home Page</h3>
-            //    <form onSubmit={this.onSubmit}>
-            //        {/* <div className='form-group'>
-            //            <label>Username:</label>
-            //            <select ref="userInput" 
-            //            required
-            //            className="form-control"
-            //            value={this.state.username}
-            //            onChange={this.onChangeUsername}> 
-            //            {
-            //                this.state.users.map(function(user){
-            //                    return<option
-            //                    key={user}
-            //                    value={user}>
-            //                        {user}
-
-            //                    </option>;
-            //                })
-            //            }
-            //            </select>
-            //        </div>
-
-            // <div className="form-group"> 
-            // <label>Date:</label>
-            // <div>
-            //     <DatePicker
-            //     selected={this.state.date}
-            //     onChange={this.onChangeDate}/>
-            // </div> */}
-
-
-            // <div className="form-group">
-            //     <input type="submit" value="Attendance" className="btn btn-warning" onClick="/view-profile-hr"/>
-            // </div>
-
-            // {/* </div> */}
-            //    </form>
-            // </div>
         )
+            if(this.state.redirectToFaculties){
+                return <Redirect to={this.state.redirectToFaculties} Component={Faculties}/>
+            }
+            if(this.state.redirectToStaff){
+                return <Redirect to={this.state.redirectToStaff} Component={Staff}/>
+            }
+            return (
+                <div>
+                    <Button onClick={this.toFaculties}>Faculties</Button>
+                    <Button onClick={this.toStaff}>Staff</Button>
+                </div>
+            )
+
+           
+        
     }
 }
