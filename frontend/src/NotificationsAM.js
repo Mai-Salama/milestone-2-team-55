@@ -6,14 +6,46 @@ export default class NotificationsAM extends Component {
         super(props);
         this.state = {
             requests: [],
-            reqid:''};
-        this.getAnnualAccepted = this.acceptreq.bind(this);
-        this.getAnnualRejected = this.rejectreq.bind(this);
+            };
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event){
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+        this.setState({[name]:value});
+    }
+    componentDidMount= ()=>{
+        axios.get('/notificationsAM', {headers: {
+         'x-auth-token': localStorage.getItem('savedToken')
+     }}).then(response =>{
+         this.setState({requests: response.data});
+     }).catch(err =>{
+         console.log(err);
+     })
     }
     render() {
         return (
             <div>
-                
+                <table id="requeststable">
+                <thead>
+                    <tr>
+                        <th>Notifications</th>
+                    </tr>
+                </thead>
+                    <tbody>
+                        {this.state.requests.map((item =>
+                        <tr>
+                            <td>
+                                {item.type} Leave Request with ID {item.req_id} has been {item.status}
+                                <br></br>
+                            </td>
+                        </tr>
+                        )
+                        )}
+                    </tbody>
+                </table>
             </div>
         )
     }
