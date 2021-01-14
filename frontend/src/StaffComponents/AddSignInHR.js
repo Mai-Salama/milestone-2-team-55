@@ -44,6 +44,15 @@ export default class AddSignInHR extends Component {
     render() {
         return (
             <div>
+                     <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li className="breadcrumb-item"><a href="/Staff">Staff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/HRstaff">HRstaff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/HRstaff/Attendance">AttendanceHR</a></li>
+            <li className="breadcrumb-item active" aria-current="page">AddSignIn</li>
+          </ol>
+        </nav>
             <h2>Add Missing Sign In</h2>
             <br></br>
             <form onSubmit = {this.handleSubmit}>

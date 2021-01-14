@@ -39,6 +39,16 @@ export default class ViewHRmissingDays extends Component {
     render() {
         if(this.state.submitted){
             return(
+                <div>
+                     <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li className="breadcrumb-item"><a href="/Staff">Staff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/HRstaff">HRstaff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/HRstaff/Attendance">AttendanceHR</a></li>
+            <li className="breadcrumb-item active" aria-current="page">ViewMissingDays</li>
+          </ol>
+        </nav>
                 <table id="requeststable">
                 <thead>
                     <tr>
@@ -56,15 +66,18 @@ export default class ViewHRmissingDays extends Component {
                 
                 </tbody>
                 </table> 
+                </div>
             )
         }
         return (
+            <div>
             <form onSubmit = {this.handleSubmit}>
             <label>
                 <input name="staffid" placeholder="Staff ID..." type="text" staffid={this.state.staffid} onChange={this.handleChange}/>
             </label>
             <input type="submit" id="submit" value="Submit" />
             </form>
+            </div>
         )
     }
 }

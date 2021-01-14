@@ -61,6 +61,16 @@ export default class StaffLeavesHR extends Component {
     render() { 
         return (
             <div>
+            <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li className="breadcrumb-item"><a href="/Staff">Staff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/HRstaff">HRstaff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/HRstaff/Attendance">AttendanceHR</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/HRstaff/Attendance/StaffLeaves">Leaves</a></li>
+            <li className="breadcrumb-item active" aria-current="page">AnnualLeaves</li>
+          </ol>
+        </nav>
             <div>
                 <table id="requeststable">
                 <thead>

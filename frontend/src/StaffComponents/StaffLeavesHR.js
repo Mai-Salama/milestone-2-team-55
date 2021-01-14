@@ -64,6 +64,15 @@ export default class StaffLeavesHR extends Component {
             }
             return (
                 <div>
+                     <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li className="breadcrumb-item"><a href="/Staff">Staff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/HRstaff">HRstaff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/HRstaff/Attendance">AttendanceHR</a></li>
+            <li className="breadcrumb-item active" aria-current="page">Leaves</li>
+          </ol>
+        </nav>
                 <h2>HR Members Leave Requests</h2>
                 <br></br>
                     <Button id="add" onClick={this.toAnnual}>Annual Leave Requests</Button>

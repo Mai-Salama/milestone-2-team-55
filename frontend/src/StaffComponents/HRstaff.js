@@ -56,6 +56,14 @@ export default class HRstaff extends Component {
         }
         return (
             <div>
+            <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li className="breadcrumb-item"><a href="/Staff">Staff</a></li>
+            <li className="breadcrumb-item active" aria-current="page">HRstaff</li>
+          </ol>
+        </nav>
+
             <br></br>
                 <div>
                 

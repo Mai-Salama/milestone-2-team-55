@@ -56,6 +56,13 @@ export default class AcademicMembers extends Component {
         }
         return (
             <div>
+            <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><a href="Home">Home</a></li>
+            <li className="breadcrumb-item"><a href="Home/Staff">Staff</a></li>
+            <li className="breadcrumb-item active" aria-current="page">AcademicMembers</li>
+          </ol>
+        </nav>
             <br></br>
                 <div>
                 <Button id="add" onClick={this.addNew}>Add new staff member</Button> 

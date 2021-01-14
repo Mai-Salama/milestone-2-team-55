@@ -44,6 +44,14 @@ export default class UpdateHR extends Component {
     render() {
         return (
             <div>
+              <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li className="breadcrumb-item"><a href="/Staff">Staff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/HRstaff">HRstaff</a></li>
+            <li className="breadcrumb-item active" aria-current="page">UpdateHR</li>
+          </ol>
+        </nav>
                 <h2>Update HR member</h2>
                 <br></br>
                 <form onSubmit = {this.handleSubmit}>
