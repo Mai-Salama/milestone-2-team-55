@@ -63,8 +63,10 @@ console.log(this.state.sick)
     <thead>
       <tr>
       <th> requester id</th>
+      <th>    request id</th>
         <th>    requested date</th>
-       
+        <th>    requested month</th>
+
         <th>     acceptance status</th>
       </tr>
     </thead>
@@ -74,8 +76,9 @@ console.log(this.state.sick)
                  
       <tr>
         <td>{request.id}</td>
+        <td>{request.req_id}</td>
         <td>{request.date}</td>
-      
+        <td>{request.month}</td>
         <td>{request.status}</td>
       </tr>
       

@@ -30,7 +30,7 @@ const dayoff = mongoose.Schema({
 
 const annual = mongoose.Schema({
     id:{type:String,
-    requires:true},
+    },
     date:{type:Number,
         required:true},
     month:{type:Number},
@@ -41,6 +41,7 @@ const annual = mongoose.Schema({
 //hghukyfg
 const compensation = mongoose.Schema({
     id:{type:String},
+    req_id:{type: Number},
     date:{type:Number},
     day:{type:String},
     month:{type:Number},
@@ -112,6 +113,13 @@ const AttendanceRecords = mongoose.Schema({
     signs: [Signs]
 
 });
+const SickLeave = mongoose.Schema({
+    id:{type:String,
+    required:true},
+    date:{type:Date},
+    status:{type:Number}
+});
+
 
 //module.exports= mongoose.model('Schedule', schedule);
 //const schedule = require('./Schedule');
@@ -151,6 +159,7 @@ const members = mongoose.Schema({
     accidentalLeave:{type:Number},
     maternityLeave:{type:Number},
     sickLeave:{type:Number},
+    sickleaverequests:[SickLeave],
     scheduleFlag:{type:Boolean},
     office:{type:String},
     Schedule: [schedule],
