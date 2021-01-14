@@ -17,9 +17,12 @@ export default class NotificationsAM extends Component {
         this.setState({[name]:value});
     }
     componentDidMount= ()=>{
+        console.log("in method");
+        console.log(localStorage.getItem('savedToken'));
         axios.get('/notificationsAM', {headers: {
          'x-auth-token': localStorage.getItem('savedToken')
      }}).then(response =>{
+         console.log("here");
          this.setState({requests: response.data});
      }).catch(err =>{
          console.log(err);
@@ -38,7 +41,7 @@ export default class NotificationsAM extends Component {
                         {this.state.requests.map((item =>
                         <tr>
                             <td>
-                                {item.type} Leave Request with ID {item.req_id} has been {item.status}
+                                {item.type} Request with ID {item.req_id} has been {item.status}
                                 <br></br>
                             </td>
                         </tr>
