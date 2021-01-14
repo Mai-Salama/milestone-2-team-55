@@ -23,7 +23,7 @@ export default class ViewAnnualStatus extends Component{
         })
      }
     componentDidMount(){
-        axios.get('/viewStatusOfAnnualPending',{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTEiLCJlbWFpbCI6IkBndWMiLCJyb2xlIjoiSFIiLCJpYXQiOjE2MTA1NDI0MTR9.cOHHcKOWqOvZcjQnOnYehK9-ik5V9rRPzSWzBoFtvmU'}})
+        axios.get('/viewStatusOfAnnualPending',{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
         .then(response=> {
              this.setState({AnnualRequests: response.data});
              console.log(response.data);
@@ -34,7 +34,7 @@ export default class ViewAnnualStatus extends Component{
     .catch((error)=> { 
     console.log(error);
 })
-    axios.get('/viewStatusOfAnnualAccepted',{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTEiLCJlbWFpbCI6IkBndWMiLCJyb2xlIjoiSFIiLCJpYXQiOjE2MTA1NDI0MTR9.cOHHcKOWqOvZcjQnOnYehK9-ik5V9rRPzSWzBoFtvmU'}})
+    axios.get('/viewStatusOfAnnualAccepted',{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
             .then((res)=>{
                 this.setState({AnnualRequestsA: res.data});
                 console.log(res.data)
@@ -47,7 +47,7 @@ export default class ViewAnnualStatus extends Component{
         console.log(error);
     })
 
-    axios.get('/viewStatusOfAnnualRejected',{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTEiLCJlbWFpbCI6IkBndWMiLCJyb2xlIjoiSFIiLCJpYXQiOjE2MTA1NDI0MTR9.cOHHcKOWqOvZcjQnOnYehK9-ik5V9rRPzSWzBoFtvmU'}})
+    axios.get('/viewStatusOfAnnualRejected',{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
         .then((res)=>{
             this.setState({AnnualRequestsR: res.data});
             console.log(res.data)}
@@ -70,7 +70,7 @@ onSubmit(e){
             reqID:this.state.id
 
     }
-    axios.post('/cancelPendingAnnual',request,{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTEiLCJlbWFpbCI6IkBndWMiLCJyb2xlIjoiSFIiLCJpYXQiOjE2MTA1NDI0MTR9.cOHHcKOWqOvZcjQnOnYehK9-ik5V9rRPzSWzBoFtvmU'}})
+    axios.post('/cancelPendingAnnual',request,{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
         .then((res)=>console.log(res.data))
     .catch((error)=> { 
     console.log(error);

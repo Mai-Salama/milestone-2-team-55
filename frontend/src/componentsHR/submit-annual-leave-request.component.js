@@ -60,7 +60,7 @@ onSubmit(e){
         TAtoCover:this.state.TAtoCover
 
     }
-    axios.post('/submitAnnualLeaveRequest',request,{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTEiLCJlbWFpbCI6IkBndWMiLCJyb2xlIjoiSFIiLCJpYXQiOjE2MTA1NDI0MTR9.cOHHcKOWqOvZcjQnOnYehK9-ik5V9rRPzSWzBoFtvmU'}})
+    axios.post('/submitAnnualLeaveRequest',request,{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
         .then((res)=>{
             console.log(res.data);
         }).catch((error)=> { 

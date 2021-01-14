@@ -33,19 +33,9 @@ export default class Logout extends Component {
    
     render() {
       
-        if(this.state.redirect == "/logout"){
+        if(this.state.redirect == "/Logout"){
             return <Redirect to={this.state.redirect} Component={UpdatedLogin}/>
         }
-        
-        return (
-            
-            <form onSubmit = {this.handleSubmit}>
-           
-            <input type="submit" id="Logout" value="Submit" />
-
-            </form>
-            
-         
-        )
+    
     }
 }

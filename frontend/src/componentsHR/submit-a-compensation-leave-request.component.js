@@ -58,7 +58,7 @@ onSubmit(e){
         reason:this.state.reason
 
     }
-    axios.post('/requestCompensationLeave',request,{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTMiLCJlbWFpbCI6IlllaGlhQGdtYWlsLmNvbSIsInJvbGUiOiJIUiIsImlhdCI6MTYxMDQ0MTA5Mn0.Qeuechb5TMFxsOG91P6BZBfOohDTsFPcwkPePoFu-CM'}})
+    axios.post('/requestCompensationLeave',request,{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
         .then((res)=>{
             console.log(res.data);
         }).catch((error)=> { 

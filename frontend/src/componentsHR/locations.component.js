@@ -4,16 +4,6 @@ import Navbar from "../NavbarHR.js";
 
 export default class Locations extends Component{
 
-    constructor(){
-        super();
-    
-        this.state={
-
-            locations:[],
-            
-        }
-    }
-
     render(){
         return(
             
