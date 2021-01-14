@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from "axios";
 import {Button} from 'react-bootstrap';
+import Navbar from '../NavbarHR.js';
 
 
 export default class StaffLeavesHR extends Component {
@@ -61,6 +62,7 @@ export default class StaffLeavesHR extends Component {
     render() { 
         return (
             <div>
+            <Navbar />
             <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item"><a href="/Home">Home</a></li>

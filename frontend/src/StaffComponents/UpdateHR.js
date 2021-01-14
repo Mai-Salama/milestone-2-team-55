@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios";
+import Navbar from '../NavbarHR.js';
 
 export default class UpdateHR extends Component {
     constructor(props){
@@ -44,6 +45,7 @@ export default class UpdateHR extends Component {
     render() {
         return (
             <div>
+            <Navbar />
               <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item"><a href="/Home">Home</a></li>

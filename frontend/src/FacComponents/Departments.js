@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, DropdownButton, Dropdown} from 'react-bootstrap';
 import {Redirect} from 'react-router-dom';
-import Navbar from '../NavbarInstructor';
+import Navbar from '../NavbarHR.js';
 import AddNewDepartment from './AddNewDepartment';
 import UpdateDepartment from './UpdateDepartment';
 import DeleteDepartment from './DeleteDepartment';

@@ -4,6 +4,7 @@ import {Button} from 'react-bootstrap';
 import {Redirect} from 'react-router-dom';
 import HRstaff from './HRstaff';
 import AcademicMembers from './AcademicMembers';
+import Navbar from '../NavbarHR.js';
 
 
 export default class Staff extends Component {
@@ -36,6 +37,7 @@ export default class Staff extends Component {
         }
         return (
             <div>
+            <Navbar />
             <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item"><a href="/Home">Home</a></li>

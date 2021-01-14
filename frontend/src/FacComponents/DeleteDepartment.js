@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios";
-import Navbar from '../NavbarInstructor';
+import Navbar from '../NavbarHR.js';
 
 export default class DeleteDepartment extends Component {
     constructor(props){

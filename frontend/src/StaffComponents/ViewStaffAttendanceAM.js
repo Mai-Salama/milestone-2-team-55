@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from "axios";
 import {Button} from 'react-bootstrap';
+import Navbar from '../NavbarHR.js';
 
 export default class ViewStaffAttendanceHR extends Component {
     constructor(props){
@@ -52,9 +53,11 @@ export default class ViewStaffAttendanceHR extends Component {
         event.preventDefault();
     };
     render() {
+
         if(this.state.submitted){
             return (
                 <div>
+                <Navbar />
                  <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item"><a href="/Home">Home</a></li>
@@ -65,51 +68,62 @@ export default class ViewStaffAttendanceHR extends Component {
           </ol>
         </nav>
             <div>
-    <table>
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Month</th>
-            <th>Day</th>
-        </tr>
-    </thead>
-    <tbody>
-    {this.state.attendance.map((item =>
-            <tr>
-            <td>{item.date}</td>
-            <td>{item.month}</td>
-            <td>{item.day}</td>
-            </tr>
-        ))}
-    </tbody>
-    </table>  
-</div>
-<div>
-    <table>
-    <thead>
-           
-        <tr>
-            <th colSpan="2">Sign In</th>
-            <th colSpan="2">Sign Out</th>
-        </tr>
-        <tr>
-            <th>Hour In</th>
-            <th>Minute In</th>
-            <th>Hour Out</th>
-            <th>Minute Out</th>
-        </tr>
-    </thead>
-    <tbody>
-    {this.state.signs.map((item =>
-        <tr>
-           <td>{item.hourin}</td>
-           <td>{item.minutein}</td>
-           <td>{item.hourout}</td>
-           <td>{item.minuteout}</td> 
-        </tr>
-    ))}
-    </tbody>
-    </table>  
+
+                <table className="table table-bordered">
+                    <thread className="table-warning">
+                        <tr>
+                            <th>Day</th>
+                            <th>Date</th>
+                            <th>Month</th>
+                            <th colSpan="2">SignIn</th>
+                            <th colSpan="2">SignOut</th>
+                        </tr>
+                    </thread>
+                    <tbody>
+                       {this.state.attendance.map((item =>
+                            <tr>
+                                <td>{item.day}</td>
+                                <td>{item.date}</td>
+                                <td>{item.month}</td>
+                                <td>
+                                    <table className= "table table-bordered">
+                                        <thread className="table-warning">
+                                            <tr>
+                                                <th>Timing</th>
+                                            </tr>
+                                        </thread>
+                                        <tbody>
+                                            {item.signs.map((smalleritem =>
+                                            <tr>
+                                                <td>{smalleritem.hourin}</td>
+                                                <td>{smalleritem.minutein}</td>
+                                            </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td>
+                                <table className= "table table-bordered">
+                                        <thread className="table-warning">
+                                            <tr>
+                                                <th>Timing</th>
+                                            </tr>
+                                        </thread>
+                                        <tbody>
+                                            {item.signs.map((smalleritem =>
+                                            <tr>
+                                                <td>{smalleritem.hourout}</td>
+                                                <td>{smalleritem.minuteout}</td>
+                                            </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                       ))}
+                    </tbody>
+                </table>
+
 </div>
 </div>)
         }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Dropdown} from 'react-bootstrap';
-import Navbar from '../NavbarInstructor';
+import Navbar from '../NavbarHR.js';
 import {Redirect} from 'react-router-dom';
 import AddNewFaculty from '../FacComponents/AddNewFaculty';
 import UpdateFaculty from '../FacComponents/UpdateFaculty';

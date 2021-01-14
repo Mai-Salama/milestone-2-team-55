@@ -6,6 +6,7 @@ import StaffAccidental from './StaffAccidental';
 import StaffMaternity from './StaffMaternity';
 import StaffCompensation from './StaffCompensation';
 import StaffSick from './StaffSick';
+import Navbar from '../NavbarHR.js';
 
 
 export default class StaffLeavesHR extends Component {
@@ -64,6 +65,7 @@ export default class StaffLeavesHR extends Component {
             }
             return (
                 <div>
+                <Navbar />
                      <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item"><a href="/Home">Home</a></li>

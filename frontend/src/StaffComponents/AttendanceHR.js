@@ -8,6 +8,7 @@ import AddSignOutHR from './AddSignOutHR';
 import ViewStaffWithMissingHR from './ViewStaffWithMissingHR';
 import StaffLeavesHR from './StaffLeavesHR';
 import ViewHRmissingDays from './ViewHRmissingDays';
+import Navbar from '../NavbarHR.js';
 
 export default class AttendanceHR extends Component {
     constructor(props){
@@ -73,6 +74,7 @@ export default class AttendanceHR extends Component {
         }
         return (
             <div>
+            <Navbar />
               <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item"><a href="/Home">Home</a></li>
