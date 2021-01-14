@@ -9,6 +9,7 @@ import HomeC from './CourseCoordinator/CoordinatorHomeCont'
 import {Redirect} from 'react-router-dom'
 import StaffAM from './CourseInstructor/StaffAM';
 import NotificationsAM from './NotificationsAM';
+import Logout from './logout';
 //import CourseSlotsC from './CourseCoordinator/CourseSlotsC';
 
 class Navbar extends Component{

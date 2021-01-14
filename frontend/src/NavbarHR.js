@@ -10,7 +10,7 @@ import {Redirect} from 'react-router-dom'
 import ViewProfileHR from './componentsHR/view-profile-hr.component';
 import NotificationsHR from './NotificationsHR';
 import Logout from './logout';
-import UpdatedLogin from './UpdatedLogin'
+
 class Navbar extends Component{
 
     constructor(){

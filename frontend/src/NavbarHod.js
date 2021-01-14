@@ -9,6 +9,7 @@ import HomeHOD from './hod/HODhomepage';
 import {Redirect} from 'react-router-dom'
 import StaffAM from './CourseInstructor/StaffAM';
 import NotificationsAM from './NotificationsAM';
+import Logout from './logout';
 class Navbar extends Component{
 
     constructor(){
