@@ -66,6 +66,7 @@ export default class Faculties extends Component {
             <li className="breadcrumb-item active" aria-current="page">Faculties</li>
           </ol>
         </nav>
+        
                 <div>
                 <br></br>
                 <Button id="add" onClick={this.addNew}>Add new faculty</Button> 

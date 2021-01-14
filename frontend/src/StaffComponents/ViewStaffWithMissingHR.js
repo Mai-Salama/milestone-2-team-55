@@ -30,7 +30,16 @@ export default class ViewStaffWithMissingHR extends Component {
     render() {
         return (
             <div>
-            <table>
+                     <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li className="breadcrumb-item"><a href="/Staff">Staff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/HRstaff">HRstaff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/HRstaff/AttendanceHR">AttendanceHR</a></li>
+            <li className="breadcrumb-item active" aria-current="page">StaffWithMissingHours</li>
+          </ol>
+        </nav>
+            <table id="requeststable">
             <thead>
                 <tr>
                     <th>Staff ID</th>
@@ -45,7 +54,7 @@ export default class ViewStaffWithMissingHR extends Component {
             
             </tbody>
             </table> 
-            <table>
+            <table id="requeststable">
             <thead>
                 <tr>
                     <th>Hours</th>
@@ -60,7 +69,7 @@ export default class ViewStaffWithMissingHR extends Component {
             
             </tbody>
             </table>
-            <table>
+            <table id="requeststable">
             <thead>
                 <tr>
                     <th>Minutes</th>

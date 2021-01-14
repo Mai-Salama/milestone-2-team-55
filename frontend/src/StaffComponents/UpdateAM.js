@@ -49,7 +49,16 @@ export default class UpdateAM extends Component {
     render() {
         return (
             <div>
-            <h1>Update HR member</h1>
+             <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li className="breadcrumb-item"><a href="/Staff">Staff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/AcademicMembers">AcademicMembers</a></li>
+            <li className="breadcrumb-item active" aria-current="page">UpdateAcademicMember</li>
+          </ol>
+        </nav>
+            <h2>Update HR member</h2>
+            <br></br>
             <form onSubmit = {this.handleSubmit}>
             <div class="row">
                 <label>

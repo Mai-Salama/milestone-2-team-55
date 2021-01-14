@@ -88,7 +88,14 @@ class ViewStaffbyCourse extends Component{
         return(
             <div className="ViewStafbyCourse" >
                 <Navbar/>
-            
+                <nav aria-label="breadcrumb">
+            <ol className="breadcrumb alert alert-warning">
+              <li className="breadcrumb-item text-warning"><a className="text-warning"href="/HomeInstructor">Home</a></li>
+              <li className="breadcrumb-item "><a className="text-warning"href="/StaffAM">Staff</a></li>
+
+              <li className="breadcrumb-item active text-danger" aria-current="page">View Staff per Course </li>
+            </ol>
+          </nav>
                 <Modal isOpen={this.state.statemodal} >
               <h2> Staff per course </h2>
               <div>

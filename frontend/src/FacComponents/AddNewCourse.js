@@ -51,7 +51,8 @@ export default class AddNewCourse extends Component {
               <li className="breadcrumb-item"><a href="Home">Home</a></li>
               <li className="breadcrumb-item"><a href="Home/Faculties">Faculties</a></li>
               <li className="breadcrumb-item"><a href="Home/Faculties/Departments">Departments</a></li>
-              <li className="breadcrumb-item active" aria-current="page">Courses</li>
+              <li className="breadcrumb-item"><a href="Home/Faculties/Departments/Courses">Courses</a></li>
+              <li className="breadcrumb-item active" aria-current="page">AddNewCourse</li>
             </ol>
           </nav>
                 <br></br>

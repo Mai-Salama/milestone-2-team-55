@@ -49,6 +49,14 @@ export default class AddNewAM extends Component {
     render() {
         return (
             <div>
+             <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li className="breadcrumb-item"><a href="/Staff">Staff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/AcademicMembers">AcademicMembers</a></li>
+            <li className="breadcrumb-item active" aria-current="page">AddNewAcademicMember</li>
+          </ol>
+        </nav>
             <h1>Add new Academic Member</h1>
             <form onSubmit = {this.handleSubmit}>
             <div class="row">

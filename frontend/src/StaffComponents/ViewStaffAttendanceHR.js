@@ -68,6 +68,15 @@ export default class ViewStaffAttendanceHR extends Component {
         if(this.state.submitted){
             return (
                 <div>
+                  <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li className="breadcrumb-item"><a href="/Staff">Staff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/HRstaff">HRstaff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/HRstaff/AttendanceHR">AttendanceHR</a></li>
+            <li className="breadcrumb-item active" aria-current="page">ViewStaffAttendance</li>
+          </ol>
+        </nav>
             <div>
     <table>
     <thead>
@@ -121,10 +130,9 @@ export default class ViewStaffAttendanceHR extends Component {
                 <div>
                 <form onSubmit = {this.handleSubmit}>
                 <label>
-                    ID:
-                    <input name="id" type="text" ide={this.state.id} onChange={this.handleChange}/>
+                    <input name="id" placeholder="ID..." type="text" ide={this.state.id} onChange={this.handleChange}/>
                 </label>
-                <input type="submit" value="Submit" />
+                <input type="submit" id="submit" value="Submit" />
                 </form>
             </div>
         )

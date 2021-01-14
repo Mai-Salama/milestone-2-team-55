@@ -40,7 +40,7 @@ td, th{
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color:dodgerblue;
+  background-color:rgb(219,114,53);
   color: white;
 }
 
@@ -60,7 +60,7 @@ span{
 }
 
 input{
-  height: 20px;
+  height: 40px;
   padding: 12px 2px;
   margin-bottom: 100px;
 }

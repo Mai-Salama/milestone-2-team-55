@@ -39,7 +39,17 @@ export default class ViewHRmissingDays extends Component {
     render() {
         if(this.state.submitted){
             return(
-                <table>
+                <div>
+                        <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li className="breadcrumb-item"><a href="/Staff">Staff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/AcademicMembers">AcademicMembers</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/AcademicMembers/AttendanceAM">Attendance</a></li>
+            <li className="breadcrumb-item active" aria-current="page">ViewMissingDays</li>
+          </ol>
+        </nav>
+                <table id="requeststable">
                 <thead>
                     <tr>
                         <th>Date</th>
@@ -56,16 +66,27 @@ export default class ViewHRmissingDays extends Component {
                 
                 </tbody>
                 </table> 
+                </div>
             )
         }
         return (
+            <div>
+                    <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li className="breadcrumb-item"><a href="/Staff">Staff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/AcademicMembers">AcademicMembers</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/AcademicMembers/AttendanceAM">Attendance</a></li>
+            <li className="breadcrumb-item active" aria-current="page">ViewMissingDays</li>
+          </ol>
+        </nav>
             <form onSubmit = {this.handleSubmit}>
             <label>
-                ID:
-                <input name="staffid" type="text" staffid={this.state.staffid} onChange={this.handleChange}/>
+                <input name="staffid" placeholder="Staff ID..." type="text" staffid={this.state.staffid} onChange={this.handleChange}/>
             </label>
-            <input type="submit" value="Submit" />
+            <input type="submit" id="submit" value="Submit" />
             </form>
+            </div>
         )
     }
 }

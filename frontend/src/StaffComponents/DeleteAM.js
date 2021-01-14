@@ -34,7 +34,15 @@ export default class DeleteAM extends Component {
     render() {
         return (
             <div>
-                <h1>Delete Academic Member</h1>
+             <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li className="breadcrumb-item"><a href="/Staff">Staff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/AcademicMembers">AcademicMembers</a></li>
+            <li className="breadcrumb-item active" aria-current="page">DeleteAcademicMember</li>
+          </ol>
+        </nav>
+                <h2>Delete Academic Member</h2>
                 <form onSubmit = {this.handleSubmit}>
                 <label>
                     <input name="ide" placeholder="ID..." type="text" ide={this.state.ide} onChange={this.handleChange}/>

@@ -8,16 +8,19 @@ import './Navbar.css'
 import HomeHOD from './hod/HODhomepage';
 import {Redirect} from 'react-router-dom'
 import StaffAM from './CourseInstructor/StaffAM';
+import NotificationsAM from './NotificationsAM';
 class Navbar extends Component{
 
     constructor(){
         super();
         this.state={
             RedirectToHomeHOD:null,
-            RedirectToProfile:null
+            RedirectToProfile:null,
+            RedirectToNotification:null
         }
         this.HomeHOD=this.HomeHOD.bind(this);
         this.ProfileInstructor=this.ProfileInstructor.bind(this);
+        this.Notifications=this.Notifications.bind(this);
     }
 
     HomeHOD(event){
@@ -26,6 +29,10 @@ class Navbar extends Component{
     }
     ProfileInstructor(event){
         this.setState({RedirectToProfile:"/StaffAM"})
+        event.preventDefault()
+    }
+    Notifications(event){
+        this.setState({RedirectToNotification:"/NotificationsAM"})
         event.preventDefault()
     }
     state={ clicked:false}
@@ -39,6 +46,9 @@ class Navbar extends Component{
         }
         if(this.state.RedirectToProfile){
             return<Redirect to ={this.state.RedirectToProfile} Component={StaffAM}/>
+        }
+        if(this.state.RedirectToNotification){
+            return<Redirect to ={this.state.RedirectToNotification} Component={NotificationsAM}/>
         }
         return(
             <nav className="NavbarItems">
@@ -62,8 +72,13 @@ class Navbar extends Component{
         
         </ul> */}
         <Button onClick={this.HomeHOD}> {MenuItems[0].title}<i class={MenuItems[0].icon}></i> </Button>
-        <Button onclick={this.ProfileInstructor}>{MenuItems[1].title}<i class={MenuItems[1].icon}></i> </Button>
+<<<<<<< HEAD
+        <Button onClick={this.ProfileInstructor}>{MenuItems[1].title}<i class={MenuItems[1].icon}></i> </Button>
         <Button >{MenuItems[2].title}<i class={MenuItems[2].icon}></i> </Button>
+=======
+        <Button onclick={this.ProfileInstructor}>{MenuItems[1].title}<i class={MenuItems[1].icon}></i> </Button>
+        <Button onClick={this.Notifications}>{MenuItems[2].title}<i class={MenuItems[2].icon}></i> </Button>        
+>>>>>>> 26ea2556b4e922df107aa576951af7a82c6c1872
         <Button >{MenuItems[3].title}<i class={MenuItems[3].icon}></i> </Button>
         <Button >{MenuItems[4].title}<i class={MenuItems[4].icon}></i> </Button>
 

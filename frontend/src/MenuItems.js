@@ -6,7 +6,6 @@ export const MenuItems=[
         url:'#',
         cName:'nav-links',
         icon:'fas fa-home',
-        RedirectTo:'HomeInstructor'
     },
     {
         title: 'Profile',

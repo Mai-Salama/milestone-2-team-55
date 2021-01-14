@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Redirect} from 'react-router-dom';
-import HomeHR from './HomeHR';
+import HomeHR from './home-hr.component';
 import HomeC from './CourseCoordinator/CoordinatorHomeCont';
 import ChangePasswordAM from './ChangePasswordAM';
 import ChangePasswordHR from './ChangePasswordHR';
@@ -43,7 +43,7 @@ export default class UpdatedLogin extends Component {
                 this.setState({redirect: "/ChangePasswordAM"});
             }
             if(response.data.roleToSend == "HR" && response.data.reset == "reset"){
-                this.setState({redirect: "/Home"});
+                this.setState({redirect: "/HomeHR"});
             }
             if(response.data.roleToSend == "HR" && response.data.reset == "notreset"){
                 this.setState({redirect: "/ChangePasswordHR"});
@@ -61,7 +61,7 @@ export default class UpdatedLogin extends Component {
         if(this.state.redirect == "/ChangePasswordAM"){
             return <Redirect to={this.state.redirect} Component={ChangePasswordAM}/>
         }
-        if(this.state.redirect == "/Home"){
+        if(this.state.redirect == "/HomeHR"){
             return <Redirect to={this.state.redirect} Component={HomeHR}/>
         }
         if(this.state.redirect == "/ChangePasswordHR"){

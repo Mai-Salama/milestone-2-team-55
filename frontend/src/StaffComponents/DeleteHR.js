@@ -34,12 +34,20 @@ export default class DeleteHR extends Component {
     render() {
         return (
             <div>
-                <h1>Delete HR member</h1>
+              <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li className="breadcrumb-item"><a href="/Staff">Staff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/HRstaff">HRstaff</a></li>
+            <li className="breadcrumb-item active" aria-current="page">DeleteHR</li>
+          </ol>
+        </nav>
+                <h2>Delete HR member</h2>
                 <form onSubmit = {this.handleSubmit}>
                 <label>
                     <input name="ide" placeholder="ID..." type="text" ide={this.state.ide} onChange={this.handleChange}/>
                 </label>
-                <input type="submit" value="Submit" />
+                <input type="submit" id="submit" value="Submit" />
                 </form>
             </div>
         )

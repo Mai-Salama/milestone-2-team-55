@@ -43,7 +43,15 @@ export default class AddNewHR extends Component {
     render() {
         return (
             <div>
-            <h1>Add new HR member</h1>
+             <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><a href="/Home">Home</a></li>
+            <li className="breadcrumb-item"><a href="/Staff">Staff</a></li>
+            <li className="breadcrumb-item"><a href="/Staff/HRstaff">HRstaff</a></li>
+            <li className="breadcrumb-item active" aria-current="page">AddNewHR</li>
+          </ol>
+        </nav>
+            <h2>Add new HR member</h2>
             <form onSubmit = {this.handleSubmit}>
             <div class="row">
                 <label>

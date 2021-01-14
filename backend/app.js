@@ -30,6 +30,7 @@ const AccidentalLeaves = require('./models/AccidentalLeaves');
 const SlotLinkingRequest = require('./models/SlotLinkingRequest');
 const Availability = require('./models/Availability');
 const { findOne } = require('./models/AcademicMember');
+const DayOffRequest = require('./models/DayOffRequest');
 
 portal.use(express.json());
 portal.use(express.urlencoded({extended:false}));
@@ -5410,3 +5411,1529 @@ console.log("dsf");
                     res.send(mem);
                 
             })
+            portal.post('/addlocation',authH,async(req,res)=>{
+                try{
+                    
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    
+                    if(verified.role=="HR"){
+                        const exists= await Location.findOne({roomNo: req.body.roomNo});
+                        if(exists){
+                            res.send(exists)
+                        }
+                        if(!exists){
+            
+                        const loc = new Location({
+                            roomNo:req.body.roomNo,
+                            roomType:req.body.roomType,
+                            capacity:req.body.capacity
+                        })
+                        await loc.save();
+            
+                        const saturday=await Availability.findOne({day:"Saturday"});
+                        if(!saturday){
+                        console.log("no Saturday ")
+                          const availablesaturday = new Availability ({
+                              day:"Saturday"
+                              
+                          });
+                          console.log("created the row");
+                          await availablesaturday.save();
+                        }
+                        const sunday=await Availability.findOne({day:"Sunday"});
+                        if(!sunday){
+                        //console.log(saturday);
+                        console.log("no Sunday ")
+                          const availablesunday = new Availability ({
+                              day:"Sunday"
+                              
+                          });
+                          //console.log("created the row");
+                          await availablesunday.save();
+                        }
+                        const monday=await Availability.findOne({day:"Monday"});
+                        if(!monday){
+                        console.log(monday);
+                        console.log("no Saturday ")
+                          const availablemonday = new Availability ({
+                              day:"Monday"
+                              
+                          });
+                          
+                          await availablemonday.save();
+                        }
+                        const Tuesday=await Availability.findOne({day:"Tuesday"});
+                        if(!Tuesday){
+                       
+                        console.log("no Tuesday ")
+                          const availabletuesday = new Availability ({
+                              day:"Tuesday"
+                              
+                          });
+                          console.log("created the row");
+                          await availabletuesday.save();
+                        }
+                        const wednesday=await Availability.findOne({day:"Wednesday"});
+                        if(!wednesday){
+                        console.log(wednesday);
+                        console.log("no Saturday ")
+                          const availablewednesday = new Availability ({
+                              day:"Wednesday"
+                              
+                          });
+                          console.log("created the row");
+                          await availablewednesday.save();
+                        }
+                        const thursday=await Availability.findOne({day:"Thursday"});
+                        if(!thursday){
+                        // console.log(saturday);
+                        // console.log("no Saturday ")
+                          const availablethursday = new Availability ({
+                              day:"Thursday"
+                              
+                          });
+                          console.log("created the row");
+                          await availablethursday.save();
+                        }
+            
+                    //       const available = new Availability ({
+                    //           day:"Tuesday",
+                    //           first:[loc.roomNo]
+                    //       });
+                    //       await available.save();
+                    // if(Availability.day=="Monday"){
+                    //  await   Availability.first.updateOne({$addToSet:{second:loc.roomNo}});
+            
+                    // }
+            
+                        await Availability.updateMany({},{$push:{"first":loc.roomNo}});
+                        await Availability.updateMany({},{$push:{"second":loc.roomNo}});
+                        await Availability.updateMany({},{$push:{"third":loc.roomNo}});
+                        await Availability.updateMany({},{$push:{"fourth":loc.roomNo}});
+                        await Availability.updateMany({},{$push:{"fifth":loc.roomNo}});
+                        console.log("added location successfullaay");
+                    }
+                }
+            
+                }
+                catch(err){
+                    console.log(err);
+                }
+            
+            })
+            portal.post('/updatelocation',authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role=="HR"){
+                      await Location.updateOne({"roomNo" :req.body.roomNo},{$set: {"roomType" : req.body.roomType,"capacity":req.body.capacity}});
+                      console.log("room updated successully");
+                    }
+            
+                }
+                catch(err){
+                    console.log(err);
+                }
+            
+            })
+            portal.post('/deletelocation',authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role=="HR"){
+                        await Location.deleteOne({"roomNo" :req.body.roomNo});
+                        const roomno=req.body.roomNo ;
+                        await Availability.updateMany({},{$pull:{"second":roomno}});
+                        await Availability.updateMany({},{$pull:{"first":roomno}});
+                         await Availability.updateMany({},{$pull:{"third":roomno}});
+            
+                        await Availability.updateMany({},{$pull:{"fourth":roomno}});
+            
+                        await Availability.updateMany({},{$pull:{"fifth":roomno}});
+                    }
+            
+                }
+                catch(err){
+                    console.log(err);
+                }
+            
+            })
+
+            portal.post('/requestCompensationLeave',authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                   
+                    const todaysDate = new Date();
+                    todaysMonth = todaysDate.getMonth() + 1; 
+                    let requests = await CompensationRequest.find({});
+                    let lastOne = requests.length-1;
+                    //console.log(lastOne);
+                    let reqID;
+                    if(lastOne == -1){
+                        reqID = 0;
+                    }
+                    else{
+                        let lastReqId = requests[lastOne].req_id;
+                        reqID = lastReqId + 1;
+                    }
+                    console.log("ID");
+                if(verified.role == "HR"){
+                    console.log("HR");
+                    if(req.body.day == "Friday" || req.body.day == "Saturday"){
+                        return res.status(400).json({msg:"You cannot request a leave on a weekend"});
+                    }
+                    const HRfound = await HrMembers.findOne({id: verified.id});
+                    const request = {
+                        "id":verified.id,
+                        "req_id":reqID,
+                        "date":req.body.date,
+                        "day":req.body.day,
+                        "month":req.body.month,
+                        "reason":req.body.reason,
+                        "status":0
+                    }
+                    console.log("request to save HR");
+                    const reqtotable = new CompensationRequest({
+                        id:verified.id,
+                        req_id:reqID,
+                        date:req.body.date,
+                        day:req.body.day,
+                        month:req.body.month,
+                        reason:req.body.reason,
+                        status:0
+                    });
+                    await reqtotable.save();
+                    console.log("saved request");
+                    const up = await HrMembers.updateOne({"id": "hr-1"},{$push: {'compensationrequests': request}}); 
+                    console.log("saved first HR");
+                }
+                else{ 
+                    const ID =verified.id;
+                    const AMfound= await AcademicMember.findOne({id:ID});
+                    console.log(AMfound.faculty);
+                          let dayoff = AMfound.dayoff;
+                          if(req.body.day == "Friday" || req.body.day == dayoff){
+                              return res.status(400).json({msg:"You cannot request a leave on a weekend"});
+                          }
+                              const request = {
+                                  "id":verified.id,
+                                  "req_id": reqID,
+                                  "date":req.body.date,
+                                  "day":req.body.day,
+                                  "month":req.body.month,
+                                  "reason":req.body.reason,
+                                  "status":0
+                              }
+                             
+                              const reqtotable = new CompensationRequest({
+                                  id:verified.id,
+                                  req_id: reqID,
+                                  date:req.body.date,
+                                  day:req.body.day,
+                                  month:req.body.month,
+                                  reason:req.body.reason,
+                                  status:0
+                              });
+                              await reqtotable.save();
+                              // find HOD
+                              let HODid;
+                              const faculty1 =await Faculties.findOne({"name": AMfound.faculty});
+                              console.log(AMfound.department);
+                            console.log(faculty1.id)
+                              for(let i = 0; i < faculty1.departments.length;i++){
+                          
+                                  if(faculty1.departments[i].name == AMfound.department){
+                                      HODid = faculty1.departments[i].HOD;
+                                      console.log("msaaaa msaaa")
+                                  }
+                              } 
+                              const up = await AcademicMember.updateOne({"id": HODid},{$push: {"compensationrequests": request}}); 
+                          }
+                        }
+                        catch(err){
+                            console.log(err);
+                        }
+            });
+
+            portal.post('/requestMaternityLeave',authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    const todaysDate = new Date();
+                    todaysMonth = todaysDate.getMonth() + 1; 
+                    let requests = await MaternityRequest.find({});
+                    let lastOne = requests.length-1;
+                    console.log(lastOne);
+                    let reqID;
+                    if(lastOne == -1){
+                        reqID = 0;
+                    }
+                    else{
+                        let lastReqId = requests[lastOne].req_id;
+                        reqID = lastReqId + 1;
+                    }
+                if(verified.role == "HR"){
+                    const HRfound = await HrMembers.findOne({id: verified.id});
+                    if(HRfound.gender=="female"){
+                    
+                    const request = {
+                        "id":HRfound.id,
+                        "req_id":reqID,
+                        "dateFrom":req.body.dateFrom,
+                        "dateTo":req.body.dateTo,
+                        "monthFrom":req.body.monthFrom,
+                        "monthTo":req.body.monthTo,
+                        "document":req.body.document,
+                        "status":0
+                    }
+                    const reqtotable = new MaternityRequest({
+                        id:HRfound.id,
+                        req_id:reqID,
+                        dateFrom:req.body.dateFrom,
+                        dateTo:req.body.dateTo,
+                        monthFrom:req.body.monthFrom,
+                        monthTo:req.body.monthTo,
+                        document:req.body.document,
+                        status:0
+                    });
+                    await reqtotable.save();
+                    const up = await HrMembers.updateOne({"id": "hr-1"},{$push: {'maternityLeaverequests': request}}); 
+                    res.json(HRfound)
+                }else{
+                    res.json(HRfound)
+                }
+                }
+                else{   
+                          const AMfound = AcademicMember.findOne({id: verified.id});
+                          if(AMfound.gender=="female"){
+                              const request = {
+                                "id":AMfound.id,
+                                "req_id":reqID,
+                                "dateFrom":req.body.dateFrom,
+                                "dateTo":req.body.dateTo,
+                                "monthFrom":req.body.monthFrom,
+                                "monthTo":req.body.monthTo,
+                                "status":0
+                              }
+                              const reqtotable = new MaternityRequest({
+                                id:AMfound.id,
+                                req_id:reqID,
+                                dateFrom:req.body.dateFrom,
+                                dateTo:req.body.dateTo,
+                                monthFrom:req.body.monthFrom,
+                                monthTo:req.body.monthTo,
+                                status:0
+                              });
+                              await reqtotable.save();
+                              // find HOD
+                              let HODid;
+                              const faculty = faculties.findOne({"name": AMfound.faculty});
+                              for(let i = 0; i < faculty.departments.length;i++){
+                                  if(faculty.departments[i].name == AMfound.department){
+                                      HODid = faculty.departments[i].HOD;
+                                  }
+                              }
+                              const up = await AcademicMember.updateOne({"id": HODid},{$push: {'maternityLeaverequests': request}}); 
+                              res.json(AMfound)
+                          }else{
+                            res.json(AMfound)
+                          }}
+                          
+                        
+                    }
+                        catch(err){
+                            console.log(err);
+                        }
+            });
+             
+            portal.post('/requestSickLeave',authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    const todaysDate = new Date();
+                    todaysMonth = todaysDate.getMonth() + 1; 
+                    let requests = await SickLeave.find({});
+                    let lastOne = requests.length;
+                    console.log(lastOne);
+                    let reqID ;
+                    if(lastOne == 0){
+                        reqID = 0;
+                    }
+                    else{
+                        console.log(requests[lastOne-1])
+                        const lastReqId = await requests[lastOne-1].id;
+                        console.log(lastReqId)
+                        let reqID = lastReqId + 1;
+                        console.log(reqID)
+                    }
+                    
+                if(verified.role == "HR"){
+                    const HRfound = await HrMembers.findOne({id: verified.id});
+                    const request = {
+                        "id":HRfound.id,
+                        "req_id":reqID,
+                        "date":req.body.date,
+                        "month":req.body.month,
+                        "status":0
+                    }
+                    const reqtotable = new SickLeave({
+                        id:HRfound.id,
+                        req_id:reqID,
+                        date:req.body.date,
+                        month:req.body.month,
+                        status:0
+                    });
+                    await reqtotable.save();
+                    const up = await HrMembers.updateOne({"id": "hr-1"},{$push: {'sickLeaverequests': request}}); 
+                    res.json(SickLeave)
+                }
+                else{
+                          const AMfound = await AcademicMember.findOne({id: verified.id});
+                              const request = {
+                                "id":AMfound.id,
+                                req_id:reqID,
+                                "date":req.body.date,
+                                "month":req.body.month,
+                                "status":0
+                              }
+                              const reqtotable = new SickLeave({
+                                id:AMfound.id,
+                                req_id:reqID,
+                                date:req.body.date,
+                                month:req.body.month,
+                                status:0
+                              });
+                              await reqtotable.save();
+                              // find HOD
+                              let HODid;
+                              const faculty = await Faculties.findOne({"name": AMfound.faculty});
+                              for(let i = 0; i < faculty.departments.length;i++){
+                                  if(faculty.departments[i].name == AMfound.department){
+                                      HODid = faculty.departments[i].HOD;
+                                  }
+                              }
+                              const up = await AcademicMember.updateOne({"id": HODid},{$push: {'sickLeaverequests': request}}); 
+                             res.send("Sick Request Sent")
+                            }
+        
+                        }
+                        catch(err){
+                            console.log(err);
+                        }
+            });
+        
+            portal.post('/submitAccidentalLeave', authH, async(req,res)=>{
+                try{
+                const JWT_Password="RandomString";
+                const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                const todaysDate = new Date();
+                let requests = await AccidentalLeaves.find({});
+                let lastOne = requests.length-1;
+                //console.log(lastOne);
+                let reqID;
+                if(lastOne == -1){
+                    reqID = 0;
+                }
+                else{
+                    let lastReqId = await requests[lastOne].req_id;
+                    console.log("hiiiii")
+                    console.log(lastReqId)
+                    reqID = lastReqId + 1;
+                }
+                if(verified.role == "HR"){
+                    if(req.body.day == "Friday" || req.body.day == "Saturday"){
+                        return res.status(400).json({msg:"You cannot request a leave on a weekend"});
+                    }
+                    const HRfound = await HrMembers.findOne({id: verified.id});
+                    if (HRfound.accidentalLeaverequests.length>=6){
+                        return res.status(400).json({msg:"You have no more accidental leaves"});
+                    }
+                   
+                    const reqtotable = new AccidentalLeaves({
+                        id:verified.id,
+                        req_id: reqID,
+                        date:req.body.date,
+                        month:req.body.month,
+                        reason:req.body.reason,
+                        status:0
+                    });
+                    await reqtotable.save();
+                      
+                        await HrMembers.updateOne({id:"hr-1"},{$push:{"accidentalLeaverequests":reqtotable}});
+        
+                        // firstHr.accidentalLeaverequests.push(request);
+                        // await firstHr.save();
+                }
+                else{
+                  
+                    const AMfound = await AcademicMember.findOne({id:verified.id});
+                    //console.log(AMfound.name)
+                    let dayoff = await AMfound.dayoff;
+                    if(req.body.day == "Friday" || req.body.day == dayoff){
+                        return res.status(400).json({msg:"You cannot request a leave on a weekend"});
+                    }
+                   //console.log(AccidentalLeave.length)
+                    if (AMfound.accidentalLeaverequests.length>=6){
+                        return res.status(400).json({msg:"You have no more accidental leaves"});
+                    }
+                        const request = {
+                            id:verified.id,
+                            req_id:1,
+                            date:req.body.date,
+                            month:req.body.month,
+                            day:req.body.day,
+                            status:0
+                        }
+                        const reqtotable = new AccidentalLeaves({
+                            id:verified.id,
+                            req_id: 1,
+                            date:req.body.date,
+                            month:req.body.month,
+                            day:req.body.day,
+                            status:0
+                        });
+                        await reqtotable.save();
+                        // find HOD
+                        let HODid;
+                
+                        const faculty1 = await Faculties.findOne({"name": AMfound.faculty});
+                        //console.log(faculty1)
+                        for(let i = 0; i < faculty1.departments.length;i++){
+                            if(faculty1.departments[i].name == AMfound.department){
+                                HODid = faculty1.departments[i].HOD;
+                            }
+                        }
+                        const HODfound = await AcademicMember.find({id:HODid});
+                       await AcademicMember.updateOne({id:HODid},{$push:{"accidentalLeaverequests":reqtotable}});
+                       
+                       
+        
+                //        const ID =verified.id;
+                //        const AMfound= await AcademicMember.findOne({id:ID});
+                //        console.log(AMfound.replacementrequest);
+                  
+                   
+                //    await AcademicMember.updateOne({id:AMfound.id},{$push:{"replacementrequest":replacement}});
+                //    await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                   res.send("Your request sent")
+                   
+                    }
+                }
+                    catch(err){
+                        console.log(err);
+                    }
+            }); 
+            
+            portal.post('/submitAnnualLeaveRequest',authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    const todaysDate = new Date();
+                    todaysMonth = todaysDate.getMonth() + 1;          
+                    if(req.body.month < todaysMonth){
+                        console.log("months");
+                        return res.status(400).json({msg:"Annual leaves must be submitted before the target date"});
+                    }
+                    if(req.body.month == todaysMonth){
+                        if(req.body.date < todaysDate.getDate()){
+                            console.log("months same, day");
+                            return res.status(400).json({msg:"Annual leaves must be submitted before the target date"});
+                        }
+                    }
+                    if(verified.role == "HR"){
+                        if(req.body.day == "Friday" || req.body.day == "Saturday"){
+                            return res.status(400).json({msg:"You cannot request a leave on a weekend"});
+                        }
+                        const HRfound = HrMembers.findOne({id: verified.id});
+                        if(HRfound.annualdays < 1){
+                            return res.status(400).json({msg:"Not enough Annual leave balance"});
+                        }
+                        let requests = await AnnualLeave.find({});
+                        let lastOne = requests.length-1;
+                        console.log(lastOne);
+                        let reqID;
+                        if(lastOne == -1){
+                            reqID = 0;
+                        }
+                        else{
+                            let lastReqId = requests[lastOne].req_id;
+                            reqID = lastReqId + 1;
+                        }
+                        const request = {
+                            "id":verified.id,
+                            "req_id": reqID,
+                            "date":req.body.date,
+                            "month":req.body.month,
+                            "day":req.body.day,
+                            "TAtoCover":req.body.tatocover,
+                            "status":0
+                        };
+                        const reqtotable = new AnnualLeave({
+                            id:verified.id,
+                            req_id: reqID,
+                            date:req.body.date,
+                            month:req.body.month,
+                            day:req.body.day,
+                            status:0
+                        });
+                        await reqtotable.save();
+                        const up = await HrMembers.updateOne({"id": "hr-1"},{$push: {'annualLeaverequests': request}}); 
+                    }
+                    else{
+                        //must check if there's teaching that day
+                        const AMfound = await AcademicMember.findOne({id: verified.id});
+                        let dayoff = AMfound.dayoff;
+                        console.log(dayoff);
+                        if(req.body.day == "Friday" || req.body.day == dayoff){
+                            return res.status(400).json({msg:"You cannot request a leave on a weekend"});
+                        }
+                        if(AMfound.annualdays < 1){
+                            return res.status(400).json({msg:"Not enough Annual leave balance"});
+                        }
+                        let dayNo;
+                        let teaching = false;
+                        if(req.body.day == "Saturday")
+                            dayNo = 0;
+                        if(req.body.day == "Sunday")
+                            dayNo = 1;
+                        if(req.body.day == "Monday")
+                            dayNo = 2;
+                        if(req.body.day == "Tuesday")
+                            dayNo = 3; 
+                        if(req.body.day == "Wednesday")
+                            dayNo = 4;
+                        if(req.body.day == "Thursday")
+                            dayNo = 5;  
+                        console.log(dayNo);
+                        if(AMfound.Schedule[dayNo].first.length > 0){
+                            teaching = true;
+                        }
+                        if(AMfound.Schedule[dayNo].second.length > 0){
+                            teaching = true;
+                        }
+                        if(AMfound.Schedule[dayNo].third.length > 0){
+                            teaching = true;
+                        }
+                        if(AMfound.Schedule[dayNo].fourth.length > 0){
+                            teaching = true;
+                        }
+                        if(AMfound.Schedule[dayNo].fifth.length > 0){
+                            teaching = true;
+                        }
+                        console.log(teaching);
+                        if(teaching){
+                            let tatocover = "";
+                            const acceptedRequest = ReplacementRequest.findOne({id: verified.id, date: req.body.date, month: req.body.month, status:"accepted"});
+                            if(acceptedRequest){
+                                tatocover = acceptedRequest.receiver_id;
+                            }
+                            const request = {
+                                "id":verified.id,
+                                "req_id": reqID,
+                                "date":req.body.date,
+                                "month":req.body.month,
+                                "day":req.body.day,
+                                "TAtoCover": tatocover,
+                                "status":0
+                            }
+                            const reqtotable = new AnnualLeave({
+                                id:verified.id,
+                                req_id:reqID,
+                                date:req.body.date,
+                                month:req.body.month,
+                                day:req.body.day,
+                                TAtoCover: tatocover,
+                                status:0
+                            });
+                            await reqtotable.save();
+                            console.log("checktable");
+                            // find HOD
+                            let HODid;
+                            let courseid;
+                            if(AMfound.courses != null){
+                                courseid = AMfound.courses[0];
+                            }
+                            else{
+                                return res.status(400).json({msg:"Member is not assigned to any courses"});
+                            }
+                            const faculty = await Faculties.findOne({"name": AMfound.faculty});
+                            
+                            for(let i = 0; i < faculty.departments.length;i++){
+                                if(faculty.departments[i].name == AMfound.department){
+                                    HODid = faculty.departments[i].HOD;
+                                }
+                            }
+                            const HODfound = await AcademicMember.findOne({id:HODid});
+                            const up = await AcademicMember.updateOne({"id": HODid},{$push: {'annualLeaverequests': request}}); 
+                        }
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+
+            portal.get('/viewStatusOfAccidentalPending', authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        const pendingrequests = await AccidentalLeaves.find({id: HRfound.id, status:0});
+                        res.send(pendingrequests);
+                    }
+                    else{
+                        const AMfound = await AcademicMember.findOne({id: verified.id});
+                        const pendingrequests = await AccidentalLeaves.find({id: AMfound.id, status:0});
+                        res.send(pendingrequests);
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+        
+            portal.get('/viewStatusOfAccidentalAccepted', authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        const pendingrequests = await AccidentalLeaves.find({id: HRfound.id, status:1});
+                        res.send(pendingrequests);
+                    }
+                    else{
+                        const AMfound = await AcademicMember.findOne({id: verified.id});
+                        const pendingrequests = await AccidentalLeaves.find({id: AMfound.id, status:1});
+                        res.send(pendingrequests);
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+
+            portal.get('/notificationsHR', authH,async(req,res)=>{
+                try{
+                    let toSend = [];
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        const accAccidental = await AccidentalLeaves.find({id: HRfound.id, status:1});
+                        for(let i = 0; i < accAccidental.length; i++){
+                            let item = {
+                                type:"Accidental",
+                                req_id: accAccidental[i].req_id,
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejAccidental = await AccidentalLeaves.find({id: HRfound.id, status:2});
+                        for(let i = 0; i < rejAccidental.length; i++){
+                            let item = {
+                                type:"Accidental",
+                                req_id: rejAccidental[i].req_id,
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        const accAnnual = await AnnualLeave.find({id: HRfound.id, status:1});
+                        for(let i = 0; i < accAnnual.length; i++){
+                            let item = {
+                                type:"Annual",
+                                req_id: accAnnual[i].req_id,
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejAnnual = await AnnualLeave.find({id: HRfound.id, status:2});
+                        for(let i = 0; i < rejAnnual.length; i++){
+                            let item = {
+                                type:"Annual",
+                                req_id: rejAnnual[i].req_id,
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        const accMaternity = await MaternityRequest.find({id: HRfound.id, status:1});
+                        for(let i = 0; i < accMaternity.length; i++){
+                            let item = {
+                                type:"Maternity",
+                                req_id: accMaternity[i].req_id,
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejMaternity = await MaternityRequest.find({id: HRfound.id, status:2});
+                        for(let i = 0; i < rejMaternity.length; i++){
+                            let item = {
+                                type:"Maternity",
+                                req_id: rejMaternity[i].req_id,
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        const accComp = await CompensationRequest.find({id: HRfound.id, status:1});
+                        for(let i = 0; i < accComp.length; i++){
+                            let item = {
+                                type:"Compensation",
+                                req_id: accComp[i].req_id,
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejComp = await CompensationRequest.find({id: HRfound.id, status:2});
+                        for(let i = 0; i < rejComp.length; i++){
+                            let item = {
+                                type:"Compensation",
+                                req_id: rejComp[i].req_id,
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        const accSick = await SickLeave.find({id: HRfound.id, status:1});
+                        for(let i = 0; i < accSick.length; i++){
+                            let item = {
+                                type:"Sick",
+                                req_id: accSick[i].req_id,
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejSick = await SickLeave.find({id: HRfound.id, status:2});
+                        for(let i = 0; i < rejSick.length; i++){
+                            let item = {
+                                type:"Sick",
+                                req_id: rejSick[i].req_id,
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        res.send(toSend);
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+
+            portal.get('/notificationsAM', authH,async(req,res)=>{
+                try{
+                    let toSend = [];
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "AM"){
+                        const HRfound = await AcademicMember.findOne({id: verified.id});
+                        console.log("in notifications")
+                        console.log(HRfound.id);
+                        const accAccidental = await AccidentalLeaves.find({id: HRfound.id, status:1});
+                        for(let i = 0; i < accAccidental.length; i++){
+                            let item = {
+                                type:"Accidental Leave",
+                                req_id: accAccidental[i].req_id,
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejAccidental = await AccidentalLeaves.find({id: HRfound.id, status:2});
+                        for(let i = 0; i < rejAccidental.length; i++){
+                            let item = {
+                                type:"Accidental Leave",
+                                req_id: rejAccidental[i].req_id,
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        const accAnnual = await AnnualLeave.find({id: HRfound.id, status:1});
+                        for(let i = 0; i < accAnnual.length; i++){
+                            let item = {
+                                type:"Annual Leave",
+                                req_id: accAnnual[i].req_id,
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejAnnual = await AnnualLeave.find({id: HRfound.id, status:2});
+                        for(let i = 0; i < rejAnnual.length; i++){
+                            let item = {
+                                type:"Annual Leave",
+                                req_id: rejAnnual[i].req_id,
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        const accMaternity = await MaternityRequest.find({id: HRfound.id, status:1});
+                        for(let i = 0; i < accMaternity.length; i++){
+                            let item = {
+                                type:"Maternity Leave",
+                                req_id: accMaternity[i].req_id,
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejMaternity = await MaternityRequest.find({id: HRfound.id, status:2});
+                        for(let i = 0; i < rejMaternity.length; i++){
+                            let item = {
+                                type:"Maternity Leave",
+                                req_id: rejMaternity[i].req_id,
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        const accComp = await CompensationRequest.find({id: HRfound.id, status:1});
+                        for(let i = 0; i < accComp.length; i++){
+                            let item = {
+                                type:"Compensation Leave",
+                                req_id: accComp[i].req_id,
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejComp = await CompensationRequest.find({id: HRfound.id, status:2});
+                        for(let i = 0; i < rejComp.length; i++){
+                            let item = {
+                                type:"Compensation Leave",
+                                req_id: rejComp[i].req_id,
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        const accSick = await SickLeave.find({id: HRfound.id, status:1});
+                        for(let i = 0; i < accSick.length; i++){
+                            let item = {
+                                type:"Sick Leave",
+                                req_id: accSick[i].req_id,
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejSick = await SickLeave.find({id: HRfound.id, status:2});
+                        for(let i = 0; i < rejSick.length; i++){
+                            let item = {
+                                type:"Sick Leave",
+                                req_id: rejSick[i].req_id,
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        //slotlinking
+                        const accSlot = await SlotLinkingRequest.find({id: HRfound.id, acceptanceStatus:1});
+                        for(let i = 0; i < accSlot.length; i++){
+                            let item = {
+                                type:"SlotLinking",
+                                req_id: "-",
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejSlot = await SlotLinkingRequest.find({id: HRfound.id, acceptanceStatus:2});
+                        for(let i = 0; i < rejSlot.length; i++){
+                            let item = {
+                                type:"SlotLinking",
+                                req_id: "-",
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        //day off
+                        const accDay = await DayOffRequest.find({id: HRfound.id, acceptanceStatus:1});
+                        for(let i = 0; i < accDay.length; i++){
+                            let item = {
+                                type:"Day Off",
+                                req_id: "-",
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejDay = await DayOffRequest.find({id: HRfound.id, acceptanceStatus:2});
+                        for(let i = 0; i < rejDay.length; i++){
+                            let item = {
+                                type:"Day Off",
+                                req_id: "-",
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        //replacement request
+                        const accRep = await ReplacementRequest.find({id: HRfound.id, request_status:"accepted"});
+                        for(let i = 0; i < accRep.length; i++){
+                            let item = {
+                                type:"Replacement",
+                                req_id: "-",
+                                status: "Accepted"
+                            };
+                            toSend.push(item);
+                        }
+                        const rejRep = await ReplacementRequest.find({id: HRfound.id, request_status:"rejected"});
+                        for(let i = 0; i < rejRep.length; i++){
+                            let item = {
+                                type:"Replacement",
+                                req_id: "-",
+                                status: "Rejected"
+                            };
+                            toSend.push(item);
+                        }
+                        res.send(toSend);
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+
+            
+        
+            portal.get('/viewStatusOfAccidentalRejected', authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        const pendingrequests = await AccidentalLeaves.find({id: HRfound.id, status:2});
+                        res.send(pendingrequests);
+                    }
+                    else{
+                        const AMfound = await AcademicMember.findOne({id: verified.id});
+                        const pendingrequests = await AccidentalLeaves.find({id: AMfound.id, status:2});
+                        res.send(pendingrequests);
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+            portal.post('/cancelPendingAccidental', authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        await AccidentalLeaves.deleteOne({id: HRfound.id, req_id: req.body.reqID, status:0});
+                        const firstHr = await HrMembers.findOne({id: "hr-1"});
+                        for(let i = 0; i < firstHr.accidentalLeaverequests.length; i++){
+                            if(firstHr.accidentalLeaverequests[i].req_id == req.body.reqID){
+                                firstHr.accidentalLeaverequests.splice(i,1);
+                            }
+                        }
+                        await firstHr.save();
+                    }
+                    else{
+                        let HODid;
+                        const faculty = faculties.findOne({"name": requester.faculty});
+                        for(let i = 0; i < faculty.departments.length;i++){
+                            if(faculty.departments[i].name == AMfound.department){
+                                HODid = faculty.departments[i].HOD;
+                            }
+                        }
+                        const HODfound = await AcademicMember.find({id:HODid});
+                        if(verified.id != HODfound.id){
+                            return res.status(400).json({msg:"You are not allowed to accept or reject requests"});
+                        }
+                        const AMfound = await AcademicMember.findOne({id: verified.id});
+                        await AccidentalLeaves.deleteOne({id: AMfound.id, req_id: req.body.reqID, status:0});
+                        for(let i = 0; i < HODfound.accidentalLeaverequests.length; i++){
+                            if(HODfound.accidentalLeaverequests[i].req_id == req.body.reqID){
+                                HODfound.accidentalLeaverequests.splice(i,1);
+                            }
+                        }
+                        await HODfound.save();
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+
+            portal.get('/viewStatusOfAnnualPending', authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        const pendingrequests = await AnnualLeave.find({id: HRfound.id, status:0});
+                        res.send(pendingrequests);
+                    }
+                    else{
+                        const AMfound = await AcademicMember.findOne({id: verified.id});
+                        const pendingrequests = await AnnualLeave.find({id: AMfound.id, status:0});
+                        res.send(pendingrequests);
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+        
+            portal.get('/viewStatusOfAnnualAccepted', authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        const pendingrequests = await AnnualLeave.find({id: HRfound.id, status:1});
+                        res.send(pendingrequests);
+                    }
+                    else{
+                        const AMfound = await AcademicMember.findOne({id: verified.id});
+                        const pendingrequests = await AnnualLeave.find({id: AMfound.id, status:1});
+                        res.send(pendingrequests);
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+        
+            portal.get('/viewStatusOfAnnualRejected', authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        const pendingrequests = await AnnualLeave.find({id: HRfound.id, status:2});
+                        res.send(pendingrequests);
+                    }
+                    else{
+                        const AMfound = await AcademicMember.findOne({id: verified.id});
+                        const pendingrequests = await AnnualLeave.find({id: AMfound.id, status:2});
+                        res.send(pendingrequests);
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+        
+        
+            portal.post('/cancelPendingAnnual', authH,async(req,res)=>{
+                try{
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        await AnnualLeave.deleteOne({id: HRfound.id, req_id: req.body.reqID, status:0});
+                        const firstHr = await HrMembers.findOne({id: "hr-1"});
+                        for(let i = 0; i < firstHr.annualLeaverequests.length; i++){
+                            if(firstHr.annualLeaverequests[i].req_id == req.body.reqID){
+                                firstHr.annualLeaverequests.splice(i,1);
+                            }
+                        }
+                        await firstHr.save();
+                    }
+                    else{
+                        let HODid;
+                        const faculty = faculties.findOne({"name": requester.faculty});
+                        for(let i = 0; i < faculty.departments.length;i++){
+                            if(faculty.departments[i].name == AMfound.department){
+                                HODid = faculty.departments[i].HOD;
+                            }
+                        }
+                        const HODfound = await AcademicMember.find({id:HODid});
+                        if(verified.id != HODfound.id){
+                            return res.status(400).json({msg:"You are not allowed to accept or reject requests"});
+                        }
+                        const AMfound = await AcademicMember.findOne({id: verified.id});
+                        await AnnualLeave.deleteOne({id: AMfound.id, req_id: req.body.reqID, status:0});
+                        for(let i = 0; i < HODfound.annualLeaverequests.length; i++){
+                            if(HODfound.annualLeaverequests[i].req_id == req.body.reqID){
+                                HODfound.annualLeaverequests.splice(i,1);
+                            }
+                        }
+                        await HODfound.save();
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+            portal.post('/viewAttendanceRecordsByMonth',authH,async(req,res)=>{
+                try{
+                    const JWT_Password = "RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                       
+                        const HRfound= await HrMembers.findOne({id:verified.id});
+                        let Arecords = new Array();
+                        for(let i = 0; i < HRfound.AttendanceRecords.length; i++){
+                            let Attendance = HRfound.AttendanceRecords[i].month;
+                            console.log(Attendance);
+                            if(Attendance == req.body.month){
+                                Arecords.push(HRfound.AttendanceRecords[i]);
+                             }
+                        }
+                         res.send(Arecords);
+                    }
+                    if(verified.role == "AM"){
+                        const AMfound = await AcademicMember.findOne({id:verified.id});
+                        let Arecords;
+                        for(let i = 0; i < AMfound.AttendanceRecords.length; i++){
+                            if(AMfound.AttendanceRecords[i].month == req.body.month){
+                                Arecords.push(AMfound.AttendanceRecords[i]);
+                            }
+                        }
+                        res.send(Arecords);
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+
+            portal.get('/viewStatusOfCompensationPending', authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        const pendingrequests = await CompensationRequest.find({id: HRfound.id, status:0});
+                        res.send(pendingrequests);
+                    }
+                    else{
+                        const AMfound = await AcademicMember.findOne({id: verified.id});
+                        const pendingrequests = await CompensationRequest.find({id: AMfound.id, status:0});
+                        res.send(pendingrequests);
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+        
+            portal.get('/viewStatusOfCompensationAccepted', authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        const pendingrequests = await CompensationRequest.find({id: HRfound.id, status:1});
+                        res.send(pendingrequests);
+                    }
+                    else{
+                        const AMfound = await AcademicMember.findOne({id: verified.id});
+                        const pendingrequests = await CompensationRequest.find({id: AMfound.id, status:1});
+                        res.send(pendingrequests);
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+        
+            portal.get('/viewStatusOfCompensationRejected', authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        const pendingrequests = await CompensationRequest.find({id: HRfound.id, status:2});
+                        res.send(pendingrequests);
+                    }
+                    else{
+                        const AMfound = await AcademicMember.findOne({id: verified.id});
+                        const pendingrequests = await CompensationRequest.find({id: AMfound.id, status:2});
+                        res.send(pendingrequests);
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+        
+        
+            portal.post('/cancelPendingCompensation', authH,async(req,res)=>{
+                const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                try{
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        await CompensationRequest.deleteOne({id: HRfound.id, req_id: req.body.reqID, status:0});
+                        const firstHr = await HrMembers.findOne({id: "hr-1"});
+                        for(let i = 0; i < firstHr.compensationrequests.length; i++){
+                            if(firstHr.compensationrequests[i].req_id == req.body.reqID){
+                                firstHr.compensationrequests.splice(i,1);
+                            }
+                        }
+                        await firstHr.save();
+                    }
+                    else{
+                        let HODid;
+                        const faculty = faculties.findOne({"name": requester.faculty});
+                        for(let i = 0; i < faculty.departments.length;i++){
+                            if(faculty.departments[i].name == AMfound.department){
+                                HODid = faculty.departments[i].HOD;
+                            }
+                        }
+                        const HODfound = await AcademicMember.find({id:HODid});
+                        if(verified.id != HODfound.id){
+                            return res.status(400).json({msg:"You are not allowed to accept or reject requests"});
+                        }
+                        const AMfound = await AcademicMember.findOne({id: verified.id});
+                        await CompensationRequest.deleteOne({id: AMfound.id, req_id: req.body.reqID, status:0});
+                        for(let i = 0; i < HODfound.compensationrequests.length; i++){
+                            if(HODfound.compensationrequests[i].req_id == req.body.reqID){
+                                HODfound.compensationrequests.splice(i,1);
+                            }
+                        }
+                        await HODfound.save();
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+            portal.get('/viewStatusOfMaternityPending', authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        const pendingrequests = await MaternityRequest.find({id: HRfound.id, status:0});
+                        res.json(pendingrequests);
+                    }
+                    else{
+                        const AMfound = await AcademicMember.findOne({id: verified.id});
+                        const pendingrequests = await MaternityRequest.find({id: AMfound.id, status:0});
+                        res.send(pendingrequests);
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+        
+            portal.get('/viewStatusOfMaternityAccepted', authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        const pendingrequests = await MaternityRequest.find({id: HRfound.id, status:1});
+                        res.send(pendingrequests);
+                    }
+                    else{
+                        const AMfound = await AcademicMember.findOne({id: verified.id});
+                        const pendingrequests = await MaternityRequest.find({id: AMfound.id, status:1});
+                        res.send(pendingrequests);
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+        
+            portal.get('/viewStatusOfMaternityRejected', authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        const pendingrequests = await MaternityRequest.find({id: HRfound.id, status:2});
+                        res.send(pendingrequests);
+                    }
+                    else{
+                        const AMfound = await AcademicMember.findOne({id: verified.id});
+                        const pendingrequests = await MaternityRequest.find({id: AMfound.id, status:2});
+                        res.send(pendingrequests);
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+        
+        
+            portal.post('/cancelPendingMaternity', authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        await MaternityRequest.deleteOne({id: HRfound.id, req_id: req.body.reqID, status:0});
+                        const firstHr = await HrMembers.findOne({id: "hr-1"});
+                        for(let i = 0; i < firstHr.maternityLeaverequests.length; i++){
+                            if(firstHr.maternityLeaverequests[i].req_id == req.body.reqID){
+                                firstHr.maternityLeaverequests.splice(i,1);
+                            }
+                        }
+                        await firstHr.save();
+                        res.json("done")
+                       
+                    }
+                    else{
+                        let HODid;
+                        const faculty = faculties.findOne({"name": requester.faculty});
+                        for(let i = 0; i < faculty.departments.length;i++){
+                            if(faculty.departments[i].name == AMfound.department){
+                                HODid = faculty.departments[i].HOD;
+                            }
+                        }
+                        const HODfound = await AcademicMember.find({id:HODid});
+                        if(verified.id != HODfound.id){
+                            return res.status(400).json({msg:"You are not allowed to accept or reject requests"});
+                        }
+                        const AMfound = await AcademicMember.findOne({id: verified.id});
+                        await MaternityRequest.deleteOne({id: AMfound.id, req_id: req.body.reqID, status:0});
+                        for(let i = 0; i < HODfound.maternityLeaverequests.length; i++){
+                            if(HODfound.maternityLeaverequests[i].req_id == req.body.reqID){
+                                HODfound.maternityLeaverequests.splice(i,1);
+                            }
+                        }
+                        await HODfound.save();
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+        
+            portal.get('/viewprofile',authA,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    
+                    if(verified.role=="HR"){
+                    const ID =verified.id;
+                    const member1= await HrMembers.findOne({id:ID});
+                
+                 
+                    const loc = {
+                        name: member1.name,
+                        office:member1.office,
+                       email:member1.email,
+                       dayoff:member1.dayoff,
+                       Salary:member1.salary
+            
+                       
+                    }
+                    res.send(loc)}
+                
+                    else {
+                    const ID =verified.id;
+                    const member1= await AcademicMember.findOne({id:ID});
+                
+                 
+                    const AM = {
+                        name:member1.name,
+                        office:member1.office,
+                       email:member1.email,
+                       dayoff:member1.dayoff,
+                       Salary:member1.salary
+            
+                       
+                    }
+                    res.send(AM)}
+                    
+            
+                }
+                catch(err){
+                    console.log(err);
+                }
+            
+             })
+             portal.get('/viewStatusOfSickPending', authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        const pendingrequests = await SickLeave.find({id: HRfound.id, status:0});
+                        res.send(pendingrequests);
+                    }
+                    else{
+                        const AMfound = await AcademicMember.findOne({id: verified.id});
+                        const pendingrequests = await SickLeave.find({id: AMfound.id, status:0});
+                        res.send(pendingrequests);
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+        
+            portal.get('/viewStatusOfSickAccepted', authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        const pendingrequests = await SickLeave.find({id: HRfound.id, status:1});
+                        res.send(pendingrequests);
+                    }
+                    else{
+                        const AMfound = await AcademicMember.findOne({id: verified.id});
+                        const pendingrequests = await SickLeave.find({id: AMfound.id, status:1});
+                        res.send(pendingrequests);
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+        
+            portal.get('/viewStatusOfSickRejected', authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        const pendingrequests = await SickLeave.find({id: HRfound.id, status:2});
+                        res.send(pendingrequests);
+                    }
+                    else{
+                        const AMfound = await AcademicMember.findOne({id: verified.id});
+                        const pendingrequests = await SickLeave.find({id: AMfound.id, status:2});
+                        res.send(pendingrequests);
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+        
+        
+            portal.post('/cancelPendingSick', authH,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role == "HR"){
+                        const HRfound = await HrMembers.findOne({id: verified.id});
+                        await SickLeave.deleteOne({id: HRfound.id, req_id: req.body.reqID, status:0});
+                        const firstHr = await HrMembers.findOne({id: "hr-1"});
+                        for(let i = 0; i < firstHr.sickLeaverequests.length; i++){
+                            if(firstHr.sickLeaverequests[i].req_id == req.body.reqID){
+                                firstHr.sickLeaverequests.splice(i,1);
+                            }
+                        }
+                        await firstHr.save();
+                    }
+                    else{
+                        let HODid;
+                        const faculty = faculties.findOne({"name": requester.faculty});
+                        for(let i = 0; i < faculty.departments.length;i++){
+                            if(faculty.departments[i].name == AMfound.department){
+                                HODid = faculty.departments[i].HOD;
+                            }
+                        }
+                        const HODfound = await AcademicMember.find({id:HODid});
+                        if(verified.id != HODfound.id){
+                            return res.status(400).json({msg:"You are not allowed to accept or reject requests"});
+                        }
+                        const AMfound = await AcademicMember.findOne({id: verified.id});
+                        await SickLeave.deleteOne({id: AMfound.id, req_id: req.body.reqID, status:0});
+                        for(let i = 0; i < HODfound.sickLeaverequests.length; i++){
+                            if(HODfound.sickLeaverequests[i].req_id == req.body.reqID){
+                                HODfound.sickLeaverequests.splice(i,1);
+                            }
+                        }
+                        await HODfound.save();
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });    
+            
+            portal.get('/logout',(req,res)=>{
+                res.send("logged out");  
+             });
