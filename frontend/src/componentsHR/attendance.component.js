@@ -4,7 +4,7 @@ import Navbar from "../NavbarHR.js";
 export default class Attendance extends Component{
     render(){
         return(
-            <div><Navbar/>
+            <div>
             <div className='container'>
             <nav aria-label="breadcrumb">
             <ol className="breadcrumb alert alert-warning">

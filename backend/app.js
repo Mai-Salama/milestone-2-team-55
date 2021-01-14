@@ -4675,6 +4675,46 @@ portal.post('/acceptslotlinking',authA,async(req,res)=>{
     })
 
 
+    portal.post('/viewcompensation',authA,async(req,res)=>{
+        try{
+            const JWT_Password="RandomString";
+            const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+            let i;
+            let replacements=[];
+            if(verified.role=="AM"){
+                 const am= await AcademicMember.findOne({id:verified.id});
+                console.log(am.id);
+                console.log(CompensationRequest)
+                
+       
+          if(req.body.status=="0"){
+                const cr= await CompensationRequest.find({id:verified.id,status:"0"});
+             replacements.push(cr);
+        res.send(replacements);
+          }
+
+          if(req.body.status=="1"){
+            const cr= await CompensationRequest.find({id:verified.id,status:"1"});
+         replacements.push(cr);
+    res.send(replacements);
+      }
+
+      if(req.body.status=="2"){
+        const cr= await CompensationRequest.find({id:verified.id,status:"2"});
+     replacements.push(cr);
+res.send(replacements);
+  }
+              
+            }
+        }
+        
+            catch(err){
+                console.log(err);
+            }
+    })
+
+
+
 
 
 
@@ -5046,7 +5086,72 @@ portal.post('/acceptslotlinking',authA,async(req,res)=>{
     })
 
 
-
+    portal.post('/slotlinkingrequest',authA,async(req,res)=>{
+        try{
+            const listOfcoverage=[];
+            const JWT_Password="RandomString";
+            const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+           // console.log(token);
+            if(verified.role=="AM"){
+                const am= await AcademicMember.findOne({"id":verified.id});
+                console.log(am.id);
+                  
+                   // console.log(".............")
+                  //  console.log(current)
+                 // am.department="Mecha"
+       const slotlinking= new SlotLinkingRequest({
+       id:am.id,
+       requestedDay:req.body.requestedDay,
+       slotNumber:req.body.slotNumber,
+    
+       acceptanceStatus:0
+       })
+  
+       const forc = {
+        id:am.id,
+       "requestedDay":req.body.day,
+        slotNumber:req.body.number,
+        acceptanceStatus:0
+        };
+       //console.log(dayoff.currentDayoff)
+       
+       await slotlinking.save();
+       //const dep="General";
+       const fac= await Faculties.findOne({"name":req.body.facultyname});
+       //console.log(fac)
+       let i=0;
+       let coordinator="";
+       console.log(fac.departments.length)
+       for(i=0;i<fac.departments.length;i++){
+       //console.log(fac.departments[i].id)
+           if(fac.departments[i].name==req.body.department){
+              console.log(fac.departments[i].name);
+                for(let j=0; j<fac.departments[i].courses.length; j++){
+                    console.log(fac.departments[i].courses[j].TAs.length);
+                    for(let k = 0; k < fac.departments[i].courses[j].TAs.length;k++){
+                        //search in the TAs array for the user, once found break and save j
+                        
+                        if(fac.departments[i].courses[j].TAs[k] == am.id){
+                            console.log("found TA in course array");
+                            coordinator = await fac.departments[i].courses[j].coordinator;
+                            console.log(coordinator)
+                        }
+                    }
+                }
+           }
+       }
+    //    console.log(coordinator);
+       
+       console.log(am.slotlinkingrequests);
+       await AcademicMember.updateOne({id:coordinator},{$push:{"slotlinkingrequests":slotlinking}});
+      
+       res.send("request sent successfully");
+               }
+           }
+            catch(err){
+            console.log(err)
+        }
+    })
 
     portal.post('/viewcoursecoverageHOD',authA,async(req,res)=>{
         try{
@@ -5090,6 +5195,94 @@ portal.post('/acceptslotlinking',authA,async(req,res)=>{
 
 
 
+    portal.post('/viewDayoffReq',authA,async(req,res)=>{
+        try{
+            const JWT_Password="RandomString";
+            const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+            let i;
+            let replacements=[];
+            if(verified.role=="AM"){
+                 const am= await AcademicMember.findOne({id:verified.id});
+                console.log(am.id);
+               
+                
+       
+          if(req.body.status=="0"){
+                const cr= await DayOffRequest.find({id:verified.id,acceptanceStatus:"0"});
+             replacements.push(cr);
+        res.send(replacements);
+          }
+
+          if(req.body.status=="1"){
+            const cr= await DayOffRequest.find({id:verified.id,acceptanceStatus:"1"});
+         replacements.push(cr);
+    res.send(replacements);
+      }
+
+      if(req.body.status=="2"){
+        const cr= await DayOffRequest.find({id:verified.id,acceptanceStatus:"2"});
+     replacements.push(cr);
+     
+res.send(replacements);
+  }
+              
+            }
+        }
+        
+            catch(err){
+                console.log(err);
+            }
+    })
+
+
+
+    portal.post('/viewMaternityAM',authA,async(req,res)=>{
+        try{
+            const JWT_Password="RandomString";
+            const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+            let i;
+            let replacements=[];
+            if(verified.role=="AM"){
+                 const am= await AcademicMember.findOne({id:verified.id});
+                console.log(am.id);
+               
+                
+       
+          if(req.body.status=="0"){
+                const cr=await MaternityRequest.find({id:verified.id,status:"0"});
+             replacements.push(cr);
+    //    res.send(replacements);
+          }
+
+          if(req.body.status=="1"){
+              
+         console.log("hiii")
+            const cr= await MaternityRequest.find({id:verified.id,status:"1"});
+         replacements.push(cr);
+         console.log("hiii")
+  //  res.send(replacements);
+      }
+
+      if(req.body.status=="2"){
+        const cr= await MaternityRequest.find({id:verified.id,status:"2"});
+     replacements.push(cr);
+//res.send(replacements);
+  }
+              
+            }
+            res.send(replacements);
+        }
+        
+            catch(err){
+                console.log(err);
+            }
+    })
+
+
+
+
+    
+
     portal.get('/viewdayoffrequests',authA,async(req,res)=>{
         const listOfTas=[];
         const JWT_Password="RandomString";
@@ -5105,6 +5298,45 @@ portal.post('/acceptslotlinking',authA,async(req,res)=>{
             }
         }
     })
+    portal.post('/viewSlotLinkAM',authA,async(req,res)=>{
+        try{
+            const JWT_Password="RandomString";
+            const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+            let i;
+            let replacements=[];
+            if(verified.role=="AM"){
+                 const am= await AcademicMember.findOne({id:verified.id});
+                console.log(am.id);
+               
+                
+       
+          if(req.body.status=="0"){
+                const cr=await slotLinkingRequests.find({id:verified.id,acceptanceStatus:"0"});
+             replacements.push(cr);
+    //    res.send(replacements);
+          }
+
+          if(req.body.status=="1"){
+            const cr= await slotLinkingRequests.find({id:verified.id,acceptanceStatus:"1"});
+         replacements.push(cr);
+  //  res.send(replacements);
+      }
+
+      if(req.body.status=="2"){
+        const cr= await slotLinkingRequests.find({id:verified.id,acceptanceStatus:"2"});
+     replacements.push(cr);
+//res.send(replacements);
+  }
+              
+            }
+            res.send(replacements);
+        }
+        
+            catch(err){
+                console.log(err);
+            }
+    })
+
 
 
 
@@ -5131,6 +5363,30 @@ portal.post('/acceptslotlinking',authA,async(req,res)=>{
             }
         }
     })
+
+
+    portal.get('/viewreplacement2',authA,async(req,res)=>{
+        try{
+            const JWT_Password="RandomString";
+            const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+            if(verified.role=="AM"){
+                 const am= await AcademicMember.findOne({id:verified.id});
+                console.log(am.id);
+                const replacement = {
+                    rep:am.replacementrequest,
+                   
+                }
+    
+             res.send(replacement);
+    
+            }
+        }
+        
+            catch(err){
+                console.log(err);
+            }
+    })
+
     
 
 
@@ -5145,6 +5401,45 @@ portal.post('/acceptslotlinking',authA,async(req,res)=>{
     
              res.send(am.replacementrequest);
     
+            }
+        }
+        
+            catch(err){
+                console.log(err);
+            }
+    })
+
+
+    portal.post('/viewsick',authA,async(req,res)=>{
+        try{
+            const JWT_Password="RandomString";
+            const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+            let i;
+            let replacements=[];
+            if(verified.role=="AM"){
+                 const am= await AcademicMember.findOne({id:verified.id});
+                console.log(am.id);
+               
+                
+       
+          if(req.body.status=="0"){
+                const cr= await SickLeave.find({id:verified.id,status:"0"});
+             replacements.push(cr);
+        res.send(replacements);
+          }
+
+          if(req.body.status=="1"){
+            const cr= await SickLeave.find({id:verified.id,status:"1"});
+         replacements.push(cr);
+    res.send(replacements);
+      }
+
+      if(req.body.status=="2"){
+        const cr= await SickLeave.find({id:verified.id,status:"2"});
+     replacements.push(cr);
+res.send(replacements);
+  }
+              
             }
         }
         
@@ -5746,6 +6041,35 @@ console.log("dsf");
                             console.log(err);
                         }
             });
+
+            portal.get('/signinAM',authH,async(req,res)=>{
+                const JWT_Password="RandomString";
+                let todaysDate = new Date();
+                let todaysMonth = todaysDate.getMonth() +1;
+                try{
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    const AMfound= await AcademicMember.findOne({id:verified.id});
+                    const signRecord = {"hourin": todaysDate.getHours(), "minutein": todaysDate.getMinutes(), "hourout": 0, "minuteout": 0, "signin": 1, "signout": 0};
+                    const Arecord = await AcademicMember.findOne({'id': AMfound.id, 'AttendanceRecords.date': todaysDate.getDate(), 'AttendanceRecords.month': todaysMonth});
+                    if(Arecord){
+                        let length = AMfound.AttendanceRecords.length-1;
+                        let lastAttendanceRecord = AMfound.AttendanceRecords[length].signs;
+                        console.log(lastAttendanceRecord);
+                        await AcademicMember.updateOne({'id': AMfound.id, 'AttendanceRecords': {'$elemMatch': {'date': todaysDate.getDate(), 'month': todaysMonth}}},{$push: {'AttendanceRecords.$.signs': signRecord}});
+                    }
+                    if(!Arecord){ 
+                        console.log("adding a new record");
+                        const todaysRecord = {"day":todaysDate.getDay(), "date": todaysDate.getDate(), "month": todaysMonth, "hours": 8, "minutes":24};
+                        await AcademicMember.updateOne({"id": AMfound.id},{$push: {'AttendanceRecords': todaysRecord}});
+                        await AcademicMember.updateOne({'id': AMfound.id, 'AttendanceRecords': {'$elemMatch': {'date': todaysDate.getDate(), 'month': todaysMonth}}},{$push: {'AttendanceRecords.$.signs': signRecord}});
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                }
+            });
+                
+
              
             portal.post('/requestSickLeave',authH,async(req,res)=>{
                 try{
@@ -5821,6 +6145,109 @@ console.log("dsf");
                         catch(err){
                             console.log(err);
                         }
+            });
+
+            portal.post('/submitAccidentalLeave2', authH, async(req,res)=>{
+                try{
+                const JWT_Password="RandomString";
+                const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                const todaysDate = new Date();
+                let requests = await AccidentalLeave.find({});
+                let lastOne = requests.length-1;
+                //console.log(lastOne);
+                let reqID;
+                if(lastOne == -1){
+                    reqID = 0;
+                }
+                else{
+                    let lastReqId = await requests[lastOne].req_id;
+                    console.log("hiiiii")
+                    console.log(lastReqId)
+                    reqID = lastReqId + 1;
+                }
+                if(verified.role == "HR"){
+                    if(req.body.day == "Friday" || req.body.day == "Saturday"){
+                        return res.status(400).json({msg:"You cannot request a leave on a weekend"});
+                    }
+                    const HRfound = await HrMembers.findOne({id: verified.id});
+                    if (HRfound.accidentalLeaverequests.length>=6){
+                        return res.status(400).json({msg:"You have no more accidental leaves"});
+                    }
+                   
+                    const reqtotable = new AccidentalLeave({
+                        id:verified.id,
+                        req_id: reqID,
+                        date:req.body.date,
+                        month:req.body.month,
+                        day:req.body.day,
+                        status:0
+                    });
+                    await reqtotable.save();
+                        const firstHr = await HrMembers.find({id:"hr-1"});
+        
+                        await HrMembers.updateOne({id:firstHr},{$push:{"accidentalLeaverequests":reqtotable}});
+        
+                        // firstHr.accidentalLeaverequests.push(request);
+                        // await firstHr.save();
+                }
+                else{
+                  
+                    const AMfound = await AcademicMember.findOne({id:verified.id});
+                    //console.log(AMfound.name)
+                    let dayoff = await AMfound.dayoff;
+                    if(req.body.day == "Friday" || req.body.day == dayoff){
+                        return res.status(400).json({msg:"You cannot request a leave on a weekend"});
+                    }
+                   //console.log(AccidentalLeave.length)
+                    if (AMfound.accidentalLeaverequests.length>=6){
+                        return res.status(400).json({msg:"You have no more accidental leaves"});
+                    }
+                        const request = {
+                            id:verified.id,
+                            req_id:1,
+                            date:req.body.date,
+                            month:req.body.month,
+                            day:req.body.day,
+                            status:0
+                        }
+                        const reqtotable = new AccidentalLeave({
+                            id:verified.id,
+                            req_id: 1,
+                            date:req.body.date,
+                            month:req.body.month,
+                            day:req.body.day,
+                            status:0
+                        });
+                        await reqtotable.save();
+                        // find HOD
+                        let HODid;
+                
+                        const faculty1 = await Faculties.findOne({"name": AMfound.faculty});
+                        //console.log(faculty1)
+                        for(let i = 0; i < faculty1.departments.length;i++){
+                            if(faculty1.departments[i].name == AMfound.department){
+                                HODid = faculty1.departments[i].HOD;
+                            }
+                        }
+                        const HODfound = await AcademicMember.find({id:HODid});
+                       await AcademicMember.updateOne({id:HODid},{$push:{"accidentalLeaverequests":reqtotable}});
+                       
+                       
+        
+                //        const ID =verified.id;
+                //        const AMfound= await AcademicMember.findOne({id:ID});
+                //        console.log(AMfound.replacementrequest);
+                  
+                   
+                //    await AcademicMember.updateOne({id:AMfound.id},{$push:{"replacementrequest":replacement}});
+                //    await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                   res.send("Your request sent")
+                   
+                    }
+                }
+                    catch(err){
+                        console.log(err);
+                    }
             });
         
             portal.post('/submitAccidentalLeave', authH, async(req,res)=>{
@@ -6402,6 +6829,55 @@ console.log("dsf");
                     console.log(err);
                 }
             });
+
+
+
+            portal.post('/canceldayoff',authA,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    
+                    
+                    if(verified.role=="AM"){
+                         const am= await AcademicMember.findOne({id:verified.id}); //gets id of senderrrrr
+                        console.log(am.id);
+                        
+                        
+                        let HODid;  
+                        const faculty = await Faculties.findOne({"name": am.faculty});
+                     
+                        for(let i = 0; i < faculty.departments.length;i++){
+                            if(faculty.departments[i].name == am.department){
+                                HODid = faculty.departments[i].HOD;
+                                console.log(HODid)
+                            }
+                        }
+                        const HODfound = await AcademicMember.findOne({id:HODid});  //gets hod memberrr
+                        console.log(HODfound.maternityLeaverequests)
+                      await DayOffRequest.deleteOne({id: am.id, requestedDayoff: req.body.requestedDayoff, status:0});
+                   
+                            const reqqqqq={
+                                req_id:req.body.reqID
+                            }
+        
+                            await AcademicMember.updateOne({"id":HODid},{$pull:{"dayoffrequests":reqqqqq}});
+        
+                         
+                      res.send("Request Deleted")
+                    }
+        
+                 
+                    }
+                
+                
+                    catch(err){
+                        console.log(err);
+                    }
+            })
+
+
+
+            
             portal.post('/cancelPendingAccidental', authH,async(req,res)=>{
                 try{
                     const JWT_Password="RandomString";
@@ -6637,7 +7113,104 @@ console.log("dsf");
                 }
             });
         
+            portal.post('/changedayoff',authA,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role=="AM"){
+                         const am= await AcademicMember.findOne({id:verified.id});
+                        console.log(am.id);
+            
+                         const current=am.dayoff;
+                        // console.log(".............")
+                       //  console.log(current)
+                      // am.department="Mecha"
+            const dayoff= new DayOffRequest({
+            id:am.id,
+            requestedDayoff:req.body.dayoff,
+            currentDayoff:current,
+            acceptanceStatus:0
+            })
+            //console.log(dayoff.currentDayoff)
+            
+            await dayoff.save();
+            const dep=am.department
+            const fac= await Faculties.findOne({"name":req.body.facultyname});
+            //console.log(fac)
+            let i=0;
+            let j=0;
+            let hod="";
+            console.log(fac.departments.length)
+            for(i=0;i<fac.departments.length;i++){
+            //console.log(fac.departments[i].id)
+                if(fac.departments[i].name==dep){
+                   // console.log("dakhal")
+                     hod= fac.departments[i].HOD;
+                }
+            }
+            //console.log(hod)
+            //ma3ana id of head of department
+            //now we need to add the new request to the table requests in row of this hod
+            await AcademicMember.updateOne({"id":hod},{$push:{"dayoffrequests":dayoff}});
+            res.send("request sent successfully");
+                    }
+                }
+                
+                    catch(err){
+                        console.log(err);
+                    }
+                  
+            
+            })
+
+
+            portal.post('/cancelpendingcompensation2',authA,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    
+                    
+                    if(verified.role=="AM"){
+                         const am= await AcademicMember.findOne({id:verified.id}); //gets id of senderrrrr
+                        console.log(am.id);
+                        
+                        
+                        let HODid;  
+                        const faculty = await Faculties.findOne({"name": am.faculty});
+                     
+                        for(let i = 0; i < faculty.departments.length;i++){
+                            if(faculty.departments[i].name == am.department){
+                                HODid = faculty.departments[i].HOD;
+                                console.log(HODid)
+                            }
+                        }
+                        const HODfound = await AcademicMember.findOne({id:HODid});  //gets hod memberrr
+                        console.log(HODfound.compensationrequests)
+                      await CompensationRequest.deleteOne({id: am.id, req_id: req.body.reqID, status:0});
+                   
+                            const reqqqqq={
+                                req_id:req.body.reqID
+                            }
         
+                            await AcademicMember.updateOne({"id":HODid},{$pull:{"compensationrequests":reqqqqq}});
+        
+                         
+                      res.send("Request Deleted")
+                    }
+        
+                 
+                    }
+                
+                
+                    catch(err){
+                        console.log(err);
+                    }
+            })
+        
+        
+
+
+
             portal.post('/cancelPendingCompensation', authH,async(req,res)=>{
                 const JWT_Password="RandomString";
                     const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
@@ -6784,6 +7357,56 @@ console.log("dsf");
                 }
             });
         
+
+            portal.get('/viewprofile',authA,async(req,res)=>{
+  
+                try{ 
+                
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    
+                    if(verified.role=="HR"){
+                    const ID =verified.id;
+                    const member1= await HrMembers.findOne({id:ID});
+                
+                 
+                    const loc = {
+                        name: member1.name,
+                        office:member1.office,
+                       email:member1.email,
+                       dayoff:member1.dayoff,
+                       Salary:member1.salary
+            
+                       
+                    }
+                    res.send(loc)}
+                
+                    else {
+                    const ID =verified.id;
+                    const member1= await AcademicMember.findOne({id:ID});
+                
+                    console.log(member1.faculty);
+                    const AM = {
+                        name:member1.name,
+                        office:member1.office,
+                       email:member1.email,
+                       dayoff:member1.dayoff,
+                       Salary:member1.salary
+            
+                       
+                    }
+                    res.send(AM)}
+                    
+            
+                }
+                catch(err){
+                    console.log(err);
+                }
+            
+             })
+            
+
+
             portal.get('/viewprofile',authA,async(req,res)=>{
                 try{
                     const JWT_Password="RandomString";
@@ -6934,3 +7557,1134 @@ console.log("dsf");
             portal.get('/logout',(req,res)=>{
                 res.send("logged out");  
              });
+
+
+
+
+             portal.post('/sendreplacement',authA,async(req,res)=>{
+                try{
+                    const JWT_Password="RandomString";
+                    const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                    if(verified.role=="AM"){
+                         const am= await AcademicMember.findOne({id:verified.id});
+                       // console.log(am.id);
+                    
+                        const rep={
+                                timing:req.body.timing,
+                                 course:req.body.course,
+                                    location:req.body.location,
+                                                                }   
+            
+                        //console.log(am.Schedule[3]);
+                       
+                        if(req.body.day=="Saturday"){
+                            console.log("tmam")
+                            if(req.body.slot=="first"){
+                            
+                                let i;
+                                
+                                for(i=0;i<am.Schedule[0].first.length;i++){
+                                  //console.log(am.Schedule[3].fifth[0][0].course)}
+                               
+                                     if((am.Schedule[0].first[i][i].timing==req.body.timing)&& (am.Schedule[0].first[i][i].course==req.body.course) &&(am.Schedule[0].first[i][i].location==req.body.location)){
+                                    
+                                         console.log("ana d5ltt");
+                                     const replacement= new ReplacementRequest({
+                                            id:am.id,
+                                            receiver_id:req.body.receiver_id,
+                                            day:req.body.day,
+                                            slot:req.body.slot,
+                                            timing:req.body.timing,
+                                            course:req.body.course,
+                                            location:req.body.location,
+                                            request_status:"pending",
+                                               })
+                                               
+                                                await replacement.save();
+                                                const ID =verified.id;
+                                                const AMfound= await AcademicMember.findOne({id:ID});
+                                                console.log(AMfound);
+                                                await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                res.send("Your request sent")
+                                     
+                                    
+                                    
+                                    }
+                                    else{
+                                        res.send("please add a valid slot")
+                                    }
+                                }}
+                                if(req.body.slot=="second"){
+                            
+                                    let i;
+                                    
+                                    for(i=0;i<am.Schedule[0].second.length;i++){
+                                      //console.log(am.Schedule[3].fifth[0][0].course)}
+                                   
+                                         if((am.Schedule[0].second[i][i].timing==req.body.timing)&& (am.Schedule[0].second[i][i].course==req.body.course) &&(am.Schedule[0].second[i][i].location==req.body.location)){
+                                        
+                                             console.log("ana d5ltt");
+                                         const replacement= new ReplacementRequest({
+                                                id:am.id,
+                                                receiver_id:req.body.receiver_id,
+                                                day:req.body.day,
+                                                slot:req.body.slot,
+                                                timing:req.body.timing,
+                                                course:req.body.course,
+                                                location:req.body.location,
+                                                request_status:"pending",
+                                                   })
+                                                   
+                                                    await replacement.save();
+                                                    await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                    await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                    res.send("Your request sent")
+                                         
+                                        
+                                        
+                                        }
+                                        else{
+                                            res.send("please add a valid slot")
+                                        }
+                                    }}
+                                    if(req.body.slot=="third"){
+                            
+                                        let i;
+                                        
+                                        for(i=0;i<am.Schedule[0].third.length;i++){
+                                          //console.log(am.Schedule[3].fifth[0][0].course)}
+                                       
+                                             if((am.Schedule[0].third[i][i].timing==req.body.timing)&& (am.Schedule[0].third[i][i].course==req.body.course) &&(am.Schedule[0].third[i][i].location==req.body.location)){
+                                            
+                                                 console.log("ana d5ltt");
+                                             const replacement= new ReplacementRequest({
+                                                    id:am.id,
+                                                    receiver_id:req.body.receiver_id,
+                                                    day:req.body.day,
+                                                    slot:req.body.slot,
+                                                    timing:req.body.timing,
+                                                    course:req.body.course,
+                                                    location:req.body.location,
+                                                    request_status:"pending",
+                                                       })
+                                                       
+                                                        await replacement.save();
+                                                        await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                        await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                        res.send("Your request sent")
+                                             
+                                            
+                                            
+                                            }
+                                            else{
+                                                res.send("please add a valid slot")
+                                            }
+                                        }}
+                                        if(req.body.slot=="fourth"){
+                            
+                                            let i;
+                                            
+                                            for(i=0;i<am.Schedule[0].fourth.length;i++){
+                                              //console.log(am.Schedule[3].fifth[0][0].course)}
+                                           
+                                                 if((am.Schedule[0].fourth[i][i].timing==req.body.timing)&& (am.Schedule[0].fourth[i][i].course==req.body.course) &&(am.Schedule[0].fourth[i][i].location==req.body.location)){
+                                                
+                                                     console.log("ana d5ltt");
+                                                 const replacement= new ReplacementRequest({
+                                                        id:am.id,
+                                                        receiver_id:req.body.receiver_id,
+                                                        day:req.body.day,
+                                                        slot:req.body.slot,
+                                                        timing:req.body.timing,
+                                                        course:req.body.course,
+                                                        location:req.body.location,
+                                                        request_status:"pending",
+                                                           })
+                                                           
+                                                            await replacement.save();
+                                                            await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                            await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                            res.send("Your request sent")
+                                                 
+                                                
+                                                
+                                                }
+                                                else{
+                                                    res.send("please add a valid slot")
+                                                }
+                                            }}
+                           
+                            if(req.body.slot=="fifth"){
+                               console.log("tmameen");
+                              console.log(am.name)
+                            let i;
+                            
+                            for(i=0;i<am.Schedule[0].fifth.length;i++){
+                              //console.log(am.Schedule[3].fifth[0][0].course)}
+                            console.log(am.name)
+                                 if((am.Schedule[0].fifth[i][i].timing==req.body.timing)&& (am.Schedule[0].fifth[i][i].course==req.body.course) &&(am.Schedule[0].fifth[i][i].location==req.body.location)){
+                                
+                                     console.log("ana d5ltt");
+                                 const replacement= new ReplacementRequest({
+                                        id:am.id,
+                                        receiver_id:req.body.receiver_id,
+                                        day:req.body.day,
+                                        slot:req.body.slot,
+                                        timing:req.body.timing,
+                                        course:req.body.course,
+                                        location:req.body.location,
+                                        request_status:"pending",
+                                           })
+                                           await replacement.save();
+                                           const ID =verified.id;
+                                                const AMfound= await AcademicMember.findOne({id:ID});
+                                                console.log(AMfound.replacementrequest);
+                                           
+                                            
+                                            await AcademicMember.updateOne({id:AMfound.id},{$push:{"replacementrequest":replacement}});
+                                            await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                            res.send("Your request sent")
+                                 
+                                
+                                
+                                }
+                                
+                            }
+                        }
+                        }
+                       
+                       
+                       
+                        if(req.body.day=="sunday"){
+                            
+                            if(req.body.slot=="first"){
+                            
+                                let i;
+                                
+                                for(i=0;i<am.Schedule[1].first.length;i++){
+                                  //console.log(am.Schedule[3].fifth[0][0].course)}
+                               
+                                     if((am.Schedule[1].first[i][i].timing==req.body.timing)&& (am.Schedule[1].first[i][i].course==req.body.course) &&(am.Schedule[1].first[i][i].location==req.body.location)){
+                                    
+                                         console.log("ana d5ltt");
+                                     const replacement= new ReplacementRequest({
+                                            id:am.id,
+                                            receiver_id:req.body.receiver_id,
+                                            day:req.body.day,
+                                            slot:req.body.slot,
+                                            timing:req.body.timing,
+                                            course:req.body.course,
+                                            location:req.body.location,
+                                            request_status:"pending",
+                                               })
+                                               
+                                                await replacement.save();
+                                                await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                res.send("Your request sent")
+                                     
+                                    
+                                    
+                                    }
+                                    else{
+                                        res.send("please add a valid slot")
+                                    }
+                                }}
+                                if(req.body.slot=="second"){
+                            
+                                    let i;
+                                    
+                                    for(i=0;i<am.Schedule[1].second.length;i++){
+                                      //console.log(am.Schedule[3].fifth[0][0].course)}
+                                   
+                                         if((am.Schedule[1].second[i][i].timing==req.body.timing)&& (am.Schedule[1].second[i][i].course==req.body.course) &&(am.Schedule[1].second[i][i].location==req.body.location)){
+                                        
+                                             console.log("ana d5ltt");
+                                         const replacement= new ReplacementRequest({
+                                                id:am.id,
+                                                receiver_id:req.body.receiver_id,
+                                                day:req.body.day,
+                                                slot:req.body.slot,
+                                                timing:req.body.timing,
+                                                course:req.body.course,
+                                                location:req.body.location,
+                                                request_status:"pending",
+                                                   })
+                                                   
+                                                    await replacement.save();
+                                                    await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                    await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                    res.send("Your request sent")
+                                         
+                                        
+                                        
+                                        }
+                                       
+                                    }}
+                                    if(req.body.slot=="third"){
+                            
+                                        let i;
+                                        
+                                        for(i=0;i<am.Schedule[1].third.length;i++){
+                                          //console.log(am.Schedule[3].fifth[0][0].course)}
+                                       
+                                             if((am.Schedule[1].third[i][i].timing==req.body.timing)&& (am.Schedule[1].third[i][i].course==req.body.course) &&(am.Schedule[1].third[i][i].location==req.body.location)){
+                                            
+                                                 console.log("ana d5ltt");
+                                             const replacement= new ReplacementRequest({
+                                                    id:am.id,
+                                                    receiver_id:req.body.receiver_id,
+                                                    day:req.body.day,
+                                                    slot:req.body.slot,
+                                                    timing:req.body.timing,
+                                                    course:req.body.course,
+                                                    location:req.body.location,
+                                                    request_status:"pending",
+                                                       })
+                                                       
+                                                        await replacement.save();
+                                                        await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                        await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                        res.send("Your request sent")
+                                             
+                                            
+                                            
+                                            }
+                                            else{
+                                                res.send("please add a valid slot")
+                                            }
+                                        }}
+                                        if(req.body.slot=="fourth"){
+                            
+                                            let i;
+                                            
+                                            for(i=0;i<am.Schedule[1].fourth.length;i++){
+                                              //console.log(am.Schedule[3].fifth[0][0].course)}
+                                           
+                                                 if((am.Schedule[1].fourth[i][i].timing==req.body.timing)&& (am.Schedule[1].fourth[i][i].course==req.body.course) &&(am.Schedule[1].fourth[i][i].location==req.body.location)){
+                                                
+                                                     console.log("ana d5ltt");
+                                                 const replacement= new ReplacementRequest({
+                                                        id:am.id,
+                                                        receiver_id:req.body.receiver_id,
+                                                        day:req.body.day,
+                                                        slot:req.body.slot,
+                                                        timing:req.body.timing,
+                                                        course:req.body.course,
+                                                        location:req.body.location,
+                                                        request_status:"pending",
+                                                           })
+                                                           
+                                                            await replacement.save();
+                                                            await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                            await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                            res.send("Your request sent")
+                                                 
+                                                
+                                                
+                                                }
+                                                else{
+                                                    res.send("please add a valid slot")
+                                                }
+                                            }}
+                           
+                            if(req.body.slot=="fifth"){
+                       
+                            
+                            let i;
+                            
+                            for(i=0;i<am.Schedule[1].fifth.length;i++){
+                              //console.log(am.Schedule[3].fifth[0][0].course)}
+                           
+                                 if((am.Schedule[1].fifth[i][i].timing==req.body.timing)&& (am.Schedule[1].fifth[i][i].course==req.body.course) &&(am.Schedule[1].fifth[i][i].location==req.body.location)){
+                                
+                                     console.log("ana d5ltt");
+                                 const replacement= new ReplacementRequest({
+                                        id:am.id,
+                                        receiver_id:req.body.receiver_id,
+                                        day:req.body.day,
+                                        slot:req.body.slot,
+                                        timing:req.body.timing,
+                                        course:req.body.course,
+                                        location:req.body.location,
+                                        request_status:"pending",
+                                           })
+                                           
+                                            await replacement.save();
+                                            await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                            await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                            res.send("Your request sent")
+                                 
+                                
+                                
+                                }
+                                else{
+                                    res.send("please add a valid slot")
+                                }
+                            }
+                        }
+                        }
+                     
+                     
+                        if(req.body.day=="monday"){
+                            
+                            if(req.body.slot=="first"){
+                            
+                                let i;
+                                
+                                for(i=0;i<am.Schedule[2].first.length;i++){
+                                  //console.log(am.Schedule[3].fifth[0][0].course)}
+                               
+                                     if((am.Schedule[2].first[i][i].timing==req.body.timing)&& (am.Schedule[2].first[i][i].course==req.body.course) &&(am.Schedule[2].first[i][i].location==req.body.location)){
+                                    
+                                         console.log("ana d5ltt");
+                                     const replacement= new ReplacementRequest({
+                                            id:am.id,
+                                            receiver_id:req.body.receiver_id,
+                                            day:req.body.day,
+                                            slot:req.body.slot,
+                                            timing:req.body.timing,
+                                            course:req.body.course,
+                                            location:req.body.location,
+                                            request_status:"pending",
+                                               })
+                                               
+                                                await replacement.save();
+                                                await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                res.send("Your request sent")
+                                     
+                                    
+                                    
+                                    }
+                                    else{
+                                        res.send("please add a valid slot")
+                                    }
+                                }}
+                                if(req.body.slot=="second"){
+                            
+                                    let i;
+                                    
+                                    for(i=0;i<am.Schedule[2].second.length;i++){
+                                      //console.log(am.Schedule[3].fifth[0][0].course)}
+                                   
+                                         if((am.Schedule[2].second[i][i].timing==req.body.timing)&& (am.Schedule[2].second[i][i].course==req.body.course) &&(am.Schedule[2].second[i][i].location==req.body.location)){
+                                        
+                                             console.log("ana d5ltt");
+                                         const replacement= new ReplacementRequest({
+                                                id:am.id,
+                                                receiver_id:req.body.receiver_id,
+                                                day:req.body.day,
+                                                slot:req.body.slot,
+                                                timing:req.body.timing,
+                                                course:req.body.course,
+                                                location:req.body.location,
+                                                request_status:"pending",
+                                                   })
+                                                   
+                                                    await replacement.save();
+                                                    await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                    await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                    res.send("Your request sent")
+                                         
+                                        
+                                        
+                                        }
+                                        else{
+                                            res.send("please add a valid slot")
+                                        }
+                                    }}
+                                    if(req.body.slot=="third"){
+                            
+                                        let i;
+                                        
+                                        for(i=0;i<am.Schedule[2].third.length;i++){
+                                          //console.log(am.Schedule[3].fifth[0][0].course)}
+                                       
+                                             if((am.Schedule[2].third[i][i].timing==req.body.timing)&& (am.Schedule[2].third[i][i].course==req.body.course) &&(am.Schedule[2].third[i][i].location==req.body.location)){
+                                            
+                                                 console.log("ana d5ltt");
+                                             const replacement= new ReplacementRequest({
+                                                    id:am.id,
+                                                    receiver_id:req.body.receiver_id,
+                                                    day:req.body.day,
+                                                    slot:req.body.slot,
+                                                    timing:req.body.timing,
+                                                    course:req.body.course,
+                                                    location:req.body.location,
+                                                    request_status:"pending",
+                                                       })
+                                                       
+                                                        await replacement.save();
+                                                        await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                        await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                        res.send("Your request sent")
+                                             
+                                            
+                                            
+                                            }
+                                            else{
+                                                res.send("please add a valid slot")
+                                            }
+                                        }}
+                                        if(req.body.slot=="fourth"){
+                            
+                                            let i;
+                                            
+                                            for(i=0;i<am.Schedule[2].fourth.length;i++){
+                                              //console.log(am.Schedule[3].fifth[0][0].course)}
+                                           
+                                                 if((am.Schedule[2].fourth[i][i].timing==req.body.timing)&& (am.Schedule[2].fourth[i][i].course==req.body.course) &&(am.Schedule[2].fourth[i][i].location==req.body.location)){
+                                                
+                                                     console.log("ana d5ltt");
+                                                 const replacement= new ReplacementRequest({
+                                                        id:am.id,
+                                                        receiver_id:req.body.receiver_id,
+                                                        day:req.body.day,
+                                                        slot:req.body.slot,
+                                                        timing:req.body.timing,
+                                                        course:req.body.course,
+                                                        location:req.body.location,
+                                                        request_status:"pending",
+                                                           })
+                                                           
+                                                            await replacement.save();
+                                                            await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                            await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                            res.send("Your request sent")
+                                                 
+                                                
+                                                
+                                                }
+                                                else{
+                                                    res.send("please add a valid slot")
+                                                }
+                                            }}
+                           
+                            if(req.body.slot=="fifth"){
+                       
+                            
+                            let i;
+                            
+                            for(i=0;i<am.Schedule[2].fifth.length;i++){
+                              //console.log(am.Schedule[3].fifth[0][0].course)}
+                           
+                                 if((am.Schedule[2].fifth[i][i].timing==req.body.timing)&& (am.Schedule[2].fifth[i][i].course==req.body.course) &&(am.Schedule[2].fifth[i][i].location==req.body.location)){
+                                
+                                     console.log("ana d5ltt");
+                                 const replacement= new ReplacementRequest({
+                                        id:am.id,
+                                        receiver_id:req.body.receiver_id,
+                                        day:req.body.day,
+                                        slot:req.body.slot,
+                                        timing:req.body.timing,
+                                        course:req.body.course,
+                                        location:req.body.location,
+                                        request_status:"pending",
+                                           })
+                                           
+                                            await replacement.save();
+                                            await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                            await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                            res.send("Your request sent")
+                                 
+                                
+                                
+                                }
+                                else{
+                                    res.send("please add a valid slot")
+                                }
+                            }
+                        }
+                        }
+                     
+                      
+            
+                        if(req.body.day=="tuesday"){
+                            
+                            if(req.body.slot=="first"){
+                            
+                                let i;
+                                
+                                for(i=0;i<am.Schedule[3].first.length;i++){
+                                  //console.log(am.Schedule[3].fifth[0][0].course)}
+                               
+                                     if((am.Schedule[3].first[i][i].timing==req.body.timing)&& (am.Schedule[3].first[i][i].course==req.body.course) &&(am.Schedule[3].first[i][i].location==req.body.location)){
+                                    
+                                         console.log("ana d5ltt");
+                                     const replacement= new ReplacementRequest({
+                                            id:am.id,
+                                            receiver_id:req.body.receiver_id,
+                                            day:req.body.day,
+                                            slot:req.body.slot,
+                                            timing:req.body.timing,
+                                            course:req.body.course,
+                                            location:req.body.location,
+                                            request_status:"pending",
+                                               })
+                                               
+                                                await replacement.save();
+                                                await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                res.send("Your request sent")
+                                     
+                                    
+                                    
+                                    }
+                                    else{
+                                        res.send("please add a valid slot")
+                                    }
+                                }}
+                                if(req.body.slot=="second"){
+                            
+                                    let i;
+                                    
+                                    for(i=0;i<am.Schedule[3].second.length;i++){
+                                      //console.log(am.Schedule[3].fifth[0][0].course)}
+                                   
+                                         if((am.Schedule[3].second[i][i].timing==req.body.timing)&& (am.Schedule[3].second[i][i].course==req.body.course) &&(am.Schedule[3].second[i][i].location==req.body.location)){
+                                        
+                                             console.log("ana d5ltt");
+                                         const replacement= new ReplacementRequest({
+                                                id:am.id,
+                                                receiver_id:req.body.receiver_id,
+                                                day:req.body.day,
+                                                slot:req.body.slot,
+                                                timing:req.body.timing,
+                                                course:req.body.course,
+                                                location:req.body.location,
+                                                request_status:"pending",
+                                                   })
+                                                   
+                                                    await replacement.save();
+                                                    await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                    await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                    res.send("Your request sent")
+                                         
+                                        
+                                        
+                                        }
+                                        else{
+                                            res.send("please add a valid slot")
+                                        }
+                                    }}
+                                    if(req.body.slot=="third"){
+                            
+                                        let i;
+                                        
+                                        for(i=0;i<am.Schedule[3].third.length;i++){
+                                          //console.log(am.Schedule[3].fifth[0][0].course)}
+                                       
+                                             if((am.Schedule[3].third[i][i].timing==req.body.timing)&& (am.Schedule[3].third[i][i].course==req.body.course) &&(am.Schedule[3].third[i][i].location==req.body.location)){
+                                            
+                                                 console.log("ana d5ltt");
+                                             const replacement= new ReplacementRequest({
+                                                    id:am.id,
+                                                    receiver_id:req.body.receiver_id,
+                                                    day:req.body.day,
+                                                    slot:req.body.slot,
+                                                    timing:req.body.timing,
+                                                    course:req.body.course,
+                                                    location:req.body.location,
+                                                    request_status:"pending",
+                                                       })
+                                                       
+                                                        await replacement.save();
+                                                        await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                        await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                        res.send("Your request sent")
+                                             
+                                            
+                                            
+                                            }
+                                            else{
+                                                res.send("please add a valid slot")
+                                            }
+                                        }}
+                                        if(req.body.slot=="fourth"){
+                            
+                                            let i;
+                                            
+                                            for(i=0;i<am.Schedule[3].fourth.length;i++){
+                                              //console.log(am.Schedule[3].fifth[0][0].course)}
+                                           
+                                                 if((am.Schedule[3].fourth[i][i].timing==req.body.timing)&& (am.Schedule[3].fourth[i][i].course==req.body.course) &&(am.Schedule[3].fourth[i][i].location==req.body.location)){
+                                                
+                                                     console.log("ana d5ltt");
+                                                 const replacement= new ReplacementRequest({
+                                                        id:am.id,
+                                                        receiver_id:req.body.receiver_id,
+                                                        day:req.body.day,
+                                                        slot:req.body.slot,
+                                                        timing:req.body.timing,
+                                                        course:req.body.course,
+                                                        location:req.body.location,
+                                                        request_status:"pending",
+                                                           })
+                                                           
+                                                            await replacement.save();
+                                                            await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                            await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                            res.send("Your request sent")
+                                                 
+                                                
+                                                
+                                                }
+                                                else{
+                                                    res.send("please add a valid slot")
+                                                }
+                                            }}
+                           
+                            if(req.body.slot=="fifth"){
+                       
+                            
+                            let i;
+                            
+                            for(i=0;i<am.Schedule[3].fifth.length;i++){
+                              //console.log(am.Schedule[3].fifth[0][0].course)}
+                           
+                                 if((am.Schedule[3].fifth[i][i].timing==req.body.timing)&& (am.Schedule[3].fifth[i][i].course==req.body.course) &&(am.Schedule[3].fifth[i][i].location==req.body.location)){
+                                
+                                     console.log("ana d5ltt");
+                                 const replacement= new ReplacementRequest({
+                                        id:am.id,
+                                        receiver_id:req.body.receiver_id,
+                                        day:req.body.day,
+                                        slot:req.body.slot,
+                                        timing:req.body.timing,
+                                        course:req.body.course,
+                                        location:req.body.location,
+                                        request_status:"pending",
+                                           })
+                                           
+                                            await replacement.save();
+                                            await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                            await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                            res.send("Your request sent")
+                                 
+                                
+                                
+                                }
+                                else{
+                                    res.send("please add a valid slot")
+                                }
+                            }
+                        }
+                        }
+            
+                   
+                        if(req.body.day=="wednesday"){
+                            
+                            if(req.body.slot=="first"){
+                            
+                                let i;
+                                
+                                for(i=0;i<am.Schedule[4].first.length;i++){
+                                  //console.log(am.Schedule[3].fifth[0][0].course)}
+                               
+                                     if((am.Schedule[4].first[i][i].timing==req.body.timing)&& (am.Schedule[4].first[i][i].course==req.body.course) &&(am.Schedule[4].first[i][i].location==req.body.location)){
+                                    
+                                         console.log("ana d5ltt");
+                                     const replacement= new ReplacementRequest({
+                                            id:am.id,
+                                            receiver_id:req.body.receiver_id,
+                                            day:req.body.day,
+                                            slot:req.body.slot,
+                                            timing:req.body.timing,
+                                            course:req.body.course,
+                                            location:req.body.location,
+                                            request_status:"pending",
+                                               })
+                                               
+                                                await replacement.save();
+                                                await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                res.send("Your request sent")
+                                     
+                                    
+                                    
+                                    }
+                                    else{
+                                        res.send("please add a valid slot")
+                                    }
+                                }}
+                                if(req.body.slot=="second"){
+                            
+                                    let i;
+                                    
+                                    for(i=0;i<am.Schedule[4].second.length;i++){
+                                      //console.log(am.Schedule[3].fifth[0][0].course)}
+                                   
+                                         if((am.Schedule[4].second[i][i].timing==req.body.timing)&& (am.Schedule[4].second[i][i].course==req.body.course) &&(am.Schedule[4].second[i][i].location==req.body.location)){
+                                        
+                                             console.log("ana d5ltt");
+                                         const replacement= new ReplacementRequest({
+                                                id:am.id,
+                                                receiver_id:req.body.receiver_id,
+                                                day:req.body.day,
+                                                slot:req.body.slot,
+                                                timing:req.body.timing,
+                                                course:req.body.course,
+                                                location:req.body.location,
+                                                request_status:"pending",
+                                                   })
+                                                   
+                                                    await replacement.save();
+                                                    await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                    await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                    res.send("Your request sent")
+                                         
+                                        
+                                        
+                                        }
+                                        else{
+                                            res.send("please add a valid slot")
+                                        }
+                                    }}
+                                    if(req.body.slot=="third"){
+                            
+                                        let i;
+                                        
+                                        for(i=0;i<am.Schedule[4].third.length;i++){
+                                          //console.log(am.Schedule[3].fifth[0][0].course)}
+                                       
+                                             if((am.Schedule[4].third[i][i].timing==req.body.timing)&& (am.Schedule[4].third[i][i].course==req.body.course) &&(am.Schedule[4].third[i][i].location==req.body.location)){
+                                            
+                                                 console.log("ana d5ltt");
+                                             const replacement= new ReplacementRequest({
+                                                    id:am.id,
+                                                    receiver_id:req.body.receiver_id,
+                                                    day:req.body.day,
+                                                    slot:req.body.slot,
+                                                    timing:req.body.timing,
+                                                    course:req.body.course,
+                                                    location:req.body.location,
+                                                    request_status:"pending",
+                                                       })
+                                                       
+                                                        await replacement.save();
+                                                        await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                        await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                        res.send("Your request sent")
+                                             
+                                            
+                                            
+                                            }
+                                            else{
+                                                res.send("please add a valid slot")
+                                            }
+                                        }}
+                                        if(req.body.slot=="fourth"){
+                            
+                                            let i;
+                                            
+                                            for(i=0;i<am.Schedule[4].fourth.length;i++){
+                                              //console.log(am.Schedule[3].fifth[0][0].course)}
+                                           
+                                                 if((am.Schedule[4].fourth[i][i].timing==req.body.timing)&& (am.Schedule[4].fourth[i][i].course==req.body.course) &&(am.Schedule[4].fourth[i][i].location==req.body.location)){
+                                                
+                                                     console.log("ana d5ltt");
+                                                 const replacement= new ReplacementRequest({
+                                                        id:am.id,
+                                                        receiver_id:req.body.receiver_id,
+                                                        day:req.body.day,
+                                                        slot:req.body.slot,
+                                                        timing:req.body.timing,
+                                                        course:req.body.course,
+                                                        location:req.body.location,
+                                                        request_status:"pending",
+                                                           })
+                                                           
+                                                            await replacement.save();
+                                                            await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                            await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                            res.send("Your request sent")
+                                                 
+                                                
+                                                
+                                                }
+                                                else{
+                                                    res.send("please add a valid slot")
+                                                }
+                                            }}
+                           
+                            if(req.body.slot=="fifth"){
+                       
+                            
+                            let i;
+                            
+                            for(i=0;i<am.Schedule[4].fifth.length;i++){
+                              //console.log(am.Schedule[3].fifth[0][0].course)}
+                           
+                                 if((am.Schedule[4].fifth[i][i].timing==req.body.timing)&& (am.Schedule[4].fifth[i][i].course==req.body.course) &&(am.Schedule[4].fifth[i][i].location==req.body.location)){
+                                
+                                     console.log("ana d5ltt");
+                                 const replacement= new ReplacementRequest({
+                                        id:am.id,
+                                        receiver_id:req.body.receiver_id,
+                                        day:req.body.day,
+                                        slot:req.body.slot,
+                                        timing:req.body.timing,
+                                        course:req.body.course,
+                                        location:req.body.location,
+                                        request_status:"pending",
+                                           })
+                                           
+                                            await replacement.save();
+                                            await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                            await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                            res.send("Your request sent")
+                                 
+                                
+                                
+                                }
+                                else{
+                                    res.send("please add a valid slot")
+                                }
+                            }
+                        }
+                        }
+            
+                     
+                        if(req.body.day=="thursday"){
+                            
+                            if(req.body.slot=="first"){
+                            
+                                let i;
+                                
+                                for(i=0;i<am.Schedule[5].first.length;i++){
+                                  //console.log(am.Schedule[3].fifth[0][0].course)}
+                               
+                                     if((am.Schedule[5].first[i][i].timing==req.body.timing)&& (am.Schedule[5].first[i][i].course==req.body.course) &&(am.Schedule[5].first[i][i].location==req.body.location)){
+                                    
+                                         console.log("ana d5ltt");
+                                     const replacement= new ReplacementRequest({
+                                            id:am.id,
+                                            receiver_id:req.body.receiver_id,
+                                            day:req.body.day,
+                                            slot:req.body.slot,
+                                            timing:req.body.timing,
+                                            course:req.body.course,
+                                            location:req.body.location,
+                                            request_status:"pending",
+                                               })
+                                               
+                                                await replacement.save();
+                                                await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                res.send("Your request sent")
+                                     
+                                    
+                                    
+                                    }
+                                    else{
+                                        res.send("please add a valid slot")
+                                    }
+                                }}
+                                if(req.body.slot=="second"){
+                            
+                                    let i;
+                                    
+                                    for(i=0;i<am.Schedule[5].second.length;i++){
+                                      //console.log(am.Schedule[3].fifth[0][0].course)}
+                                   
+                                         if((am.Schedule[5].second[i][i].timing==req.body.timing)&& (am.Schedule[5].second[i][i].course==req.body.course) &&(am.Schedule[5].second[i][i].location==req.body.location)){
+                                        
+                                             console.log("ana d5ltt");
+                                         const replacement= new ReplacementRequest({
+                                                id:am.id,
+                                                receiver_id:req.body.receiver_id,
+                                                day:req.body.day,
+                                                slot:req.body.slot,
+                                                timing:req.body.timing,
+                                                course:req.body.course,
+                                                location:req.body.location,
+                                                request_status:"pending",
+                                                   })
+                                                   
+                                                    await replacement.save();
+                                                    await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                    await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                    res.send("Your request sent")
+                                         
+                                        
+                                        
+                                        }
+                                        else{
+                                            res.send("please add a valid slot")
+                                        }
+                                    }}
+                                    if(req.body.slot=="third"){
+                            
+                                        let i;
+                                        
+                                        for(i=0;i<am.Schedule[5].third.length;i++){
+                                          //console.log(am.Schedule[3].fifth[0][0].course)}
+                                       
+                                             if((am.Schedule[5].third[i][i].timing==req.body.timing)&& (am.Schedule[5].third[i][i].course==req.body.course) &&(am.Schedule[5].third[i][i].location==req.body.location)){
+                                            
+                                                 console.log("ana d5ltt");
+                                             const replacement= new ReplacementRequest({
+                                                    id:am.id,
+                                                    receiver_id:req.body.receiver_id,
+                                                    day:req.body.day,
+                                                    slot:req.body.slot,
+                                                    timing:req.body.timing,
+                                                    course:req.body.course,
+                                                    location:req.body.location,
+                                                    request_status:"pending",
+                                                       })
+                                                       
+                                                        await replacement.save();
+                                                        await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                        await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                        res.send("Your request sent")
+                                             
+                                            
+                                            
+                                            }
+                                            else{
+                                                res.send("please add a valid slot")
+                                            }
+                                        }}
+                                        if(req.body.slot=="fourth"){
+                            
+                                            let i;
+                                            
+                                            for(i=0;i<am.Schedule[5].fourth.length;i++){
+                                              //console.log(am.Schedule[3].fifth[0][0].course)}
+                                           
+                                                 if((am.Schedule[5].fourth[i][i].timing==req.body.timing)&& (am.Schedule[5].fourth[i][i].course==req.body.course) &&(am.Schedule[5].fourth[i][i].location==req.body.location)){
+                                                
+                                                     console.log("ana d5ltt");
+                                                 const replacement= new ReplacementRequest({
+                                                        id:am.id,
+                                                        receiver_id:req.body.receiver_id,
+                                                        day:req.body.day,
+                                                        slot:req.body.slot,
+                                                        timing:req.body.timing,
+                                                        course:req.body.course,
+                                                        location:req.body.location,
+                                                        request_status:"pending",
+                                                           })
+                                                           
+                                                            await replacement.save();
+                                                            await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                                            await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                                            res.send("Your request sent")
+                                                 
+
+                                                            
+
+
+                                                    
+                                        
+                                        }
+                                        else{
+                                            res.send("please add a valid slot")
+                                        }
+                                    }}
+                   
+                    if(req.body.slot=="fifth"){
+               
+                    
+                    let i;
+                    
+                    for(i=0;i<am.Schedule[5].fifth.length;i++){
+                      //console.log(am.Schedule[3].fifth[0][0].course)}
+                   
+                         if((am.Schedule[5].fifth[i][i].timing==req.body.timing)&& (am.Schedule[5].fifth[i][i].course==req.body.course) &&(am.Schedule[5].fifth[i][i].location==req.body.location)){
+                        
+                             console.log("ana d5ltt");
+                         const replacement= new ReplacementRequest({
+                                id:am.id,
+                                receiver_id:req.body.receiver_id,
+                                day:req.body.day,
+                                slot:req.body.slot,
+                                timing:req.body.timing,
+                                course:req.body.course,
+                                location:req.body.location,
+                                request_status:"pending",
+                                   })
+                                   
+                                    await replacement.save();
+                                    await AcademicMember.updateOne({"id":verified.id},{$push:{"replacementrequest":replacement}});
+                                    await AcademicMember.updateOne({"id":req.body.receiver_id,},{$push:{"replacementrequest":replacement}});
+                                    res.send("Your request sent")
+                         
+                        
+                        
+                        }
+                        
+                    }
+                }
+                }}
+    
+    
+            
+            }
+            catch(err){
+                console.log(err);
+            }
+    })
+
+
+    portal.get('/signoutAM', async(req,res)=>{
+        const JWT_Password = "RandomString";
+        const todaysDate = new Date();
+        const todaysMonth = todaysDate.getMonth() + 1;
+            try{
+                const verified = jwt.verify(req.header('x-auth-token'),JWT_Password);
+                const AMfound= await AcademicMember.findOne({id:verified.id});
+                //find the record with signin == 1
+                let theRecord = await AcademicMember.findOne({'id': verified.id, 'AttendanceRecords': {'$elemMatch':{ 'date': todaysDate.getDate(), 'month': todaysMonth, 'signs': {'$elemMatch' : {'signin': 1, 'signout': 0 }}}}});
+                if(!theRecord){
+                    console.log("not signed in aslan");
+                }
+                else{
+                    let recordToCount = await AcademicMember.findOne({'id': verified.id, 'AttendanceRecords': {'$elemMatch':{ 'date': todaysDate.getDate(), 'month': todaysMonth}}});
+                    let ARlength = recordToCount.AttendanceRecords.length-1;
+                    let signsLength = recordToCount.AttendanceRecords[ARlength].signs.length -1;
+                    console.log(ARlength);
+                    console.log(signsLength);
+                    recordToCount.AttendanceRecords[ARlength].signs[signsLength].signout = 1;
+                    recordToCount.AttendanceRecords[ARlength].signs[signsLength].hourout = todaysDate.getHours();
+                    recordToCount.AttendanceRecords[ARlength].signs[signsLength].minuteout = todaysDate.getMinutes();
+                    await recordToCount.save();
+                    let lastRecord = recordToCount.AttendanceRecords[ARlength];
+                    let lastSign = recordToCount.AttendanceRecords[ARlength].signs[signsLength];
+        
+                    let updatedHours = lastSign.hourout - lastSign.hourin;
+                    let updatedMinutes = lastSign.minuteout - lastSign.minutein;
+                    if(updatedMinutes < 0 && updatedHours > 0){
+                        updatedMinutes = updatedMinutes * -1;
+                        updatedMinutes = 60 - updatedMinutes;
+                        updatedHours -= 1;
+                    }
+                    //calculate hours and minutes - updated
+                    lastRecord.hours -= updatedHours;
+                    lastRecord.minutes -= updatedMinutes;
+                    if(lastRecord.hours < 0){
+                        if(lastRecord.minutes > 0){
+                                lastRecord.minutes -= 60;
+                                lastRecord.minutes = lastRecord.minutes * -1;
+                                lastRecord.hours += 1; 
+                            }
+                    }
+                    else{
+                        if(lastRecord.minutes < 0){
+                            lastRecord.minutes = lastRecord.minutes * -1;
+                            lastRecord.minutes = 60 - lastRecord.minutes;
+                            lastRecord.hours -= 1;
+                        }
+                    }
+                    await recordToCount.save();
+                    res.send("check timing");
+                }
+                console.log("check if updated"); 
+            }
+            catch(err){
+                console.log(err);
+            }
+        });

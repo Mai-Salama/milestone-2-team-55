@@ -131,7 +131,9 @@ import Logout from "./logout";
 
 import NotificationsHR from './NotificationsHR';
 import NotificationsAM from './NotificationsAM';
+ // Yassmin's Routes 
 
+ import HomeAM from './AM/Homepage';
 
 function App() {
   const DefaultContainer = ()=>(
@@ -368,6 +370,11 @@ function App() {
       <Route path="/ViewAnnualStatus" component= {ViewAnnualStatus}/>
       <Route path="/Logout" component= {Logout}/>
   
+
+ {/* Yassmin's routes */}
+ <Route path="/HomepageAM" component= {HomeAM}/>
+
+
 
     </div>
   )

@@ -3,9 +3,8 @@
 import React,{Component  } from 'react';
 import {MenuItems} from "./MenuItems"
 import {Button} from './CourseInstructor/Button';
-
 import './Navbar.css'
-import HomeInstructor from './CourseInstructor/HomeInstuctor';
+import Homepage from './AM/Homepage';
 import {Redirect} from 'react-router-dom'
 import StaffAM from './CourseInstructor/StaffAM';
 class Navbar extends Component{
@@ -13,15 +12,15 @@ class Navbar extends Component{
     constructor(){
         super();
         this.state={
-            RedirectToHomeInstructor:null,
+            RedirectToHomeAM:null,
             RedirectToProfile:null
         }
-        this.HomeInstructor=this.HomeInstructor.bind(this);
+        this.HomeAM=this.HomeAM.bind(this);
         this.ProfileInstructor=this.ProfileInstructor.bind(this);
     }
 
-    HomeInstructor(event){
-        this.setState({RedirectToHomeInstructor:"/HomeInstructor"})
+    HomeAM(event){
+        this.setState({RedirectToHomeAM:"/HomepageAM"})
         event.preventDefault()
     }
     ProfileInstructor(event){
@@ -34,8 +33,8 @@ class Navbar extends Component{
     }
 
     render(){
-        if(this.state.RedirectToHomeInstructor){
-            return<Redirect to ={this.state.RedirectToHomeInstructor} Component={HomeInstructor}/>
+        if(this.state.RedirectToHomeAM){
+            return<Redirect to ={this.state.RedirectToHomeAM} Component={this.HomeAM}/>
         }
         if(this.state.RedirectToProfile){
             return<Redirect to ={this.state.RedirectToProfile} Component={StaffAM}/>
@@ -61,7 +60,7 @@ class Navbar extends Component{
         })}
         
         </ul> */}
-        <Button onClick={this.HomeInstructor}> {MenuItems[0].title}<i class={MenuItems[0].icon}></i> </Button>
+        <Button onClick={this.HomeAM}> {MenuItems[0].title}<i class={MenuItems[0].icon}></i> </Button>
         <Button onclick={this.ProfileInstructor}>{MenuItems[1].title}<i class={MenuItems[1].icon}></i> </Button>
         <Button >{MenuItems[2].title}<i class={MenuItems[2].icon}></i> </Button>
         <Button >{MenuItems[3].title}<i class={MenuItems[3].icon}></i> </Button>

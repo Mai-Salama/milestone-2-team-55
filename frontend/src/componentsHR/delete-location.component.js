@@ -46,7 +46,7 @@ window.location="/Success"
     render(){
         return(
             <div>
-                <Navbar/>
+                
             <div className='container'>
                 <nav aria-label="breadcrumb">
             <ol className="breadcrumb alert alert-warning">
