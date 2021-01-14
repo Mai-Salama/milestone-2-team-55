@@ -66,7 +66,7 @@ onSubmit(e){
         document:this.state.document
 
     }
-    axios.post('/requestMaternityLeave',request,{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTMiLCJlbWFpbCI6IlllaGlhQGdtYWlsLmNvbSIsInJvbGUiOiJIUiIsImlhdCI6MTYxMDQ0MTA5Mn0.Qeuechb5TMFxsOG91P6BZBfOohDTsFPcwkPePoFu-CM'}})
+    axios.post('/requestMaternityLeave',request,{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
         .then((res)=>{
             if(res.data.gender=="male")
             {console.log("male")}

@@ -42,7 +42,7 @@ onSubmit(e){
     e.preventDefault();
     const monthy= {month:this.state.month}
 
-    axios.post('/viewAttendanceRecordsByMonth',monthy,{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTMiLCJlbWFpbCI6IlllaGlhQGdtYWlsLmNvbSIsInJvbGUiOiJIUiIsImlhdCI6MTYxMDQxMzgxOH0.yLuTAkZUrQScAzILJXFJRi80eCDZtXt4mpiZhK0BDiU'}})
+    axios.post('/viewAttendanceRecordsByMonth',monthy,{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
     .then(response=> {
         console.log(response.data);
         console.log(monthy);

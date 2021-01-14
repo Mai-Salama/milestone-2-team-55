@@ -23,7 +23,7 @@ export default class ViewMaternityStaus extends Component{
         })
      }
     componentDidMount(){
-        axios.get('/viewStatusOfMaternityPending',{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTEiLCJlbWFpbCI6IkBndWMiLCJyb2xlIjoiSFIiLCJpYXQiOjE2MTA1NDI0MTR9.cOHHcKOWqOvZcjQnOnYehK9-ik5V9rRPzSWzBoFtvmU'}})
+        axios.get('/viewStatusOfMaternityPending',{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
         .then(response=> {
              this.setState({maternityRequests: response.data});
              console.log(response.data);
@@ -34,7 +34,7 @@ export default class ViewMaternityStaus extends Component{
     .catch((error)=> { 
     console.log(error);
 })
-    axios.get('/viewStatusOfMaternityAccepted',{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTEiLCJlbWFpbCI6IkBndWMiLCJyb2xlIjoiSFIiLCJpYXQiOjE2MTA1NDI0MTR9.cOHHcKOWqOvZcjQnOnYehK9-ik5V9rRPzSWzBoFtvmU'}})
+    axios.get('/viewStatusOfMaternityAccepted',{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
             .then((res)=>{
                 this.setState({maternityRequestsA: res.data});
                 console.log(res.data)
@@ -47,7 +47,7 @@ export default class ViewMaternityStaus extends Component{
         console.log(error);
     })
 
-    axios.get('/viewStatusOfMaternityRejected',{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTEiLCJlbWFpbCI6IkBndWMiLCJyb2xlIjoiSFIiLCJpYXQiOjE2MTA1NDI0MTR9.cOHHcKOWqOvZcjQnOnYehK9-ik5V9rRPzSWzBoFtvmU'}})
+    axios.get('/viewStatusOfMaternityRejected',{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
         .then((res)=>{
             this.setState({maternityRequestsR: res.data});
             console.log(res.data)}
@@ -70,7 +70,7 @@ onSubmit(e){
             reqID:this.state.id
 
     }
-    axios.post('/cancelPendingMaternity',request,{headers:{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTEiLCJlbWFpbCI6IkBndWMiLCJyb2xlIjoiSFIiLCJpYXQiOjE2MTA1NDI0MTR9.cOHHcKOWqOvZcjQnOnYehK9-ik5V9rRPzSWzBoFtvmU'}})
+    axios.post('/cancelPendingMaternity',request,{headers:{'x-auth-token':localStorage.getItem('savedToken')}})
         .then((res)=>console.log(res.data))
     .catch((error)=> { 
     console.log(error);
